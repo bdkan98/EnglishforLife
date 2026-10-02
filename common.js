@@ -1,0 +1,1 @@
+function showTab(id){document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.target===id));document.getElementById(id).classList.add('active');window.scrollTo({top:190,behavior:'smooth'})}document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>showTab(b.dataset.target));
