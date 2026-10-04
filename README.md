@@ -1,11 +1,15 @@
-# English for Life v6
-Adds:
-- Lesson 5: Time & Schedules
-- Lesson 6: Food & Shopping
-- New activity types: time reading, schedule personalization, mini-market price comprehension, polite-request choices, role play
-- Normal and Slow pronunciation throughout new lessons
-- Teacher guides for Lessons 5 and 6
-- Conversation cards expanded through Lesson 6
-- Dashboard expanded to six available lessons
+# Everyday English v7
+## Practical Learning. Real Conversations.
 
-Preserve the lessons/ and teacher/ folders when uploading.
+This version:
+- Rebrands the full website from English for Life to Everyday English
+- Adds the official tagline: Practical Learning. Real Conversations.
+- Adds a simple EE brand mark and redesigned homepage messaging
+- Adds Lesson 7: Directions & Places
+- Adds Lesson 8: Transportation
+- Adds map-based practice and transportation listening activities
+- Adds Teacher Guides 7 and 8
+- Expands conversation cards through Lesson 8
+- Updates the Level 1 dashboard to eight available lessons
+
+Upload while preserving the lessons/ and teacher/ folder structure.
