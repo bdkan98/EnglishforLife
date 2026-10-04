@@ -1,12 +1,11 @@
-# English for Life v4 — Professional & Interactive
-New:
-- Redesigned home page and dashboard
-- Browser pronunciation buttons using speech synthesis
-- Interactive English-to-Spanish matching activities
-- Improved progress visuals
-- More polished responsive design
-- Improved Teacher Center
-- Print buttons and print-friendly teacher resources
-- Lessons 1–4 retained and upgraded
+# English for Life v5
+Professional interactive update:
+- Normal and Slow pronunciation buttons
+- Preference for more natural English voices already installed on the student's device
+- Upgraded dashboard with completion, quiz scores, and progress
+- Lessons 1–4 review checkpoint
+- Listening comprehension activity
+- Speaking self-check
+- Teacher checkpoint guide
 
-Upload contents to the root of the existing GitHub Pages repository, preserving lessons/ and teacher/ folders.
+Note: pronunciation still uses the browser/device speech engine so the site remains free and requires no API key. Voice quality varies by device. Prerecorded or cloud AI audio would require adding audio files or a speech service.
