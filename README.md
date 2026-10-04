@@ -1,1 +1,12 @@
-English for Life v3: Lessons 1–4 plus Teacher Resources. Upload contents to the root of your GitHub Pages repository, preserving the lessons and teacher folders.
+# English for Life v4 — Professional & Interactive
+New:
+- Redesigned home page and dashboard
+- Browser pronunciation buttons using speech synthesis
+- Interactive English-to-Spanish matching activities
+- Improved progress visuals
+- More polished responsive design
+- Improved Teacher Center
+- Print buttons and print-friendly teacher resources
+- Lessons 1–4 retained and upgraded
+
+Upload contents to the root of the existing GitHub Pages repository, preserving lessons/ and teacher/ folders.
