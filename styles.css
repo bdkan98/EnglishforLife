@@ -16,3 +16,17 @@
 .course-unit.locked{opacity:.82}
 .final-unit{background:#f4f7fb}
 @media(max-width:780px){.course-unit{padding:15px}.course-unit-header{display:block}}
+
+/* Level 1 grouped dashboard: keep four lesson tiles across on desktop */
+.course-unit > .cards{
+  grid-template-columns:repeat(4,minmax(0,1fr));
+}
+.course-unit > .cards .card{
+  min-width:0;
+}
+@media(max-width:1050px){
+  .course-unit > .cards{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
+@media(max-width:650px){
+  .course-unit > .cards{grid-template-columns:1fr;}
+}
