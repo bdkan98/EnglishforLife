@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Level 1 | Everyday English</title><link rel="stylesheet" href="styles.css"></head><body><header class="top"><div class="brand">Everyday English</div><div class="tag">Level 1 · Foundations</div></header><main class="wrap"><a class="home" href="index.html">← Home</a><section class="hero"><span class="pill">YOUR COURSE</span><h1>Level 1 · Foundations</h1><p>Build everyday English one conversation at a time.</p><div class="bar"><i id="levelbar"></i></div><div class="scorecard"><div class="metric"><b id="completeCount">0</b><span>Lessons complete</span></div><div class="metric"><b id="avgScore">—</b><span>Average quiz score</span></div><div class="metric"><b id="progressPct">0%</b><span>Course progress</span></div></div></section><h2 class="section-title">Your Course</h2>
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Level 1 | Kandd Learning</title><link rel="stylesheet" href="styles.css"><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script></head><body><header class="top"><div class="brand">Kandd Learning</div><div class="tag">Level 1 · Foundations</div></header><main class="wrap"><a class="home" href="index.html">← Home</a><section class="hero"><span class="pill">YOUR COURSE</span><h1>Level 1 · Foundations</h1><p>Build everyday English one conversation at a time.</p><div class="bar"><i id="levelbar"></i></div><div class="scorecard"><div class="metric"><b id="completeCount">0</b><span>Lessons complete</span></div><div class="metric"><b id="avgScore">—</b><span>Average quiz score</span></div><div class="metric"><b id="progressPct">0%</b><span>Course progress</span></div></div></section><h2 class="section-title">Your Course</h2>
 <section class="course-unit">
   <div class="course-unit-header"><div><span class="unitlabel">UNIT 1 · GETTING STARTED</span><h2>Lessons 1–4</h2><p>Introduce yourself, talk about family, use numbers, and describe your day.</p></div></div>
   <div class="cards"><a class="card available" href="lessons/lesson1.html"><span class="status" id="s1">AVAILABLE</span><h3>1. Introducing Yourself</h3><p>Presentarte</p><p class="mini" id="score1">Quiz: not taken</p></a><a class="card available" href="lessons/lesson2.html"><span class="status" id="s2">AVAILABLE</span><h3>2. My Family</h3><p>Mi familia</p><p class="mini" id="score2">Quiz: not taken</p></a><a class="card available" href="lessons/lesson3.html"><span class="status" id="s3">AVAILABLE</span><h3>3. Numbers, Age & Phone Numbers</h3><p>Números, edad y teléfonos</p><p class="mini" id="score3">Quiz: not taken</p></a><a class="card available" href="lessons/lesson4.html"><span class="status" id="s4">AVAILABLE</span><h3>4. My Day</h3><p>Mi día</p><p class="mini" id="score4">Quiz: not taken</p></a></div>
@@ -14,5 +14,42 @@
   <div class="cards"><a class="card available" href="lessons/lesson9.html"><span class="status" id="s9">AVAILABLE</span><h3>9. Appointments</h3><p>Citas</p><p class="mini" id="score9">Quiz: not taken</p></a><a class="card available" href="lessons/lesson10.html"><span class="status" id="s10">AVAILABLE</span><h3>10. My Job</h3><p>Mi trabajo</p><p class="mini" id="score10">Quiz: not taken</p></a><a class="card available" href="lessons/lesson11.html"><span class="status" id="s11">AVAILABLE</span><h3>11. Talking to Coworkers</h3><p>Hablar con compañeros</p><p class="mini" id="score11">Quiz: not taken</p></a><a class="card available" href="lessons/lesson12.html"><span class="status" id="s12">AVAILABLE</span><h3>12. Conversation Challenge</h3><p>Reto de conversación</p><p class="mini" id="score12">Quiz: not taken</p></a></div>
   <div class="checkpoint-row"><a class="card review-card" href="final-assessment.html"><span class="status" id="finalstatus">FINAL ASSESSMENT</span><h3>🎓 Level 1 Final Conversation Assessment</h3><p>Use skills from the entire Level 1 course in practical conversations.</p><p class="mini">Complete the assessment to earn your printable Level 1 certificate.</p></a><a class="card available" href="certificate.html"><span class="status">CERTIFICATE</span><h3>📜 Level 1 Completion Certificate</h3><p>Available after the final assessment is completed.</p></a></div>
 </section>
-</main><footer>Everyday English · Level 1</footer><script>let c=0,total=0,scored=0;for(let n of [1,2,3,4,5,6,7,8,9,10,11,12]){if(localStorage.getItem('lesson'+n+'Complete')==='yes'){c++;let e=document.getElementById('s'+n);e.textContent='✓ COMPLETE';e.classList.add('done')}let s=localStorage.getItem('lesson'+n+'Score');if(s!==null){document.getElementById('score'+n).textContent='Quiz: '+s+'/5';total+=Number(s);scored++}}let pct=Math.round(c/12*100);levelbar.style.width=pct+'%';completeCount.textContent=c;progressPct.textContent=pct+'%';avgScore.textContent=scored?Math.round(total/scored*20)+'%':'—';if(localStorage.getItem('review14Complete')==='yes')reviewstatus.textContent='✓ Checkpoint complete';
-if(localStorage.getItem('review58Complete')==='yes'){let r=document.getElementById('review58status');if(r){r.textContent='✓ CHECKPOINT COMPLETE';r.classList.add('done')}}if(localStorage.getItem('finalAssessmentComplete')==='yes'){let f=document.getElementById('finalstatus');if(f){f.textContent='✓ LEVEL 1 COMPLETE';f.classList.add('done')}};</script></body></html>
+</main><footer>Kandd Learning · Level 1</footer><script src="supabase-client.js"></script><script>
+(async function loadLevel1() {
+  const notice=document.createElement('p');notice.id='cloudNotice';notice.setAttribute('role','status');notice.textContent='Loading your saved learning progress…';
+  document.querySelector('.hero').appendChild(notice);
+  try {
+    const user=await kanddUser();
+    if(!user){location.replace('account.html');return;}
+    const {data:rows,error}=await kanddDb.from('progress').select('*').eq('user_id',user.id);
+    if(error)throw error;
+    const lessonRows=new Map((rows||[]).filter(r=>r.item_type==='lesson').map(r=>[String(r.item_key),r]));
+    let completed=0,total=0,scored=0;
+    for(let n=1;n<=12;n++){
+      const record=lessonRows.get(String(n));
+      const badge=document.getElementById('s'+n),score=document.getElementById('score'+n);
+      badge.textContent=record?.completed?'✓ COMPLETE':'AVAILABLE';badge.classList.toggle('done',!!record?.completed);
+      if(record?.completed)completed++;
+      if(record?.score!==null && record?.score!==undefined && Number.isFinite(Number(record.score))){score.textContent='Quiz: '+record.score+'/5';total+=Number(record.score);scored++}
+      else score.textContent='Quiz: not taken';
+    }
+    const pct=Math.round(completed/12*100);
+    document.getElementById('levelbar').style.width=pct+'%';
+    document.getElementById('completeCount').textContent=completed;
+    document.getElementById('progressPct').textContent=pct+'%';
+    document.getElementById('avgScore').textContent=scored?Math.round(total/scored*20)+'%':'—';
+    const checkpoint1=(rows||[]).some(r=>r.item_type==='checkpoint'&&r.item_key==='checkpoint-1'&&r.completed);
+    document.getElementById('reviewstatus').textContent=checkpoint1?'✓ Checkpoint complete':'Ready when you are';
+    const cp2=document.getElementById('review58status');
+    const checkpoint2=(rows||[]).some(r=>r.item_type==='checkpoint'&&r.item_key==='checkpoint-2'&&r.completed);
+    cp2.textContent=checkpoint2?'✓ CHECKPOINT COMPLETE':'CHECKPOINT 2';cp2.classList.toggle('done',checkpoint2);
+    const fin=document.getElementById('finalstatus');
+    const final=(rows||[]).some(r=>r.item_type==='assessment'&&r.item_key==='final-assessment'&&r.completed);
+    fin.textContent=final?'✓ LEVEL 1 COMPLETE':'FINAL ASSESSMENT';fin.classList.toggle('done',final);
+    notice.textContent='✓ Progress synced with your Kandd Learning account';
+  } catch(err) {
+    console.error('Unable to load Level 1 cloud progress:',err);
+    notice.textContent='Unable to load cloud progress. Please check your connection and reload this page.';
+  }
+})();
+</script></body></html>
