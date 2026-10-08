@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Lesson 8 | Everyday English</title><link rel="stylesheet" href="../styles.css"></head><body><header class="top"><div class="brand">Everyday English</div><div class="tag">Practical Learning. Real Conversations.</div></header><main class="wrap"><a class="home" href="../level1.html">← Level 1 Dashboard</a><section class="hero"><span class="pill">LESSON 8</span><h1>Transportation</h1><p>Transporte</p><div class="progressrow"><b id="pct">0% complete</b><span class="badge">Listen • Practice • Speak</span></div><div class="bar"><i id="bar"></i></div></section><div class="tabs"><button class="tab active" data-target="learn">1 · Learn</button><button class="tab" data-target="practice">2 · Practice</button><button class="tab" data-target="speak">3 · Speak</button><button class="tab" data-target="check">4 · Check</button></div>
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Lesson 8 | Kandd Learning</title><link rel="stylesheet" href="../styles.css"><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script></head><body><header class="top"><div class="brand">Kandd Learning</div><div class="tag">Practical Learning. Real Conversations.</div></header><main class="wrap"><a class="home" href="../level1.html">← Level 1 Dashboard</a><section class="hero"><span class="pill">LESSON 8</span><h1>Transportation</h1><p>Transporte</p><div class="progressrow"><b id="pct">0% complete</b><span class="badge">Listen • Practice • Speak</span></div><div class="bar"><i id="bar"></i></div></section><div class="tabs"><button class="tab active" data-target="learn">1 · Learn</button><button class="tab" data-target="practice">2 · Practice</button><button class="tab" data-target="speak">3 · Speak</button><button class="tab" data-target="check">4 · Check</button></div>
 <section id="learn" class="panel active"><article><h2>🎯 Today's Goal</h2><p>Talk about how you travel, ask about buses or trains, and understand simple transportation information.</p></article><div class="grid2"><article><h2>🔊 Useful Phrases</h2>
 <div class="phrase"><div class="phrase-text"><b>How do you get to work?</b><span>¿Cómo llegas al trabajo?</span></div><div class="audio-controls"><button class="speak normal" data-text="How do you get to work?" onclick="speakText(this.dataset.text,this,'normal')">🔊 Normal</button><button class="speak slow" data-text="How do you get to work?" onclick="speakText(this.dataset.text,this,'slow')">🐢 Slow</button></div></div>
 <div class="phrase"><div class="phrase-text"><b>I drive to work.</b><span>Voy al trabajo en carro.</span></div><div class="audio-controls"><button class="speak normal" data-text="I drive to work." onclick="speakText(this.dataset.text,this,'normal')">🔊 Normal</button><button class="speak slow" data-text="I drive to work." onclick="speakText(this.dataset.text,this,'slow')">🐢 Slow</button></div></div>
@@ -8,6 +8,55 @@
 </article><article class="tip"><h2>🇪🇸 Spanish-Speaker Tip</h2><p>Use <b>by</b> for many transportation methods: “by bus,” “by train,” “by car.” But say “I drive,” “I walk,” or “I take the bus.”</p></article></div><article><h2>Ways to Travel</h2><div class="transit-grid"><div class="transit-card">🚗 <b>drive / car</b><br><small>manejar / carro</small></div><div class="transit-card">🚌 <b>bus</b><br><small>autobús</small></div><div class="transit-card">🚆 <b>train</b><br><small>tren</small></div><div class="transit-card">🚲 <b>bike</b><br><small>bicicleta</small></div><div class="transit-card">🚶 <b>walk</b><br><small>caminar</small></div><div class="transit-card">🚏 <b>bus stop</b><br><small>parada de autobús</small></div></div></article><button class="btn" onclick="done('learn','practice')">Finished Learning →</button></section>
 <section id="practice" class="panel"><article><h2>🎧 Listen for Transportation</h2><p>Listen, then answer without reading a script.</p><div class="listen-box"><button class="btn" onclick="speakText('I usually take the bus to work. The bus arrives at seven fifteen. The bus stop is across from the market.','', 'normal')">🔊 Play</button></div><div class="question"><b>How does the person get to work?</b><select id="x0"><option value="">Choose…</option><option>bus</option><option>car</option></select></div><div class="question"><b>What time does it arrive?</b><select id="x1"><option value="">Choose…</option><option>7:15</option><option>7:50</option></select></div><div class="question"><b>Where is the bus stop?</b><select id="x2"><option value="">Choose…</option><option>across from the market</option><option>next to the bank</option></select></div><button class="btn" onclick="checkMatching('x',['bus','7:15','across from the market'])">Check Listening</button><div id="xFeedback"></div></article><article><h2>🚌 Choose the Best Sentence</h2><div class="phrases"><div><b>I take the bus to work.</b><span>Natural ✓</span></div><div><b>I go by bus.</b><span>Natural ✓</span></div><div><b>I go in bus.</b><span>Not natural ✗</span></div></div></article><button class="btn" onclick="done('practice','speak')">Finish Practice →</button></section>
 <section id="speak" class="panel"><article><h2>💬 Transportation Conversation</h2><div class="dialogue"><p><b>A:</b> How do you get to work?</p><p><b>B:</b> I take the bus.</p><p><b>A:</b> What time does your bus arrive?</p><p><b>B:</b> At seven fifteen.</p><p><b>A:</b> Where is the bus stop?</p><p><b>B:</b> It's across from the market.</p></div></article><article><h2>🎯 Live It</h2><div class="challenge">Tell a partner how you normally travel to work, school, the store, or another place. Ask your partner three transportation questions.</div></article><button class="btn" onclick="done('speak','check')">Speaking Challenge Complete →</button></section>
-<section id="check" class="panel"><article><h2>✅ Quick Check</h2><div id="quiz"></div><button class="btn" onclick="grade()">Check My Answers</button><div id="result" class="result"></div></article></section></main><footer>Everyday English · Practical Learning. Real Conversations.</footer><script src="../common.js"></script><script>
+<section id="check" class="panel"><article><h2>✅ Quick Check</h2><div id="quiz"></div><button class="btn" onclick="grade()">Check My Answers</button><div id="result" class="result"></div></article></section></main><footer>Kandd Learning · Practical Learning. Real Conversations.</footer><script src="../supabase-client.js"></script><script src="../common.js"></script><script>
 const quiz=[["Natural sentence:",["I take the bus.","I take bus the.","I bus go."],"I take the bus."],["Ask about transportation:",["How do you get to work?","How work get?","What get work?"],"How do you get to work?"],["Bus stop means…",["parada de autobús","estación de policía","semáforo"],"parada de autobús"],["Correct?",["I go by train.","I go in train.","I by train go."],"I go by train."],["Ask arrival time:",["What time does the bus arrive?","What bus time arrive?","When time bus?"],"What time does the bus arrive?"]];
-let parts=JSON.parse(localStorage.getItem('lesson8Parts')||'{}');function update(){let x=['learn','practice','speak','check'].filter(k=>parts[k]).length,p=Math.round(x/4*100);bar.style.width=p+'%';pct.textContent=p+'% complete'}function done(x,y){parts[x]=true;localStorage.setItem('lesson8Parts',JSON.stringify(parts));update();showTab(y)};quizEl=document.getElementById('quiz');quizEl.innerHTML=quiz.map((x,i)=>`<div class="question"><b>${i+1}. ${x[0]}</b>${x[1].map(o=>`<label><input type="radio" name="q${i}" value="${o}"> ${o}</label>`).join('')}</div>`).join('');function grade(){let s=0;quiz.forEach((x,i)=>{let a=document.querySelector(`input[name=q${i}]:checked`);if(a&&a.value===x[2])s++});saveScore(8,s);if(s>=4){parts.check=true;localStorage.setItem('lesson8Parts',JSON.stringify(parts));localStorage.setItem('lesson8Complete','yes');result.className='result success';result.innerHTML=`🎉 ${s}/5 — Lesson complete! <a href="../level1.html"><u>Dashboard</u></a>`;update()}else{result.className='result retry';result.textContent=s+'/5 — Review and try again.'}}update();</script></body></html>
+let parts=JSON.parse(localStorage.getItem('lesson8Parts')||'{}');function update(){let x=['learn','practice','speak','check'].filter(k=>parts[k]).length,p=Math.round(x/4*100);bar.style.width=p+'%';pct.textContent=p+'% complete'}function done(x,y){parts[x]=true;localStorage.setItem('lesson8Parts',JSON.stringify(parts));update();showTab(y)};quizEl=document.getElementById('quiz');quizEl.innerHTML=quiz.map((x,i)=>`<div class="question"><b>${i+1}. ${x[0]}</b>${x[1].map(o=>`<label><input type="radio" name="q${i}" value="${o}"> ${o}</label>`).join('')}</div>`).join('');function grade(){let s=0;quiz.forEach((x,i)=>{let a=document.querySelector(`input[name=q${i}]:checked`);if(a&&a.value===x[2])s++});localStorage.setItem('lesson8Score',String(s));if(s>=4){parts.check=true;localStorage.setItem('lesson8Parts',JSON.stringify(parts));localStorage.setItem('lesson8Complete','yes');result.className='result success';result.innerHTML=`🎉 ${s}/5 — Lesson complete! <a href="../level1.html"><u>Dashboard</u></a>`;update()}else{result.className='result retry';result.textContent=s+'/5 — Review and try again.'}}update();</script><script>
+/* Kandd Learning cloud progress — Lesson 8. Original lesson activities remain unchanged. */
+(function(){
+  const lessonNumber=8;
+  const originalGrade=grade;
+  let cloudBusy=false;
+  const status=document.createElement('div');
+  status.id='kandd-cloud-status';
+  status.setAttribute('role','status');
+  status.setAttribute('aria-live','polite');
+  status.style.cssText='margin-top:12px;font-weight:600;line-height:1.5';
+  document.getElementById('result').insertAdjacentElement('afterend',status);
+  function message(text,good){status.textContent=text;status.style.color=good?'#176b44':'#a04421';}
+  async function loadCloud(){
+    try{
+      const user=await kanddUser();
+      if(!user){message('Sign in to save your progress across devices. Progress on this device remains local.',false);return;}
+      const rows=await kanddLoadProgress();
+      const saved=rows.find(r=>r.item_type==='lesson'&&String(r.item_key)===String(lessonNumber));
+      if(saved&&saved.completed){
+        parts.check=true;
+        localStorage.setItem('lesson'+lessonNumber+'Parts',JSON.stringify(parts));
+        localStorage.setItem('lesson'+lessonNumber+'Complete','yes');
+        if(saved.score!==null&&saved.score!==undefined)localStorage.setItem('lesson'+lessonNumber+'Score',String(saved.score));
+        update();
+        message('✓ Lesson completion loaded from your Kandd Learning account.',true);
+      } else {message('Signed in — your next passing quiz will be saved to your account.',true);}
+    }catch(err){console.error('Cloud load error',err);message('Unable to check cloud progress. Please refresh and try again.',false);}
+  }
+  grade=async function(){
+    if(cloudBusy)return;
+    cloudBusy=true;
+    try{
+      originalGrade();
+      const score=Number(localStorage.getItem('lesson'+lessonNumber+'Score'));
+      if(!Number.isFinite(score))return;
+      message('Saving your quiz result to Kandd Learning…',true);
+      const user=await kanddUser();
+      if(!user){message('Quiz scored on this device only. Sign in to save across devices.',false);return;}
+      const existing=(await kanddLoadProgress()).find(r=>r.item_type==='lesson'&&String(r.item_key)===String(lessonNumber));
+      const completed=score>=4||Boolean(existing&&existing.completed);
+      const bestScore=existing&&existing.score!==null?Math.max(score,Number(existing.score)):score;
+      const ok=await kanddSaveProgress('lesson',String(lessonNumber),completed,bestScore,{source:'lesson-quiz'});
+      message(ok?'✓ Saved to your Kandd Learning account. Your progress will appear on other devices.':'Cloud save failed. Your result is on this device only. Please check your connection and try again.',ok);
+    }catch(err){console.error('Cloud save error',err);message('Cloud save failed. Please try submitting the quiz again.',false);}
+    finally{cloudBusy=false;}
+  };
+  loadCloud();
+})();
+</script></body></html>
