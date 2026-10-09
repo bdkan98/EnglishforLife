@@ -86,7 +86,7 @@
       if(!('speechSynthesis' in window)){result.append(document.createTextNode(' Audio is unavailable in this browser.'));return;}
       speechSynthesis.cancel();
       const u=new SpeechSynthesisUtterance(text);
-      u.lang='en-US';u.rate=slow?.65:.9;u.pitch=1;
+      u.lang='en-US';u.rate=slow ? 0.45 : 0.9;u.pitch=1;
       const voices=speechSynthesis.getVoices().filter(v=>/^en[-_]/i.test(v.lang));
       if(voices.length)u.voice=voices.find(v=>v.lang==='en-US')||voices[0];
       speechSynthesis.speak(u);
