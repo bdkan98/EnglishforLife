@@ -35,4 +35,21 @@ function checkMatching(id,answers){
  const f=document.getElementById(id+'Feedback');f.textContent=ok===answers.length?'✓ Excellent! All answers are correct.':`${ok}/${answers.length} correct. Try again.`;
  f.className='feedback '+(ok===answers.length?'success':'retry');
 }
-function saveScore(n,score){localStorage.setItem('lesson'+n+'Score',String(score))}
+function saveScore(n,score){
+ localStorage.setItem('lesson'+n+'Score',String(score));
+ if(typeof window.kanddSaveProgress==='function'){
+  Promise.resolve(window.kanddSaveProgress('lesson',String(n),score>=4,score,{source:'lesson-quiz'})).catch(console.error);
+ }else if(typeof kanddSaveProgress==='function'){
+  Promise.resolve(kanddSaveProgress('lesson',String(n),score>=4,score,{source:'lesson-quiz'})).catch(console.error);
+ }
+}
+
+// Load the helper relative to common.js, including from /lessons/ pages.
+(function(){
+ const here=document.currentScript;
+ if(!here)return;
+ const s=document.createElement('script');
+ s.src=new URL('pronunciation-helper.js',here.src).href;
+ s.defer=true;
+ document.head.appendChild(s);
+})();

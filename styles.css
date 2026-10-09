@@ -32,3 +32,23 @@
 }
 
 .assessment-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.scenario{border:1px solid #dce5ee;border-radius:16px;padding:18px;background:#fff}.scenario h3{margin-top:0}.rubric-table{width:100%;border-collapse:collapse;margin:14px 0}.rubric-table th,.rubric-table td{border:1px solid #dce5ee;padding:10px;text-align:left;vertical-align:top}.rubric-table th{background:#f3f6f9}.score-input{width:64px;padding:8px;border:1px solid #cbd6e1;border-radius:8px}.certificate{max-width:900px;margin:30px auto;padding:52px;border:10px double #173f67;text-align:center;background:#fff}.certificate h1{font-size:3rem;margin:12px 0}.certificate-name{font-size:2.3rem;font-weight:900;border-bottom:2px solid #173f67;display:inline-block;min-width:60%;padding:8px 20px;margin:20px}.certificate-sub{font-size:1.25rem}.signature-grid{display:grid;grid-template-columns:1fr 1fr;gap:50px;margin-top:55px}.signature-line{border-top:1px solid #333;padding-top:8px}.certificate-controls{max-width:900px;margin:20px auto}.reflection textarea{width:100%;min-height:90px;padding:12px;border:1px solid #ccd6df;border-radius:12px;box-sizing:border-box}@media(max-width:780px){.assessment-grid,.signature-grid{grid-template-columns:1fr}.certificate{padding:25px;border-width:6px}.certificate h1{font-size:2rem}}@media print{body.certificate-page .top,body.certificate-page .certificate-controls,body.certificate-page footer{display:none!important}body.certificate-page{background:#fff}.certificate{border:10px double #173f67;margin:0 auto;box-shadow:none;page-break-inside:avoid}}
+
+
+/* Kandd floating pronunciation helper */
+.kandd-pronounce-launcher{position:fixed;bottom:20px;right:20px;z-index:9998;background:#173f67;color:white;border:0;border-radius:999px;padding:13px 19px;box-shadow:0 7px 25px #122c4a55;font-weight:800;cursor:pointer}
+.kandd-pronounce-panel[hidden]{display:none!important}
+.kandd-pronounce-panel{position:fixed;bottom:78px;right:20px;width:min(400px,calc(100vw - 32px));max-height:calc(100vh - 110px);overflow:auto;z-index:9999;background:white;border:1px solid #dce5ee;border-radius:20px;padding:20px;box-shadow:0 12px 40px #17223840;color:#172238}
+.kandd-pronounce-heading{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.kandd-pronounce-close{border:0;background:#e8f0f7;border-radius:9px;padding:2px 11px;font-size:25px;cursor:pointer}
+.kandd-pronounce-panel p{font-size:.92rem;color:#536477;margin:10px 0}
+.kandd-pronounce-panel label{font-weight:750;display:block;margin:12px 0 5px}
+.kandd-pronounce-search{display:flex;gap:7px}
+.kandd-pronounce-search input{min-width:0;flex:1;border:1px solid #bdcad9;border-radius:9px;padding:10px;font:inherit}
+.kandd-pronounce-panel button{cursor:pointer}
+.kandd-pronounce-search button,.kandd-pronounce-actions button{background:#e8f0f7;color:#173f67;border:0;border-radius:9px;padding:9px;font-weight:750}
+.kandd-pronounce-actions{display:flex;gap:7px;flex-wrap:wrap;margin:12px 0}
+#kandd-pronounce-result{background:#f4f8fc;border-radius:12px;padding:13px;min-height:58px;overflow-wrap:anywhere}
+#kandd-pronounce-result strong{display:block;font-size:1.15rem}
+.kandd-pronounce-panel small{display:block;color:#536477;margin-top:10px}
+@media(max-width:600px){.kandd-pronounce-launcher{bottom:12px;right:12px}.kandd-pronounce-panel{bottom:68px;right:12px}}
+@media print{.kandd-pronounce-launcher,.kandd-pronounce-panel{display:none!important}}
