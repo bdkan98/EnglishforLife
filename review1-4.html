@@ -1,5 +1,42 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Lessons 1–4 Review</title><link rel="stylesheet" href="styles.css"></head><body><header class="top"><div class="brand">Everyday English</div><div class="tag">Level 1 · Checkpoint</div></header><main class="wrap"><a class="home" href="level1.html">← Level 1 Dashboard</a><section class="hero"><span class="pill">REVIEW · LESSONS 1–4</span><h1>Show what you can do.</h1><p>This checkpoint reviews introductions, family, numbers, phone numbers, and daily routines. Communication matters more than perfection.</p></section>
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Lessons 1–4 Review</title><link rel="stylesheet" href="styles.css"><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="supabase-client.js"></script></head><body><header class="top"><div class="brand">Kandd Learning</div><div class="tag">Level 1 · Checkpoint</div></header><main class="wrap"><a class="home" href="level1.html">← Level 1 Dashboard</a><section class="hero"><span class="pill">REVIEW · LESSONS 1–4</span><h1>Show what you can do.</h1><p>This checkpoint reviews introductions, family, numbers, phone numbers, and daily routines. Communication matters more than perfection.</p></section>
 <article><h2>1 · Listening</h2><div class="listen-box"><p>Listen without reading a script.</p><button class="btn" onclick="speakText('My name is Elena. I am from Peru. I have two children. I wake up at six thirty and I go to work at eight.','', 'normal')">🔊 Play Listening</button></div><div class="question"><b>Where is Elena from?</b><label><input type="radio" name="l1" value="Peru"> Peru</label><label><input type="radio" name="l1" value="Mexico"> Mexico</label></div><div class="question"><b>How many children does she have?</b><label><input type="radio" name="l2" value="2"> Two</label><label><input type="radio" name="l2" value="3"> Three</label></div><div class="question"><b>What time does she wake up?</b><label><input type="radio" name="l3" value="6:30"> 6:30</label><label><input type="radio" name="l3" value="8:00"> 8:00</label></div></article>
 <article><h2>2 · Vocabulary</h2><div class="activity"><div class="activity-row"><b>daughter</b><select id="r0"><option value="">Choose…</option><option>hija</option><option>hermano</option><option>trabajo</option></select></div><div class="activity-row"><b>thirty</b><select id="r1"><option value="">Choose…</option><option>trece</option><option>treinta</option><option>tres</option></select></div><div class="activity-row"><b>wake up</b><select id="r2"><option value="">Choose…</option><option>despertarse</option><option>acostarse</option><option>almorzar</option></select></div></div><button class="btn" onclick="checkMatching('r',['hija','treinta','despertarse'])">Check Vocabulary</button><div id="rFeedback"></div></article>
 <article><h2>3 · Speaking Check</h2><p>Say each item aloud without reading a model answer.</p><label class="checkline"><input type="checkbox" class="sp"> Introduce yourself: name, where you're from, and where you live.</label><label class="checkline"><input type="checkbox" class="sp"> Say two things about your family.</label><label class="checkline"><input type="checkbox" class="sp"> Say your age and a pretend phone number.</label><label class="checkline"><input type="checkbox" class="sp"> Describe at least five things you do in a normal day.</label><label class="checkline"><input type="checkbox" class="sp"> Ask someone to repeat something in English.</label></article>
-<article><h2>4 · Finish Your Checkpoint</h2><p>Complete the listening questions and speaking checklist, then check your results.</p><button class="btn" onclick="finishReview()">Check My Review</button><div id="final" class="result"></div></article></main><footer>Everyday English · Lessons 1–4 Review</footer><script src="common.js"></script><script>function finishReview(){let s=0;let a=document.querySelector('input[name=l1]:checked');if(a&&a.value==='Peru')s++;a=document.querySelector('input[name=l2]:checked');if(a&&a.value==='2')s++;a=document.querySelector('input[name=l3]:checked');if(a&&a.value==='6:30')s++;let spoken=[...document.querySelectorAll('.sp')].filter(x=>x.checked).length;if(s===3&&spoken>=4){localStorage.setItem('review14Complete','yes');final.className='result success';final.innerHTML='🎉 Checkpoint complete! You are ready to continue to the next unit.'}else{final.className='result retry';final.textContent=`Listening: ${s}/3 · Speaking tasks: ${spoken}/5. Review anything you missed and try again.`}}</script></body></html>
+<article><h2>4 · Finish Your Checkpoint</h2><p>Complete the listening questions and speaking checklist, then check your results.</p><button class="btn" onclick="finishReview()">Check My Review</button><div id="final" class="result"></div></article></main><footer>Kandd Learning · Lessons 1–4 Review</footer><script src="common.js"></script><script>function finishReview(){let s=0;let a=document.querySelector('input[name=l1]:checked');if(a&&a.value==='Peru')s++;a=document.querySelector('input[name=l2]:checked');if(a&&a.value==='2')s++;a=document.querySelector('input[name=l3]:checked');if(a&&a.value==='6:30')s++;let spoken=[...document.querySelectorAll('.sp')].filter(x=>x.checked).length;if(s===3&&spoken>=4){localStorage.setItem('review14Complete','yes');final.className='result success';final.innerHTML='🎉 Checkpoint complete! You are ready to continue to the next unit.'}else{final.className='result retry';final.textContent=`Listening: ${s}/3 · Speaking tasks: ${spoken}/5. Review anything you missed and try again.`}}</script><script>
+(function(){
+ const itemType='checkpoint', itemKey='checkpoint-1';
+ const notice=document.createElement('div'); notice.className='result'; notice.setAttribute('role','status');
+ document.querySelector('.hero').appendChild(notice);
+ function message(t,ok){notice.textContent=t;notice.className='result '+(ok?'success':'retry');}
+ const original=window.finishReview;
+ window.finishReview=async function(){
+   const user=await kanddUser();
+   if(!user){message('Please sign in to save your results. Your account is required for this checkpoint.',false);return;}
+   original();
+   const passed=document.getElementById('final').classList.contains('success');
+   if(!passed)return;
+   const score=[['l1','Peru'],['l2','2'],['l3','6:30']].reduce((n,[k,v])=>n+(document.querySelector('input[name=\"'+k+'\"]:checked')?.value===v),0);
+   message('Saving your results to your Kandd Learning account…',true);
+   const saved=await kanddSaveProgress(itemType,itemKey,true,score,{source:'milestone',saved_at:new Date().toISOString()});
+   if(saved)message('✓ Saved to your Kandd Learning account. Your progress will appear on other devices.',true);
+   else message('Could not save to your account. Check your connection and select the completion button again.',false);
+ };
+ async function restore(){
+  message('Loading saved progress…',true);
+  try{
+   const user=await kanddUser();
+   if(!user){location.replace('account.html');return;}
+   const {data,error}=await kanddDb.from('progress').select('*').eq('user_id',user.id).eq('item_type',itemType).eq('item_key',itemKey).maybeSingle();
+   if(error)throw error;
+   if(data&&data.completed){
+     document.getElementById('final').className='result success';
+     document.getElementById('final').textContent='✓ Already completed and saved to your account. You may practice again.';
+     
+     
+     message('✓ Completion synced from your Kandd Learning account.',true);
+   }else message('Ready to complete and save this milestone.',true);
+  }catch(e){console.error(e);message('Unable to load cloud progress. Please reconnect and reload.',false);}
+ }
+ restore();
+})();
+</script></body></html>

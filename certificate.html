@@ -1,9 +1,38 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Level 1 Certificate | Everyday English</title><link rel="stylesheet" href="styles.css"></head><body class="certificate-page">
-<header class="top"><div class="brand">Everyday English</div><div class="tag">Practical Learning. Real Conversations.</div></header>
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Level 1 Certificate | Kandd Learning</title><link rel="stylesheet" href="styles.css"><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="supabase-client.js"></script></head><body class="certificate-page">
+<header class="top"><div class="brand">Kandd Learning</div><div class="tag">Practical Learning. Real Conversations.</div></header>
 <div class="certificate-controls"><a class="home" href="level1.html">← Level 1 Dashboard</a><section class="hero"><h2>Create Your Certificate</h2><p>Enter the student's name and optional teacher name, then print or save the certificate as a PDF.</p><label><b>Student name</b><br><input id="studentInput" style="width:100%;max-width:500px;padding:12px;margin:6px 0 14px" placeholder="Student name"></label><br><label><b>Teacher name (optional)</b><br><input id="teacherInput" style="width:100%;max-width:500px;padding:12px;margin:6px 0 14px" placeholder="Teacher name"></label><br><button class="btn" onclick="makeCert()">Update Certificate</button> <button class="btn secondary" onclick="window.print()">🖨️ Print / Save PDF</button></section></div>
-<section class="certificate"><div class="unitlabel">CERTIFICATE OF COMPLETION</div><h1>Everyday English</h1><div class="certificate-sub"><i>Practical Learning. Real Conversations.</i></div><p style="margin-top:38px">This certificate is presented to</p><div class="certificate-name" id="studentName">Student Name</div><p class="certificate-sub">for successfully completing</p><h2>Level 1 · Foundations</h2><p>and demonstrating practical English communication skills for everyday life, community situations, and the workplace.</p><p style="margin-top:28px"><b>12 Lessons · 2 Checkpoints · Final Conversation Assessment</b></p><div class="signature-grid"><div><div class="signature-line" id="teacherName">Teacher / Instructor</div></div><div><div class="signature-line" id="dateLine"></div></div></div></section>
-<footer>Everyday English · Level 1</footer><script>
+<section class="certificate"><div class="unitlabel">CERTIFICATE OF COMPLETION</div><h1>Kandd Learning</h1><div class="certificate-sub"><i>Practical Learning. Real Conversations.</i></div><p style="margin-top:38px">This certificate is presented to</p><div class="certificate-name" id="studentName">Student Name</div><p class="certificate-sub">for successfully completing</p><h2>Level 1 · Foundations</h2><p>and demonstrating practical English communication skills for everyday life, community situations, and the workplace.</p><p style="margin-top:28px"><b>12 Lessons · 2 Checkpoints · Final Conversation Assessment</b></p><div class="signature-grid"><div><div class="signature-line" id="teacherName">Teacher / Instructor</div></div><div><div class="signature-line" id="dateLine"></div></div></div></section>
+<footer>Kandd Learning · Level 1</footer><script>
 if(localStorage.getItem('finalAssessmentComplete')!=='yes'){document.querySelector('.certificate-controls .hero').insertAdjacentHTML('afterbegin','<div class="result retry">The final assessment has not been marked complete on this device yet.</div>')}
 function makeCert(){let s=studentInput.value.trim();studentName.textContent=s||'Student Name';let t=teacherInput.value.trim();teacherName.textContent=t||'Teacher / Instructor';localStorage.setItem('certificateStudentName',s);localStorage.setItem('certificateTeacherName',t)}
 let saved=localStorage.getItem('certificateStudentName')||'';let teach=localStorage.getItem('certificateTeacherName')||'';studentInput.value=saved;teacherInput.value=teach;studentName.textContent=saved||'Student Name';teacherName.textContent=teach||'Teacher / Instructor';dateLine.textContent=new Date().toLocaleDateString(undefined,{year:'numeric',month:'long',day:'numeric'});
+</script><script>
+(function(){
+ const cert=document.querySelector('.certificate');
+ const printBtn=document.querySelector('button[onclick="window.print()"]');
+ const updateBtn=document.querySelector('button[onclick="makeCert()"]');
+ const hero=document.querySelector('.certificate-controls .hero');
+ const notice=document.createElement('div');notice.className='result';notice.setAttribute('role','status');hero.prepend(notice);
+ cert.hidden=true;printBtn.disabled=true;updateBtn.disabled=true;
+ function message(text,success){notice.textContent=text;notice.className='result '+(success?'success':'retry');}
+ async function loadCertificate(){
+  message('Verifying your Level 1 completion…',true);
+  try{
+   const user=await kanddUser();if(!user){location.replace('account.html');return;}
+   const {data,error}=await kanddDb.from('progress').select('*').eq('user_id',user.id).eq('item_type','assessment').eq('item_key','final-assessment').maybeSingle();
+   if(error)throw error;
+   if(!data||!data.completed){message('Complete the Level 1 Final Assessment to unlock your certificate.',false);return;}
+   const {data:profile}=await kanddDb.from('profiles').select('*').eq('user_id',user.id).maybeSingle();
+   const profileName=(profile&&(profile.full_name||profile.name||profile.display_name))||user.user_metadata?.full_name||'';
+   if(profileName&&!studentInput.value.trim()){studentInput.value=profileName;studentName.textContent=profileName;}
+   const date=data.metadata?.saved_at||data.updated_at||new Date().toISOString();
+   dateLine.textContent=new Date(date).toLocaleDateString(undefined,{year:'numeric',month:'long',day:'numeric'});
+   cert.hidden=false;printBtn.disabled=false;updateBtn.disabled=false;
+   // Remove the old device-only completion warning, which is no longer authoritative.
+   const oldWarning=hero.querySelector('.result.retry:not([role="status"])');if(oldWarning)oldWarning.remove();
+   message('✓ Certificate unlocked. Your completion was verified in your Kandd Learning account.',true);
+  }catch(e){console.error(e);message('Unable to verify completion. Reconnect and reload to access your certificate.',false);}
+ }
+ loadCertificate();
+})();
 </script></body></html>

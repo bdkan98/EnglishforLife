@@ -1,0 +1,95 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Review Lessons 5–8 | Kandd Learning</title><link rel="stylesheet" href="styles.css"><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="supabase-client.js"></script></head><body>
+<header class="top"><div class="brand">Kandd Learning</div><div class="tag">Practical Learning. Real Conversations.</div></header>
+<main class="wrap"><a class="home" href="level1.html">← Level 1 Dashboard</a>
+<section class="hero"><span class="pill">CHECKPOINT 2 · LESSONS 5–8</span><h1>Use your English in real situations.</h1><p>Review schedules, shopping, directions, and transportation. This checkpoint includes listening, practical understanding, and speaking.</p><div class="bar"><i id="reviewbar"></i></div></section>
+
+<article><h2>1 · Listening: A Morning Schedule</h2><p>Listen twice if needed. Try not to read anything while you listen.</p>
+<div class="listen-box"><button class="btn" onclick="speakText('Tomorrow I start work at nine. I take the bus at eight fifteen. After work, I need to go to the market. I am available after five thirty.',this,'normal')">🔊 Play Listening</button></div>
+<div class="question"><b>What time does the speaker start work?</b><label><input type="radio" name="a1" value="9:00"> 9:00</label><label><input type="radio" name="a1" value="8:15"> 8:15</label></div>
+<div class="question"><b>How does the speaker get to work?</b><label><input type="radio" name="a2" value="bus"> By bus</label><label><input type="radio" name="a2" value="car"> By car</label></div>
+<div class="question"><b>Where does the speaker go after work?</b><label><input type="radio" name="a3" value="market"> The market</label><label><input type="radio" name="a3" value="bank"> The bank</label></div></article>
+
+<article><h2>2 · Real-Life English</h2>
+<div class="question"><b>You want to know the price. What do you say?</b><select id="p0"><option value="">Choose…</option><option>How much is this?</option><option>How many is this?</option><option>Where is this?</option></select></div>
+<div class="question"><b>You need the pharmacy. What do you ask?</b><select id="p1"><option value="">Choose…</option><option>Where is the pharmacy?</option><option>What time pharmacy?</option><option>How much pharmacy?</option></select></div>
+<div class="question"><b>Someone says, “Turn right at the light.” What should you do?</b><select id="p2"><option value="">Choose…</option><option>Go to the right at the traffic light.</option><option>Go straight forever.</option><option>Turn left immediately.</option></select></div>
+<div class="question"><b>You travel on a bus. Which sentence sounds natural?</b><select id="p3"><option value="">Choose…</option><option>I take the bus.</option><option>I go in bus.</option><option>I bus take.</option></select></div>
+<button class="btn" onclick="checkPractical()">Check This Section</button><div id="practicalFeedback" class="feedback"></div></article>
+
+<article><h2>3 · Speaking Check</h2><p>Complete these with a partner or teacher. Check each one after you can do it without reading a model answer.</p>
+<label class="checkline"><input type="checkbox" class="sp"> Tell someone what time you start and finish work, school, or another activity.</label>
+<label class="checkline"><input type="checkbox" class="sp"> Ask for an item in a store and ask how much it costs.</label>
+<label class="checkline"><input type="checkbox" class="sp"> Ask where a place is and understand at least two directions.</label>
+<label class="checkline"><input type="checkbox" class="sp"> Explain how you get to work, school, or another place.</label>
+<label class="checkline"><input type="checkbox" class="sp"> Ask a transportation question about a stop, route, or arrival time.</label></article>
+
+<article><h2>4 · Conversation Challenge</h2><div class="rolecard"><b>Situation:</b> You need to go to a store after work. Ask your partner what time the store closes, how to get there, and where it is. Then pretend to buy one item and ask the price.</div>
+<p class="mini">Teacher/partner: answer naturally and ask one follow-up question.</p></article>
+
+<article><h2>Finish Checkpoint 2</h2><button class="btn" onclick="finishReview()">Check My Progress</button><div id="final" class="result"></div></article>
+</main><footer>Kandd Learning · Practical Learning. Real Conversations.</footer>
+<script src="common.js"></script><script>
+let practicalScore=0;
+function val(name){let x=document.querySelector(`input[name="${name}"]:checked`);return x?x.value:''}
+function checkPractical(){
+ const ans=['How much is this?','Where is the pharmacy?','Go to the right at the traffic light.','I take the bus.'];
+ practicalScore=ans.reduce((s,a,i)=>s+(document.getElementById('p'+i).value===a),0);
+ practicalFeedback.textContent=practicalScore===4?'✓ Excellent — 4/4 correct.':practicalScore+'/4 correct. Review the ones you missed.';
+ practicalFeedback.className='feedback '+(practicalScore===4?'success':'retry');
+}
+function finishReview(){
+ checkPractical();
+ let listening=(val('a1')==='9:00')+(val('a2')==='bus')+(val('a3')==='market');
+ let speaking=[...document.querySelectorAll('.sp')].filter(x=>x.checked).length;
+ let knowledge=listening+practicalScore;
+ let ready=knowledge>=6 && speaking>=4;
+ reviewbar.style.width=Math.round(((knowledge/7)*.65+(speaking/5)*.35)*100)+'%';
+ if(ready){
+   localStorage.setItem('review58Complete','yes');
+   localStorage.setItem('review58Knowledge',knowledge+'/7');
+   final.className='result success';
+   final.innerHTML=`🎉 Checkpoint complete! Knowledge: ${knowledge}/7 · Speaking: ${speaking}/5. You are ready for Lessons 9–12. <a href="level1.html"><u>Return to dashboard</u></a>`;
+ } else {
+   final.className='result retry';
+   final.textContent=`Knowledge: ${knowledge}/7 · Speaking: ${speaking}/5. Aim for at least 6/7 knowledge and 4/5 speaking tasks, then try again.`;
+ }
+}
+if(localStorage.getItem('review58Complete')==='yes')reviewbar.style.width='100%';
+</script><script>
+(function(){
+ const itemType='checkpoint', itemKey='checkpoint-2';
+ const notice=document.createElement('div'); notice.className='result'; notice.setAttribute('role','status');
+ document.querySelector('.hero').appendChild(notice);
+ function message(t,ok){notice.textContent=t;notice.className='result '+(ok?'success':'retry');}
+ const original=window.finishReview;
+ window.finishReview=async function(){
+   const user=await kanddUser();
+   if(!user){message('Please sign in to save your results. Your account is required for this checkpoint.',false);return;}
+   original();
+   const passed=document.getElementById('final').classList.contains('success');
+   if(!passed)return;
+   const score=Number((localStorage.getItem('review58Knowledge')||'0').split('/')[0]);
+   message('Saving your results to your Kandd Learning account…',true);
+   const saved=await kanddSaveProgress(itemType,itemKey,true,score,{source:'milestone',saved_at:new Date().toISOString()});
+   if(saved)message('✓ Saved to your Kandd Learning account. Your progress will appear on other devices.',true);
+   else message('Could not save to your account. Check your connection and select the completion button again.',false);
+ };
+ async function restore(){
+  message('Loading saved progress…',true);
+  try{
+   const user=await kanddUser();
+   if(!user){location.replace('account.html');return;}
+   const {data,error}=await kanddDb.from('progress').select('*').eq('user_id',user.id).eq('item_type',itemType).eq('item_key',itemKey).maybeSingle();
+   if(error)throw error;
+   if(data&&data.completed){
+     document.getElementById('final').className='result success';
+     document.getElementById('final').textContent='✓ Already completed and saved to your account. You may practice again.';
+     document.getElementById("reviewbar").style.width="100%";
+     
+     message('✓ Completion synced from your Kandd Learning account.',true);
+   }else message('Ready to complete and save this milestone.',true);
+  }catch(e){console.error(e);message('Unable to load cloud progress. Please reconnect and reload.',false);}
+ }
+ restore();
+})();
+</script></body></html>
