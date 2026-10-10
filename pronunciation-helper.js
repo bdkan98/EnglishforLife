@@ -11,6 +11,7 @@
     pharmacy:['FÁR-ma-si','farmacia'], bus:['bas','autobús'], shopping:['SHÓ-ping','compras'],
     schedule:['SKÉ-dyul','horario'], directions:['di-RÉK-shons','direcciones'],
     transportation:['trans-por-TÉI-shon','transporte'], english:['ÍNG-glish','inglés'],
+    from:['fram','de / desde'], live:['liv','vivir'], city:['SÍ-ti','ciudad'], country:['KÁN-tri','país'],
     name:['néim','nombre'], friend:['frend','amigo/a'], today:['tu-DÉI','hoy'],
     tomorrow:['tu-MÓ-rou','mañana'], price:['prais','precio'], right:['rait','derecha / correcto'],
     left:['left','izquierda'], help:['jelp','ayuda / ayudar'], learn:['lern','aprender']
@@ -77,6 +78,14 @@
         result.append(note);
       }
     }
+    // Public interface for clickable lesson vocabulary. Does not affect account or progress.
+    window.kanddOpenPronunciation = function (word) {
+      const value=String(word||'').trim().slice(0,160);
+      if(!value)return;
+      input.value=value;
+      show(true);
+      update();
+    };
     input.addEventListener('input',update);
     input.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();play(false)}});
     function play(slow){
