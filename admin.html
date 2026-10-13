@@ -1,0 +1,15 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Teacher Approvals | Kandd Learning</title><link rel="stylesheet" href="styles.css"><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script></head><body><header class="top"><a href="index.html" class="brand">Kandd Learning</a><span class="tag">Administrator · Teacher Approvals</span></header><main class="wrap"><a href="index.html" class="home">← Home</a><section class="hero"><span class="pill">PRIVATE ADMINISTRATION</span><h1>Teacher Applications</h1><p>Review and approve teacher access. Only designated administrator accounts can load or change applications.</p><button class="btn secondary" onclick="loadApps()">Refresh Applications</button><p id="status" role="status"></p></section><div id="apps"></div></main><script src="supabase-client.js"></script><script>
+const statusEl=document.getElementById('status'),container=document.getElementById('apps');
+async function loadApps(){container.replaceChildren();statusEl.textContent='Checking administrator access…';
+ try{const user=await kanddUser();if(!user){statusEl.textContent='Sign in before opening the administrator dashboard.';return}
+ const {data:isAdmin,error:adminError}=await kanddDb.rpc('kandd_is_admin');if(adminError)throw adminError;
+ if(!isAdmin){statusEl.textContent='Access denied. This account is not a Kandd Learning administrator.';return}
+ const {data, error}=await kanddDb.from('kandd_teacher_applications').select('id,full_name,teaching_background,status,submitted_at,admin_notes').order('submitted_at',{ascending:false});if(error)throw error;
+ statusEl.textContent=(data||[]).length+' application(s) found.';
+ for(const item of data||[]){const card=document.createElement('article');const h=document.createElement('h2');h.textContent=item.full_name+' — '+item.status;card.append(h);
+ const date=document.createElement('p');date.textContent='Submitted '+new Date(item.submitted_at).toLocaleString();card.append(date);
+ const bg=document.createElement('p');bg.textContent=item.teaching_background;card.append(bg);
+ const note=document.createElement('textarea');note.className='forminput';note.maxLength=2000;note.placeholder='Private administrator notes (optional)';note.value=item.admin_notes||'';card.append(note);
+ for(const [label,next] of [['Approve','approved'],['Decline','declined'],['Return to Pending','pending']]){const b=document.createElement('button');b.className='btn'+(next==='approved'?'':' secondary');b.style.margin='8px 8px 0 0';b.textContent=label;b.onclick=async()=>{if(!confirm(label+' this application?'))return;b.disabled=true;const {error}=await kanddDb.rpc('kandd_review_teacher',{p_application_id:item.id,p_status:next,p_notes:note.value});if(error){alert(error.message);b.disabled=false;return}await loadApps()};card.append(b)}container.append(card)}
+ }catch(e){console.error(e);statusEl.textContent='Unable to load applications: '+e.message}
+}loadApps();</script></body></html>
