@@ -1,0 +1,38 @@
+(function(){
+'use strict';
+if(window.__kanddSidebarLoaded)return;window.__kanddSidebarLoaded=true;
+const script=document.currentScript;
+const root=new URL('./',script.src);
+const url=(p)=>new URL(p,root).href;
+const current=new URL(location.href);
+const home=current.pathname.replace(/\/+$/,'/').endsWith('/index.html')||current.pathname===root.pathname||current.pathname===root.pathname.replace(/\/$/,'');
+const svg={home:'<path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/>',lessons:'<path d="M4 5c3-1 5-1 8 1 3-2 5-2 8-1v14c-3-1-5-1-8 1-3-2-5-2-8-1zM12 6v14"/>',learning:'<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/>',teacher:'<path d="M3 8 12 3l9 5-9 5zM7 11v5c3 3 7 3 10 0v-5M21 8v8"/>',contact:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>',admin:'<path d="m12 2 8 4v6c0 5-3 8-8 10-5-2-8-5-8-10V6zM9 12l2 2 4-4"/>',account:'<circle cx="12" cy="8" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/>',out:'<path d="M10 4H5v16h5M14 8l4 4-4 4M18 12H9"/>',menu:'<path d="M4 6h16M4 12h16M4 18h16"/>'};
+const icon=(n)=>'<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+svg[n]+'</svg>';
+const nav=document.createElement('aside');nav.id='kandd-sidebar';nav.className=home?'kandd-expanded':'kandd-collapsed';nav.setAttribute('aria-label','Kandd Learning site navigation');
+const links=[['home','Homepage','index.html'],['lessons','Explore Lessons','level1.html'],['learning','My Learning','dashboard.html'],['teacher','Apply to Teach','teacher-apply.html'],['contact','Contact Us','contact.html']];
+const header=document.createElement('div');header.className='kandd-side-head';header.innerHTML='<span class="kandd-side-logo">K</span><span class="kandd-side-name">Kandd Learning</span>';
+const toggle=document.createElement('button');toggle.type='button';toggle.className='kandd-side-toggle';toggle.setAttribute('aria-label',home?'Collapse navigation':'Expand navigation');toggle.title='Expand or collapse menu';toggle.innerHTML=icon('menu');header.appendChild(toggle);nav.appendChild(header);
+const list=document.createElement('nav');list.setAttribute('aria-label','Main links');nav.appendChild(list);
+function add(key,label,path){const a=document.createElement('a');a.href=url(path);a.className='kandd-side-link';a.title=label;a.innerHTML=icon(key)+'<span class="kandd-side-label"></span>';a.querySelector('span').textContent=label;if(new URL(a.href).pathname===current.pathname)a.setAttribute('aria-current','page');list.appendChild(a);return a;}
+links.forEach(x=>add(...x));
+const account=add('account','Sign In / Account','account.html');
+const admin=add('admin','Administrator','admin.html');admin.hidden=true;
+const teacherDash=add('teacher','Teacher Dashboard','teacher/dashboard.html');teacherDash.hidden=true;
+const logout=document.createElement('button');logout.type='button';logout.className='kandd-side-link kandd-side-logout';logout.title='Sign Out';logout.innerHTML=icon('out')+'<span class="kandd-side-label">Sign Out</span>';logout.hidden=true;list.appendChild(logout);
+function applyState(){const expanded=nav.classList.contains('kandd-expanded');toggle.setAttribute('aria-label',expanded?'Collapse navigation':'Expand navigation');document.documentElement.classList.toggle('kandd-side-expanded',expanded);document.documentElement.classList.toggle('kandd-side-collapsed',!expanded);}
+toggle.addEventListener('click',()=>{nav.classList.toggle('kandd-expanded');nav.classList.toggle('kandd-collapsed');applyState()});
+logout.addEventListener('click',async()=>{try{if(window.kanddDb)await window.kanddDb.auth.signOut();else if(window.supabase){const client=window.supabase.createClient('https://hfqallzmxsmkiqmolzui.supabase.co','sb_publishable_O7ZvBkAu8JH939O0ylNOkA_Y7aYEnQr');await client.auth.signOut();}location.href=url('index.html')}catch(e){alert('Could not sign out. Please try again.')}});
+function init(){document.body.prepend(nav);applyState();updateAccount()}
+async function updateAccount(){try{
+ let db=window.kanddDb;
+ if(!db && window.supabase)db=window.supabase.createClient('https://hfqallzmxsmkiqmolzui.supabase.co','sb_publishable_O7ZvBkAu8JH939O0ylNOkA_Y7aYEnQr');
+ if(!db)return;
+ const {data:{user}}=await db.auth.getUser();if(!user)return;
+ account.querySelector('span').textContent='My Account';account.title='My Account';account.href=url('dashboard.html');logout.hidden=false;
+ // Read-only checks; Supabase RLS decides which rows can be returned.
+ const [a,t]=await Promise.all([db.from('kandd_admins').select('user_id').eq('user_id',user.id).maybeSingle(),db.from('kandd_teacher_applications').select('status').eq('user_id',user.id).eq('status','approved').maybeSingle()]);
+ if(a.data)admin.hidden=false;
+ if(t.data)teacherDash.hidden=false;
+ }catch(e){console.warn('Kandd sidebar: optional account status unavailable',e)}}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
+})();

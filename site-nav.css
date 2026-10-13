@@ -1,0 +1,22 @@
+
+/* Kandd Learning persistent sidebar — scoped to avoid changing lesson controls */
+#kandd-sidebar{position:fixed;inset:0 auto 0 0;z-index:9000;background:#12385f;color:white;box-shadow:3px 0 18px #102a4325;display:flex;flex-direction:column;width:66px;overflow-y:auto;overflow-x:hidden;transition:width .22s ease;font-family:Inter,ui-sans-serif,system-ui,sans-serif}
+#kandd-sidebar.kandd-expanded{width:242px}
+#kandd-sidebar .kandd-side-head{display:flex;align-items:center;gap:10px;min-height:68px;padding:12px 13px}
+#kandd-sidebar .kandd-side-logo{display:grid;place-items:center;flex:0 0 36px;height:36px;border-radius:11px;background:white;color:#173f67;font-size:20px;font-weight:900}
+#kandd-sidebar .kandd-side-name{font-size:15px;font-weight:850;white-space:nowrap;overflow:hidden;flex:1}
+#kandd-sidebar .kandd-side-toggle{flex:0 0 30px;border:0;background:transparent;color:white;cursor:pointer;padding:5px;display:grid;place-items:center;border-radius:8px}
+#kandd-sidebar.kandd-collapsed .kandd-side-name{display:none}
+#kandd-sidebar.kandd-collapsed .kandd-side-head{flex-wrap:wrap;justify-content:center;padding:12px 8px;gap:6px}
+#kandd-sidebar nav{display:flex;flex-direction:column;gap:5px;padding:12px 9px}
+#kandd-sidebar .kandd-side-link{color:#f4f8fc;display:flex;align-items:center;gap:13px;min-height:44px;padding:10px 12px;border-radius:11px;font-size:13px;font-weight:750;text-decoration:none;white-space:nowrap;border:0;background:transparent;cursor:pointer;text-align:left;font-family:inherit;width:100%}
+#kandd-sidebar .kandd-side-link svg{flex:0 0 21px}
+#kandd-sidebar .kandd-side-link:hover,#kandd-sidebar .kandd-side-link:focus-visible,#kandd-sidebar .kandd-side-link[aria-current=page]{background:#2b648d;outline-offset:-2px}
+#kandd-sidebar .kandd-side-link[hidden]{display:none!important}
+#kandd-sidebar.kandd-collapsed .kandd-side-link{justify-content:center;padding:10px}
+#kandd-sidebar.kandd-collapsed .kandd-side-label{display:none}
+html.kandd-side-expanded body{padding-left:242px!important;transition:padding-left .22s ease}
+html.kandd-side-collapsed body{padding-left:66px!important;transition:padding-left .22s ease}
+#kandd-sidebar *{box-sizing:border-box}
+@media(max-width:600px){#kandd-sidebar.kandd-expanded{width:205px}html.kandd-side-expanded body{padding-left:205px!important}#kandd-sidebar .kandd-side-head{padding:9px}#kandd-sidebar .kandd-side-link{font-size:12px}}
+@media print{#kandd-sidebar{display:none!important}html.kandd-side-expanded body,html.kandd-side-collapsed body{padding-left:0!important}}

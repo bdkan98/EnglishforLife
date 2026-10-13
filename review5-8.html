@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Review Lessons 5–8 | Kandd Learning</title><link rel="stylesheet" href="styles.css"><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="supabase-client.js"></script></head><body>
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Review Lessons 5–8 | Kandd Learning</title><link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="site-nav.css"><script defer src="site-nav.js"></script></head><body>
 <header class="top"><div class="brand">Kandd Learning</div><div class="tag">Practical Learning. Real Conversations.</div></header>
 <main class="wrap"><a class="home" href="level1.html">← Level 1 Dashboard</a>
 <section class="hero"><span class="pill">CHECKPOINT 2 · LESSONS 5–8</span><h1>Use your English in real situations.</h1><p>Review schedules, shopping, directions, and transportation. This checkpoint includes listening, practical understanding, and speaking.</p><div class="bar"><i id="reviewbar"></i></div></section>
@@ -55,41 +55,4 @@ function finishReview(){
  }
 }
 if(localStorage.getItem('review58Complete')==='yes')reviewbar.style.width='100%';
-</script><script>
-(function(){
- const itemType='checkpoint', itemKey='checkpoint-2';
- const notice=document.createElement('div'); notice.className='result'; notice.setAttribute('role','status');
- document.querySelector('.hero').appendChild(notice);
- function message(t,ok){notice.textContent=t;notice.className='result '+(ok?'success':'retry');}
- const original=window.finishReview;
- window.finishReview=async function(){
-   const user=await kanddUser();
-   if(!user){message('Please sign in to save your results. Your account is required for this checkpoint.',false);return;}
-   original();
-   const passed=document.getElementById('final').classList.contains('success');
-   if(!passed)return;
-   const score=Number((localStorage.getItem('review58Knowledge')||'0').split('/')[0]);
-   message('Saving your results to your Kandd Learning account…',true);
-   const saved=await kanddSaveProgress(itemType,itemKey,true,score,{source:'milestone',saved_at:new Date().toISOString()});
-   if(saved)message('✓ Saved to your Kandd Learning account. Your progress will appear on other devices.',true);
-   else message('Could not save to your account. Check your connection and select the completion button again.',false);
- };
- async function restore(){
-  message('Loading saved progress…',true);
-  try{
-   const user=await kanddUser();
-   if(!user){location.replace('account.html');return;}
-   const {data,error}=await kanddDb.from('progress').select('*').eq('user_id',user.id).eq('item_type',itemType).eq('item_key',itemKey).maybeSingle();
-   if(error)throw error;
-   if(data&&data.completed){
-     document.getElementById('final').className='result success';
-     document.getElementById('final').textContent='✓ Already completed and saved to your account. You may practice again.';
-     document.getElementById("reviewbar").style.width="100%";
-     
-     message('✓ Completion synced from your Kandd Learning account.',true);
-   }else message('Ready to complete and save this milestone.',true);
-  }catch(e){console.error(e);message('Unable to load cloud progress. Please reconnect and reload.',false);}
- }
- restore();
-})();
 </script></body></html>
