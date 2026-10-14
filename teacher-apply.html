@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><meta content="Kandd Learning offers practical English lessons with Spanish support, speaking practice, and real-life conversations." name="description"/><title>Become a Teacher | Kandd Learning</title><link href="styles.css" rel="stylesheet"/><link rel="stylesheet" href="site-nav.css"><script defer src="site-nav.js"></script></head><body><header class="top"><a class="brandmark" href="index.html"><span class="brandicon">K</span><span><span class="brand">Kandd Learning</span><span class="tag" style="display:block">Practical Learning. Real Conversations.</span></span></a><nav aria-label="Main navigation" class="k-nav"><a href="index.html">Home</a><a href="level1.html">Explore Level 1</a><a href="contact.html">Contact</a><a class="btn secondary" href="account.html">Student Sign In</a></nav></header><main class="wrap"><section class="hero"><span class="k-eyebrow">Teachers · Maestros</span><h1>Teach with Kandd Learning</h1><p>Help English learners develop confidence through practical lessons and real conversations.</p><p>Teacher accounts are not automatic. All teacher access requires approval from the Kandd Learning administrator.</p></section><div class="k-steps"><div class="k-step"><h3>1 · Introduce yourself</h3><p>Tell us your name, teaching experience, and how you hope to use Kandd Learning.</p></div><div class="k-step"><h3>2 · Application review</h3><p>The Kandd Learning administrator reviews your request.</p></div><div class="k-step"><h3>3 · Approved access</h3><p>Approved teachers will receive instructions when the teacher account system is enabled.</p></div></div><article><h2>Request teacher access</h2><p class="k-note">Sign in with your Kandd Learning account before applying. Your application will remain pending until reviewed by the administrator.</p><div id="authGate"><p>Teacher applications require a signed-in account.</p><a class="btn" href="account.html">Create Account or Sign In →</a></div>
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><meta content="Kandd Learning offers practical English lessons with Spanish support, speaking practice, and real-life conversations." name="description"/><title>Become a Teacher | Kandd Learning</title><link href="styles.css" rel="stylesheet"/><link rel="stylesheet" href="site-nav.css"><script defer src="site-nav.js"></script></head><body><header class="top"><a class="brandmark" href="index.html"><span class="brandicon">K</span><span><span class="brand">Kandd Learning</span><span class="tag" style="display:block">Practical Learning. Real Conversations.</span></span></a><nav aria-label="Main navigation" class="k-nav"><a href="index.html">Home</a><a href="level1.html">Explore Level 1</a><a href="contact.html">Contact</a><a class="btn secondary" href="account.html">Student Sign In</a></nav></header><main class="wrap"><section class="hero"><span class="k-eyebrow">Teachers · Maestros</span><h1>Teach with Kandd Learning</h1><p>Help English learners develop confidence through practical lessons and real conversations.</p><p>Teacher accounts are not automatic. All teacher access requires approval from the Kandd Learning administrator.</p></section><div class="k-steps"><div class="k-step"><h3>1 · Introduce yourself</h3><p>Tell us your name, teaching experience, and how you hope to use Kandd Learning.</p></div><div class="k-step"><h3>2 · Application review</h3><p>The Kandd Learning administrator reviews your request.</p></div><div class="k-step"><h3>3 · Approved access</h3><p>Approved teachers will receive instructions when the teacher account system is enabled.</p></div></div><article><h2>Request teacher access</h2><p class="k-note">Sign in with your Kandd Learning account before applying. Your application will remain pending until reviewed by the administrator.</p><div id="authGate" aria-live="polite"><p id="teacherAuthMessage">Checking your Kandd Learning sign-in…</p><a class="btn" href="account.html" id="teacherSignInLink" hidden>Create Account or Sign In →</a></div>
 <form class="k-form" hidden="" id="secureTeacherForm">
 <label>Full name<input autocomplete="name" id="tname" maxlength="120" required=""/></label>
 <label>Teaching background and intended use<textarea id="texperience" maxlength="3000" minlength="15" required=""></textarea></label>
@@ -11,7 +11,18 @@ let applicant=null;
 async function initTeacher(){
  const msg=document.getElementById('teacherStatus');
  try {
-  applicant=await kanddUser();if(!applicant)return;
+  // Wait for the existing Supabase session to finish restoring before showing a sign-in prompt.
+  if(!window.kanddDb || !window.kanddUser)throw new Error('Kandd authentication scripts did not load.');
+  for(let attempt=0;attempt<3;attempt++){
+    applicant=await kanddUser();
+    if(applicant)break;
+    if(attempt<2)await new Promise(resolve=>setTimeout(resolve,650));
+  }
+  if(!applicant){
+    document.getElementById('teacherAuthMessage').textContent='Please sign in to apply to teach.';
+    document.getElementById('teacherSignInLink').hidden=false;
+    return;
+  }
   document.getElementById('authGate').hidden=true;
   const {data,error}=await kanddDb.from('kandd_teacher_applications').select('status,submitted_at,admin_notes').eq('user_id',applicant.id).maybeSingle();
   if(error)throw error;
@@ -19,7 +30,7 @@ async function initTeacher(){
     document.getElementById('applicationState').textContent='Application status: '+data.status.toUpperCase()+'. Submitted: '+new Date(data.submitted_at).toLocaleDateString()+ (data.status==='approved'?' — You can now open your teacher dashboard.':'');
     if(data.status==='approved'){const a=document.createElement('a');a.className='btn';a.href='teacher/dashboard.html';a.textContent='Open Teacher Dashboard →';document.getElementById('applicationState').appendChild(document.createElement('p')).appendChild(a)}
   }else{document.getElementById('secureTeacherForm').hidden=false;}
- }catch(e){msg.className='feedback retry';msg.textContent='Could not load application status. The teacher approval database may not be configured yet.';console.error(e)}
+ }catch(e){msg.className='feedback retry';msg.textContent='Could not verify your account or application status. Please refresh this page. If the problem continues, check that Supabase is reachable.';document.getElementById('teacherAuthMessage').textContent='Unable to verify sign-in right now.';console.error(e)}
 }
 document.getElementById('secureTeacherForm').addEventListener('submit',async e=>{
  e.preventDefault();if(!e.target.reportValidity()||!applicant)return;
