@@ -20,3 +20,19 @@ html.kandd-side-collapsed body{padding-left:66px!important;transition:padding-le
 #kandd-sidebar *{box-sizing:border-box}
 @media(max-width:600px){#kandd-sidebar.kandd-expanded{width:205px}html.kandd-side-expanded body{padding-left:205px!important}#kandd-sidebar .kandd-side-head{padding:9px}#kandd-sidebar .kandd-side-link{font-size:12px}}
 @media print{#kandd-sidebar{display:none!important}html.kandd-side-expanded body,html.kandd-side-collapsed body{padding-left:0!important}}
+
+/* Shared account profile, displayed consistently across pages */
+header.top.kandd-profile-header{display:flex;align-items:center;flex-wrap:wrap;gap:12px}
+#kandd-account-header{display:flex;align-items:center;gap:12px;margin-left:auto;min-width:0;font-family:Inter,ui-sans-serif,system-ui,sans-serif}
+#kandd-account-header .kandd-profile-link{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;min-width:0;border-radius:12px;padding:7px 10px;background:rgba(255,255,255,.12)}
+#kandd-account-header .kandd-avatar{width:36px;height:36px;flex:0 0 36px;border-radius:50%;display:grid;place-items:center;background:#fff;color:#12385f;font-weight:800}
+#kandd-account-header .kandd-profile-details{display:flex;flex-direction:column;gap:3px;min-width:0;max-width:240px}
+#kandd-account-header .kandd-profile-name{font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#kandd-account-header .kandd-profile-email{font-size:11px;opacity:.85;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#kandd-account-header .kandd-profile-signout{background:transparent;color:inherit;border:1px solid currentColor;border-radius:9px;padding:8px 10px;cursor:pointer;font-weight:650}
+#kandd-account-header .kandd-profile-signout[hidden]{display:none!important}
+/* Remove redundant old top navigation when the shared left sidebar is present */
+body:has(#kandd-sidebar) header.top .k-nav{display:none!important}
+.kandd-global-account-bar{display:flex;justify-content:flex-end;padding:12px 20px;background:#12385f;color:white}
+body:has(#kandd-sidebar) header.top.kandd-profile-header{min-height:72px}
+@media(max-width:600px){#kandd-account-header .kandd-profile-email{max-width:130px}#kandd-account-header .kandd-profile-signout{padding:7px;font-size:12px}#kandd-account-header .kandd-profile-details{max-width:140px}}

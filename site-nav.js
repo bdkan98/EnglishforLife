@@ -22,17 +22,27 @@ const logout=document.createElement('button');logout.type='button';logout.classN
 function applyState(){const expanded=nav.classList.contains('kandd-expanded');toggle.setAttribute('aria-label',expanded?'Collapse navigation':'Expand navigation');document.documentElement.classList.toggle('kandd-side-expanded',expanded);document.documentElement.classList.toggle('kandd-side-collapsed',!expanded);}
 toggle.addEventListener('click',()=>{nav.classList.toggle('kandd-expanded');nav.classList.toggle('kandd-collapsed');applyState()});
 logout.addEventListener('click',async()=>{try{if(window.kanddDb)await window.kanddDb.auth.signOut();else if(window.supabase){const client=window.supabase.createClient('https://hfqallzmxsmkiqmolzui.supabase.co','sb_publishable_O7ZvBkAu8JH939O0ylNOkA_Y7aYEnQr');await client.auth.signOut();}location.href=url('index.html')}catch(e){alert('Could not sign out. Please try again.')}});
-function init(){document.body.prepend(nav);applyState();updateAccount()}
+const profile=document.createElement('div');profile.id='kandd-account-header';profile.setAttribute('aria-label','Account profile');
+profile.innerHTML='<a class="kandd-profile-link" href="'+url('account.html')+'"><span class="kandd-avatar" aria-hidden="true">?</span><span class="kandd-profile-details"><strong class="kandd-profile-name">Account</strong><small class="kandd-profile-email">Sign in or create an account</small></span></a><button class="kandd-profile-signout" type="button" hidden>Sign Out</button>';
+profile.querySelector('button').addEventListener('click',()=>logout.click());
+function init(){document.body.prepend(nav);const top=document.querySelector('header.top');if(top){top.appendChild(profile);top.classList.add('kandd-profile-header');}else{const bar=document.createElement('header');bar.className='kandd-global-account-bar';bar.appendChild(profile);document.body.insertBefore(bar,nav.nextSibling);}applyState();updateAccount()}
+function setProfile(user,firstName){
+ const name=profile.querySelector('.kandd-profile-name'),email=profile.querySelector('.kandd-profile-email'),avatar=profile.querySelector('.kandd-avatar'),link=profile.querySelector('.kandd-profile-link'),out=profile.querySelector('.kandd-profile-signout');
+ if(user){const display=firstName||user.user_metadata?.full_name||user.user_metadata?.first_name||user.email?.split('@')[0]||'My Account';name.textContent=display;email.textContent=user.email||'My Learning';avatar.textContent=display.charAt(0).toUpperCase();link.href=url('dashboard.html');out.hidden=false;document.documentElement.classList.add('kandd-authenticated');}
+ else{name.textContent='My Account';email.textContent='Sign In / Create Account';avatar.textContent='?';link.href=url('account.html');out.hidden=true;document.documentElement.classList.remove('kandd-authenticated');}
+}
+
 async function updateAccount(){try{
  let db=window.kanddDb;
  if(!db && window.supabase)db=window.supabase.createClient('https://hfqallzmxsmkiqmolzui.supabase.co','sb_publishable_O7ZvBkAu8JH939O0ylNOkA_Y7aYEnQr');
- if(!db)return;
- const {data:{user}}=await db.auth.getUser();if(!user)return;
- account.querySelector('span').textContent='My Account';account.title='My Account';account.href=url('dashboard.html');logout.hidden=false;
- // Read-only checks; Supabase RLS decides which rows can be returned.
+ if(!db){setProfile(null);return;}
+ const {data:{user},error}=await db.auth.getUser();if(error||!user){setProfile(null);return;}
+ let firstName='';try{const {data:p}=await db.from('profiles').select('first_name').eq('id',user.id).maybeSingle();firstName=p?.first_name||'';}catch(e){}
+ setProfile(user,firstName);
+ account.querySelector('span').textContent='My Learning';account.title='My Learning';account.href=url('dashboard.html');logout.hidden=false;
  const [a,t]=await Promise.all([db.from('kandd_admins').select('user_id').eq('user_id',user.id).maybeSingle(),db.from('kandd_teacher_applications').select('status').eq('user_id',user.id).eq('status','approved').maybeSingle()]);
- if(a.data)admin.hidden=false;
- if(t.data)teacherDash.hidden=false;
- }catch(e){console.warn('Kandd sidebar: optional account status unavailable',e)}}
+ admin.hidden=!a.data;teacherDash.hidden=!t.data;
+ const note=document.querySelector('body:has(#secureTeacherForm) .k-note');if(note)note.hidden=true;
+ }catch(e){console.warn('Kandd profile: account status unavailable',e)} }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 })();
