@@ -1,4 +1,14 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Teacher Approvals | Kandd Learning</title><link rel="stylesheet" href="styles.css"><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><link rel="stylesheet" href="site-nav.css"><script defer src="site-nav.js"></script></head><body><header class="top"><a href="index.html" class="brand">Kandd Learning</a><span class="tag">Administrator · Teacher Approvals</span></header><main class="wrap"><a href="index.html" class="home">← Home</a><section class="hero"><span class="pill">PRIVATE ADMINISTRATION</span><h1>Teacher Applications</h1><p>Review and approve teacher access. Only designated administrator accounts can load or change applications.</p><button class="btn secondary" onclick="loadApps()">Refresh Applications</button><p id="status" role="status"></p></section><div id="apps"></div></main><script src="supabase-client.js"></script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Teacher Approvals | Kandd Learning</title><link rel="stylesheet" href="styles.css"><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><link rel="stylesheet" href="site-nav.css"><script defer src="site-nav.js"></script><style>
+/* Teacher approval notes: scoped styling; no changes to global site styles. */
+#apps article{box-sizing:border-box;max-width:100%;padding:22px 24px;margin:18px 0;border:1px solid #dbe4ee;border-radius:18px;background:#fff;box-shadow:0 3px 12px rgba(16,45,76,.05)}
+#apps .admin-note-group{margin:20px 0 8px;max-width:100%}
+#apps .admin-note-label{display:block;font-weight:700;color:#152c48;margin:0 0 8px}
+#apps .admin-note-optional{font-weight:400;color:#64748b}
+#apps .admin-note-help{font-size:.9rem;color:#64748b;margin:0 0 10px;line-height:1.5}
+#apps .admin-note-field{display:block;box-sizing:border-box;width:100%;max-width:100%;min-height:105px;padding:13px 15px;border:1px solid #b8c9dc;border-radius:12px;background:#fff;color:#152c48;font:inherit;line-height:1.5;resize:vertical}
+#apps .admin-note-field:focus{outline:3px solid rgba(26,90,143,.2);outline-offset:1px;border-color:#1a5a8f}
+@media(max-width:600px){#apps article{padding:16px}}
+</style></head><body><header class="top"><a href="index.html" class="brand">Kandd Learning</a><span class="tag">Administrator · Teacher Approvals</span></header><main class="wrap"><a href="index.html" class="home">← Home</a><section class="hero"><span class="pill">PRIVATE ADMINISTRATION</span><h1>Teacher Applications</h1><p>Review and approve teacher access. Only designated administrator accounts can load or change applications.</p><button class="btn secondary" onclick="loadApps()">Refresh Applications</button><p id="status" role="status"></p></section><div id="apps"></div></main><script src="supabase-client.js"></script><script>
 const statusEl=document.getElementById('status'),container=document.getElementById('apps');
 async function loadApps(){container.replaceChildren();statusEl.textContent='Checking administrator access…';
  try{const user=await kanddUser();if(!user){statusEl.textContent='Sign in before opening the administrator dashboard.';return}
@@ -9,7 +19,13 @@ async function loadApps(){container.replaceChildren();statusEl.textContent='Chec
  for(const item of data||[]){const card=document.createElement('article');const h=document.createElement('h2');h.textContent=item.full_name+' — '+item.status;card.append(h);
  const date=document.createElement('p');date.textContent='Submitted '+new Date(item.submitted_at).toLocaleString();card.append(date);
  const bg=document.createElement('p');bg.textContent=item.teaching_background;card.append(bg);
- const note=document.createElement('textarea');note.className='forminput';note.maxLength=2000;note.placeholder='Private administrator notes (optional)';note.value=item.admin_notes||'';card.append(note);
+ const noteGroup=document.createElement('div');noteGroup.className='admin-note-group';
+ const noteLabel=document.createElement('label');noteLabel.className='admin-note-label';
+ noteLabel.textContent='Private administrator notes ';
+ const optional=document.createElement('span');optional.className='admin-note-optional';optional.textContent='(optional)';noteLabel.append(optional);
+ const noteHelp=document.createElement('p');noteHelp.className='admin-note-help';noteHelp.textContent='Only administrators can view these notes. They are saved when you choose an application decision.';
+ const note=document.createElement('textarea');note.className='admin-note-field';note.id='admin-note-'+item.id;noteLabel.htmlFor=note.id;note.rows=4;note.maxLength=2000;note.placeholder='Add review details or follow-up information…';note.value=item.admin_notes||'';
+ noteGroup.append(noteLabel,noteHelp,note);card.append(noteGroup);
  for(const [label,next] of [['Approve','approved'],['Decline','declined'],['Return to Pending','pending']]){const b=document.createElement('button');b.className='btn'+(next==='approved'?'':' secondary');b.style.margin='8px 8px 0 0';b.textContent=label;b.onclick=async()=>{if(!confirm(label+' this application?'))return;b.disabled=true;const {error}=await kanddDb.rpc('kandd_review_teacher',{p_application_id:item.id,p_status:next,p_notes:note.value});if(error){alert(error.message);b.disabled=false;return}await loadApps()};card.append(b)}container.append(card)}
  }catch(e){console.error(e);statusEl.textContent='Unable to load applications: '+e.message}
 }loadApps();</script></body></html>
