@@ -19,8 +19,35 @@ const account=add('account','Sign In / Account','account.html');
 const admin=add('admin','Administrator','admin.html');admin.hidden=true;
 const teacherDash=add('teacher','Teacher Dashboard','teacher/dashboard.html');teacherDash.hidden=true;
 const logout=document.createElement('button');logout.type='button';logout.className='kandd-side-link kandd-side-logout';logout.title='Sign Out';logout.innerHTML=icon('out')+'<span class="kandd-side-label">Sign Out</span>';logout.hidden=true;list.appendChild(logout);
-function applyState(){const expanded=nav.classList.contains('kandd-expanded');toggle.setAttribute('aria-label',expanded?'Collapse navigation':'Expand navigation');document.documentElement.classList.toggle('kandd-side-expanded',expanded);document.documentElement.classList.toggle('kandd-side-collapsed',!expanded);}
-toggle.addEventListener('click',()=>{nav.classList.toggle('kandd-expanded');nav.classList.toggle('kandd-collapsed');applyState()});
+// Hover opens the menu temporarily; the menu button pins it open.
+// Pin preference is remembered across pages on this browser.
+const pinKey='kandd-sidebar-pinned-v1';
+let pinned=false;
+try{pinned=localStorage.getItem(pinKey)==='true';}catch(e){}
+let hovering=false;
+function applyState(){
+ const expanded=home||pinned||hovering;
+ nav.classList.toggle('kandd-expanded',expanded);
+ nav.classList.toggle('kandd-collapsed',!expanded);
+ const doc=document.documentElement;
+ doc.classList.toggle('kandd-side-expanded',expanded);
+ doc.classList.toggle('kandd-side-collapsed',!expanded);
+ // A temporary hover floats above the page; pinning reserves full width.
+ doc.classList.toggle('kandd-side-overlay',expanded&&!home&&!pinned);
+ toggle.setAttribute('aria-pressed',String(pinned));
+ toggle.setAttribute('aria-label',pinned?'Unpin navigation menu':'Pin navigation menu open');
+ toggle.title=pinned?'Unpin menu (auto-collapse when pointer leaves)':'Pin menu open';
+}
+toggle.addEventListener('click',()=>{
+ pinned=!pinned;
+ try{localStorage.setItem(pinKey,String(pinned));}catch(e){}
+ applyState();
+});
+nav.addEventListener('pointerenter',e=>{if(e.pointerType==='mouse'||e.pointerType==='pen'){hovering=true;applyState();}});
+nav.addEventListener('pointerleave',e=>{if(e.pointerType==='mouse'||e.pointerType==='pen'){hovering=false;applyState();}});
+// Keyboard users can explore the expanded menu with Tab.
+nav.addEventListener('focusin',()=>{hovering=true;applyState();});
+nav.addEventListener('focusout',e=>{if(!nav.contains(e.relatedTarget)){hovering=false;applyState();}});
 logout.addEventListener('click',async()=>{try{if(window.kanddDb)await window.kanddDb.auth.signOut();else if(window.supabase){const client=window.supabase.createClient('https://hfqallzmxsmkiqmolzui.supabase.co','sb_publishable_O7ZvBkAu8JH939O0ylNOkA_Y7aYEnQr');await client.auth.signOut();}location.href=url('index.html')}catch(e){alert('Could not sign out. Please try again.')}});
 const profile=document.createElement('div');profile.id='kandd-account-header';profile.setAttribute('aria-label','Account profile');
 profile.innerHTML='<a class="kandd-profile-link" href="'+url('account.html')+'"><span class="kandd-avatar" aria-hidden="true">?</span><span class="kandd-profile-details"><strong class="kandd-profile-name">Account</strong><small class="kandd-profile-email">Sign in or create an account</small></span></a><button class="kandd-profile-signout" type="button" hidden>Sign Out</button>';

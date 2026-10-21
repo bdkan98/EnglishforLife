@@ -36,3 +36,8 @@ body:has(#kandd-sidebar) header.top .k-nav{display:none!important}
 .kandd-global-account-bar{display:flex;justify-content:flex-end;padding:12px 20px;background:#12385f;color:white}
 body:has(#kandd-sidebar) header.top.kandd-profile-header{min-height:72px}
 @media(max-width:600px){#kandd-account-header .kandd-profile-email{max-width:130px}#kandd-account-header .kandd-profile-signout{padding:7px;font-size:12px}#kandd-account-header .kandd-profile-details{max-width:140px}}
+
+/* Hover preview floats above content; pinned navigation reserves full width. */
+html.kandd-side-overlay body{padding-left:66px!important}
+@media(max-width:600px){html.kandd-side-overlay body{padding-left:66px!important}}
+#kandd-sidebar .kandd-side-toggle[aria-pressed="true"]{background:#2b648d;outline:1px solid rgba(255,255,255,.5)}
