@@ -56,3 +56,8 @@ html.kandd-side-overlay body{padding-left:66px!important}
 #kandd-idle-warning .kandd-idle-countdown{font-size:20px;font-weight:750;color:#a72b24}
 #kandd-idle-warning #kandd-idle-stay{border:0;background:#174c75;color:white;padding:13px 24px;border-radius:10px;font-weight:750;cursor:pointer;margin-top:12px}
 #kandd-idle-warning #kandd-idle-stay:focus-visible{outline:3px solid #ffbd2e;outline-offset:3px}
+
+/* Hover-expanded navigation pushes page content instead of covering titles.
+   The existing body padding transition animates the page with the sidebar. */
+html.kandd-side-overlay body{padding-left:242px!important}
+@media(max-width:600px){html.kandd-side-overlay body{padding-left:205px!important}}
