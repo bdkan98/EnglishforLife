@@ -61,7 +61,7 @@ nav.addEventListener('pointerleave',e=>{if(e.pointerType==='mouse'||e.pointerTyp
 // Keyboard users can explore the expanded menu with Tab.
 nav.addEventListener('focusin',()=>{hovering=true;applyState();});
 nav.addEventListener('focusout',e=>{if(!nav.contains(e.relatedTarget)){hovering=false;applyState();}});
-logout.addEventListener('click',async()=>{try{if(window.kanddDb)await window.kanddDb.auth.signOut();else if(window.supabase){const client=window.supabase.createClient('https://hfqallzmxsmkiqmolzui.supabase.co','sb_publishable_O7ZvBkAu8JH939O0ylNOkA_Y7aYEnQr');await client.auth.signOut();}location.href=url('index.html')}catch(e){alert('Could not sign out. Please try again.')}});
+logout.addEventListener('click',async()=>{try{localStorage.removeItem('kandd-last-activity-v1');}catch(e){}try{if(window.kanddDb)await window.kanddDb.auth.signOut();else if(window.supabase){const client=window.supabase.createClient('https://hfqallzmxsmkiqmolzui.supabase.co','sb_publishable_O7ZvBkAu8JH939O0ylNOkA_Y7aYEnQr');await client.auth.signOut();}location.href=url('index.html')}catch(e){alert('Could not sign out. Please try again.')}});
 // Five-minute INACTIVITY sign-out; warning at four minutes with a live countdown.
 // Navigation, including the Kandd logo, never signs a user out.
 const idleLimit=5*60*1000, warningAt=4*60*1000;
@@ -91,9 +91,12 @@ function checkIdle(){if(!idleActive||signingOut)return;
  if(elapsed>=warningAt){if(!warningLatched)lastActivity=getLastActivity();warningLatched=true;warning.hidden=false;const left=Math.max(1,Math.ceil((idleLimit-elapsed)/1000));warning.querySelector('#kandd-idle-seconds').textContent=String(left);}
  else if(!warningLatched)hideWarning();
 }
-function startIdle(){if(idleActive)return;idleActive=true;lastActivity=Date.now();
- // Start a fresh timer at sign-in unless another tab has a recent activity timestamp.
- const existing=getLastActivity();lastActivity=existing;
+function startIdle(){if(idleActive)return;idleActive=true;
+ // Each authenticated page load starts a fresh idle window. Never inherit a stale
+ // timestamp from a previous signed-out session (which caused instant logout).
+ lastActivity=Date.now();
+ try{localStorage.setItem(activityKey,String(lastActivity));}catch(e){}
+ warningLatched=false;warning.hidden=true;
  if(!idleTimer)idleTimer=setInterval(checkIdle,1000);checkIdle();}
 function stopIdle(){idleActive=false;hideWarning();if(idleTimer){clearInterval(idleTimer);idleTimer=null;}}
 // Throttle mouse movement writes to avoid excessive localStorage activity.
