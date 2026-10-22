@@ -46,3 +46,13 @@ html.kandd-side-overlay body{padding-left:66px!important}
 #kandd-sidebar .kandd-brand-home{display:flex;align-items:center;gap:10px;min-width:0;flex:1;text-decoration:none;color:inherit}
 #kandd-sidebar .kandd-brand-home:focus-visible{outline:2px solid currentColor;outline-offset:3px;border-radius:6px}
 #kandd-sidebar.kandd-collapsed .kandd-brand-home{flex:0 0 auto;justify-content:center}
+
+/* Inactivity countdown warning; appears after four idle minutes. */
+#kandd-idle-warning[hidden]{display:none!important}
+#kandd-idle-warning{position:fixed;inset:0;z-index:2147483646;background:rgba(9,25,43,.68);display:grid;place-items:center;padding:20px;font-family:Inter,ui-sans-serif,system-ui,sans-serif}
+#kandd-idle-warning .kandd-idle-panel{background:#fff;color:#15283b;max-width:430px;width:100%;padding:30px;border-radius:16px;box-shadow:0 18px 55px rgba(0,0,0,.3);text-align:center}
+#kandd-idle-warning h2{margin:0 0 10px;font-size:25px}
+#kandd-idle-warning p{margin:10px 0;line-height:1.5}
+#kandd-idle-warning .kandd-idle-countdown{font-size:20px;font-weight:750;color:#a72b24}
+#kandd-idle-warning #kandd-idle-stay{border:0;background:#174c75;color:white;padding:13px 24px;border-radius:10px;font-weight:750;cursor:pointer;margin-top:12px}
+#kandd-idle-warning #kandd-idle-stay:focus-visible{outline:3px solid #ffbd2e;outline-offset:3px}

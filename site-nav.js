@@ -25,7 +25,7 @@ const account=add('account','Sign In / Account','account.html');
 const admin=add('admin','Administrator','admin.html');admin.hidden=true;
 // Reorder links for the signed-in role without duplicating any item.
 function orderLinks(isTeacher){
- const order=isTeacher?[teacherDash,pronunciation,linksEl,contact,admin,account,logout]:[studentDash,linksEl,pronunciation,myTeacher,applyTeach,contact,admin,account,logout];
+ const order=isTeacher?[teacherDash,pronunciation,linksEl,contact,admin,account,logout]:[studentDash,pronunciation,myTeacher,linksEl,applyTeach,contact,admin,account,logout];
  order.forEach(el=>list.appendChild(el));
 }
 const linksEl=list.querySelector('a[href="'+url('level1.html')+'"]');
@@ -61,14 +61,48 @@ nav.addEventListener('pointerleave',e=>{if(e.pointerType==='mouse'||e.pointerTyp
 nav.addEventListener('focusin',()=>{hovering=true;applyState();});
 nav.addEventListener('focusout',e=>{if(!nav.contains(e.relatedTarget)){hovering=false;applyState();}});
 logout.addEventListener('click',async()=>{try{if(window.kanddDb)await window.kanddDb.auth.signOut();else if(window.supabase){const client=window.supabase.createClient('https://hfqallzmxsmkiqmolzui.supabase.co','sb_publishable_O7ZvBkAu8JH939O0ylNOkA_Y7aYEnQr');await client.auth.signOut();}location.href=url('index.html')}catch(e){alert('Could not sign out. Please try again.')}});
+// Five-minute INACTIVITY sign-out; warning at four minutes with a live countdown.
+// Navigation, including the Kandd logo, never signs a user out.
+const idleLimit=5*60*1000, warningAt=4*60*1000;
+const activityKey='kandd-last-activity-v1';
+let idleTimer=null, warningTimer=null, idleActive=false, signingOut=false, lastActivity=Date.now();
+const warning=document.createElement('div');warning.id='kandd-idle-warning';warning.hidden=true;
+warning.setAttribute('role','alertdialog');warning.setAttribute('aria-modal','true');warning.setAttribute('aria-labelledby','kandd-idle-title');
+warning.innerHTML='<div class="kandd-idle-panel"><h2 id="kandd-idle-title">Still there?</h2><p>For your security, you will be signed out after five minutes of inactivity.</p><p class="kandd-idle-countdown"><span id="kandd-idle-seconds">60</span> seconds remaining</p><button type="button" id="kandd-idle-stay">Stay Signed In</button></div>';
+function getLastActivity(){try{const t=Number(localStorage.getItem(activityKey));return t>0?t:lastActivity;}catch(e){return lastActivity;}}
+function hideWarning(){warning.hidden=true;}
+function recordActivity(){if(!idleActive||signingOut)return;lastActivity=Date.now();try{localStorage.setItem(activityKey,String(lastActivity));}catch(e){}hideWarning();}
+async function doIdleSignOut(){if(signingOut)return;signingOut=true;hideWarning();
+ try{const db=window.kanddDb||(window.supabase&&window.supabase.createClient('https://hfqallzmxsmkiqmolzui.supabase.co','sb_publishable_O7ZvBkAu8JH939O0ylNOkA_Y7aYEnQr'));if(db)await db.auth.signOut();
+  try{sessionStorage.setItem('kandd-idle-signed-out','1');}catch(e){}
+  location.replace(url('account.html'));
+ }catch(e){signingOut=false;alert('Your session has expired. Please use Sign Out to end your session.');}}
+function checkIdle(){if(!idleActive||signingOut)return;
+ const elapsed=Date.now()-getLastActivity();
+ if(elapsed>=idleLimit){doIdleSignOut();return;}
+ if(elapsed>=warningAt){warning.hidden=false;const left=Math.max(1,Math.ceil((idleLimit-elapsed)/1000));warning.querySelector('#kandd-idle-seconds').textContent=String(left);}
+ else hideWarning();
+}
+function startIdle(){if(idleActive)return;idleActive=true;lastActivity=Date.now();
+ // Start a fresh timer at sign-in unless another tab has a recent activity timestamp.
+ const existing=getLastActivity();if(Date.now()-existing>idleLimit)recordActivity();else lastActivity=existing;
+ if(!idleTimer)idleTimer=setInterval(checkIdle,1000);checkIdle();}
+function stopIdle(){idleActive=false;hideWarning();if(idleTimer){clearInterval(idleTimer);idleTimer=null;}}
+// Throttle mouse movement writes to avoid excessive localStorage activity.
+let lastMotion=0;
+for(const eventName of ['pointerdown','keydown','touchstart','scroll'])document.addEventListener(eventName,recordActivity,{passive:true});
+document.addEventListener('pointermove',()=>{if(Date.now()-lastMotion>15000){lastMotion=Date.now();recordActivity();}},{passive:true});
+window.addEventListener('storage',e=>{if(e.key===activityKey)checkIdle();});
+window.addEventListener('pageshow',checkIdle);
+warning.querySelector('#kandd-idle-stay').addEventListener('click',recordActivity);
 const profile=document.createElement('div');profile.id='kandd-account-header';profile.setAttribute('aria-label','Account profile');
 profile.innerHTML='<a class="kandd-profile-link" href="'+url('account.html')+'"><span class="kandd-avatar" aria-hidden="true">?</span><span class="kandd-profile-details"><strong class="kandd-profile-name">Account</strong><small class="kandd-profile-email">Sign in or create an account</small></span></a><button class="kandd-profile-signout" type="button" hidden>Sign Out</button>';
 profile.querySelector('button').addEventListener('click',()=>logout.click());
-function init(){orderLinks(false);document.body.prepend(nav);const top=document.querySelector('header.top');if(top){top.appendChild(profile);top.classList.add('kandd-profile-header');}else{const bar=document.createElement('header');bar.className='kandd-global-account-bar';bar.appendChild(profile);document.body.insertBefore(bar,nav.nextSibling);}applyState();updateAccount()}
+function init(){orderLinks(false);document.body.prepend(nav);document.body.appendChild(warning);const top=document.querySelector('header.top');if(top){top.appendChild(profile);top.classList.add('kandd-profile-header');}else{const bar=document.createElement('header');bar.className='kandd-global-account-bar';bar.appendChild(profile);document.body.insertBefore(bar,nav.nextSibling);}applyState();updateAccount()}
 function setProfile(user,firstName){
  const name=profile.querySelector('.kandd-profile-name'),email=profile.querySelector('.kandd-profile-email'),avatar=profile.querySelector('.kandd-avatar'),link=profile.querySelector('.kandd-profile-link'),out=profile.querySelector('.kandd-profile-signout');
- if(user){const display=firstName||user.user_metadata?.full_name||user.user_metadata?.first_name||user.email?.split('@')[0]||'My Account';name.textContent=display;email.textContent=user.email||'My Learning';avatar.textContent=display.charAt(0).toUpperCase();link.href=url('dashboard.html');out.hidden=false;document.documentElement.classList.add('kandd-authenticated');}
- else{name.textContent='My Account';email.textContent='Sign In / Create Account';avatar.textContent='?';link.href=url('account.html');out.hidden=true;document.documentElement.classList.remove('kandd-authenticated');}
+ if(user){startIdle();const display=firstName||user.user_metadata?.full_name||user.user_metadata?.first_name||user.email?.split('@')[0]||'My Account';name.textContent=display;email.textContent=user.email||'My Learning';avatar.textContent=display.charAt(0).toUpperCase();link.href=url('dashboard.html');out.hidden=false;document.documentElement.classList.add('kandd-authenticated');}
+ else{stopIdle();name.textContent='My Account';email.textContent='Sign In / Create Account';avatar.textContent='?';link.href=url('account.html');out.hidden=true;document.documentElement.classList.remove('kandd-authenticated');}
 }
 
 async function updateAccount(){try{
