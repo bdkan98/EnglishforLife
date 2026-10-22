@@ -15,6 +15,8 @@ const toggle=document.createElement('button');toggle.type='button';toggle.classN
 const list=document.createElement('nav');list.setAttribute('aria-label','Main links');nav.appendChild(list);
 function add(key,label,path){const a=document.createElement('a');a.href=url(path);a.className='kandd-side-link';a.title=label;a.innerHTML=icon(key)+'<span class="kandd-side-label"></span>';a.querySelector('span').textContent=label;if(new URL(a.href).pathname===current.pathname)a.setAttribute('aria-current','page');list.appendChild(a);return a;}
 links.forEach(x=>add(...x));
+const pronunciation=add('learning','Pronunciation Helper','pronunciation.html');
+const myTeacher=add('teacher','My Teacher','student/my-teacher.html');myTeacher.hidden=true;
 const account=add('account','Sign In / Account','account.html');
 const admin=add('admin','Administrator','admin.html');admin.hidden=true;
 const teacherDash=add('teacher','Teacher Dashboard','teacher/dashboard.html');teacherDash.hidden=true;
@@ -64,8 +66,9 @@ async function updateAccount(){try{
  if(!db && window.supabase)db=window.supabase.createClient('https://hfqallzmxsmkiqmolzui.supabase.co','sb_publishable_O7ZvBkAu8JH939O0ylNOkA_Y7aYEnQr');
  if(!db){setProfile(null);return;}
  const {data:{user},error}=await db.auth.getUser();if(error||!user){setProfile(null);return;}
- let firstName='';try{const {data:p}=await db.from('profiles').select('first_name').eq('id',user.id).maybeSingle();firstName=p?.first_name||'';}catch(e){}
+ let firstName='';try{const {data:p}=await db.from('profiles').select('first_name').eq('user_id',user.id).maybeSingle();firstName=p?.first_name||'';}catch(e){}
  setProfile(user,firstName);
+ myTeacher.hidden=false;
  account.querySelector('span').textContent='My Learning';account.title='My Learning';account.href=url('dashboard.html');logout.hidden=false;
  const [a,t]=await Promise.all([db.from('kandd_admins').select('user_id').eq('user_id',user.id).maybeSingle(),db.from('kandd_teacher_applications').select('status').eq('user_id',user.id).eq('status','approved').maybeSingle()]);
  admin.hidden=!a.data;teacherDash.hidden=!t.data;
