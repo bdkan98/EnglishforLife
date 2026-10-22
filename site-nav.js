@@ -116,13 +116,35 @@ function setProfile(user,firstName){
  else{stopIdle();name.textContent='My Account';email.textContent='Sign In / Create Account';avatar.textContent='?';link.href=url('account.html');out.hidden=true;document.documentElement.classList.remove('kandd-authenticated');}
 }
 
+async function ensureAuthSdk(){
+ if(window.kanddDb || window.supabase)return true;
+ return new Promise(resolve=>{
+  const existing=document.querySelector('script[data-kandd-auth-sdk]');
+  if(existing){existing.addEventListener('load',()=>resolve(!!window.supabase),{once:true});existing.addEventListener('error',()=>resolve(false),{once:true});return;}
+  const script=document.createElement('script');
+  script.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+  script.dataset.kanddAuthSdk='1';
+  script.onload=()=>resolve(!!window.supabase);
+  script.onerror=()=>resolve(false);
+  document.head.appendChild(script);
+ });
+}
 async function updateAccount(){try{
+ await ensureAuthSdk();
  let db=window.kanddDb;
  if(!db && window.supabase)db=window.supabase.createClient('https://hfqallzmxsmkiqmolzui.supabase.co','sb_publishable_O7ZvBkAu8JH939O0ylNOkA_Y7aYEnQr');
  if(!db){setProfile(null);return;}
  const {data:{user},error}=await db.auth.getUser();if(error||!user){setProfile(null);return;}
  let firstName='';try{const {data:p}=await db.from('profiles').select('first_name').eq('user_id',user.id).maybeSingle();firstName=p?.first_name||'';}catch(e){}
  setProfile(user,firstName);
+ // Homepage has a static Student Sign In link; reflect active sessions instead.
+ if(home){document.querySelectorAll('header.top a[href$="account.html"]').forEach(a=>{
+   if(/sign in|log in|student account/i.test(a.textContent.trim())){
+     a.textContent='My Dashboard';
+     a.href=url('dashboard.html');
+     a.dataset.kanddDashboardLink='1';
+   }
+ });}
  account.hidden=true;logout.hidden=false;
  const [a,t]=await Promise.all([db.from('kandd_admins').select('user_id').eq('user_id',user.id).maybeSingle(),db.from('kandd_teacher_applications').select('status').eq('user_id',user.id).eq('status','approved').maybeSingle()]);
  admin.hidden=!a.data;
@@ -132,6 +154,10 @@ async function updateAccount(){try{
  applyTeach.hidden=isTeacher;
  myTeacher.hidden=isTeacher;
  orderLinks(isTeacher);
+ if(home)document.querySelectorAll('[data-kandd-dashboard-link]').forEach(a=>{
+   a.href=url(isTeacher?'teacher/dashboard.html':'dashboard.html');
+   a.textContent=isTeacher?'Dashboard':'My Learning';
+ });
  // The profile header should lead to the correct dashboard for each account.
  profile.querySelector('.kandd-profile-link').href=url(isTeacher?'teacher/dashboard.html':'dashboard.html');
  const note=document.querySelector('body:has(#secureTeacherForm) .k-note');if(note)note.hidden=true;
