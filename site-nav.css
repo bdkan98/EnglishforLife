@@ -61,3 +61,13 @@ html.kandd-side-overlay body{padding-left:66px!important}
    The existing body padding transition animates the page with the sidebar. */
 html.kandd-side-overlay body{padding-left:242px!important}
 @media(max-width:600px){html.kandd-side-overlay body{padding-left:205px!important}}
+
+/* Inner pages: sidebar K/brand handles homepage navigation.
+   Remove redundant Kandd Learning text from page header, not the page title. */
+html:not(.kandd-home) body:has(#kandd-sidebar) header.top .brand,
+html:not(.kandd-home) body:has(#kandd-sidebar) header.top .brandmark,
+html:not(.kandd-home) body:has(#kandd-sidebar) header.top > a.brand,
+html:not(.kandd-home) body:has(#kandd-sidebar) header.top > div.brand {display:none!important}
+body:has(#kandd-sidebar) header.top{justify-content:flex-end}
+body:has(#kandd-sidebar) header.top > span:not(.brand),
+body:has(#kandd-sidebar) header.top .tag{margin-right:auto}

@@ -1,0 +1,14 @@
+/* Kandd consistent account and pronunciation pages. No global layout overrides. */
+.kandd-polished-page{max-width:1120px}
+.kandd-polished-page .hero{margin-bottom:24px;padding:32px 36px}
+.kandd-polished-page .hero h1{font-size:clamp(2rem,4vw,3rem);margin:10px 0}
+.kandd-polished-page .grid2{align-items:start}
+.kandd-polished-page .grid2>article,.kandd-polished-page .tc-card{background:#fff;border:1px solid #dce5ee;border-radius:20px;padding:26px;box-shadow:0 8px 28px #19324d0b;margin-bottom:20px}
+.kandd-polished-page h2{color:#173f67;margin:0 0 18px;font-size:1.4rem}
+.kandd-polished-page label{display:block;font-weight:700;color:#243d58;margin:12px 0 6px}
+.kandd-polished-page input,.kandd-polished-page select{display:block;width:100%;max-width:100%;box-sizing:border-box;border:1px solid #cbd7e3;border-radius:11px;padding:12px 13px;background:white;color:#172238;font:inherit;margin:6px 0 12px}
+.kandd-polished-page input:focus,.kandd-polished-page select:focus{outline:3px solid #bcd8ef;border-color:#236b9b}
+.kandd-polished-page button.btn{border-radius:11px;min-height:44px;margin-top:8px}
+.kandd-polished-page #result:not(:empty){padding:16px;background:#f2f7fb;border:1px solid #dce7ef;border-radius:12px;margin-top:16px}
+.kandd-polished-page #message:not(:empty),.kandd-polished-page .feedback:not(:empty){margin-top:12px}
+@media(max-width:720px){.kandd-polished-page .hero{padding:25px}.kandd-polished-page .grid2>article,.kandd-polished-page .tc-card{padding:19px}}

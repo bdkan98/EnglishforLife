@@ -6,6 +6,7 @@ const root=new URL('./',script.src);
 const url=(p)=>new URL(p,root).href;
 const current=new URL(location.href);
 const home=current.pathname.replace(/\/+$/,'/').endsWith('/index.html')||current.pathname===root.pathname||current.pathname===root.pathname.replace(/\/$/,'');
+if(home)document.documentElement.classList.add('kandd-home');
 const svg={home:'<path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/>',lessons:'<path d="M4 5c3-1 5-1 8 1 3-2 5-2 8-1v14c-3-1-5-1-8 1-3-2-5-2-8-1zM12 6v14"/>',learning:'<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/>',teacher:'<path d="M3 8 12 3l9 5-9 5zM7 11v5c3 3 7 3 10 0v-5M21 8v8"/>',contact:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>',admin:'<path d="m12 2 8 4v6c0 5-3 8-8 10-5-2-8-5-8-10V6zM9 12l2 2 4-4"/>',account:'<circle cx="12" cy="8" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/>',out:'<path d="M10 4H5v16h5M14 8l4 4-4 4M18 12H9"/>',menu:'<path d="M4 6h16M4 12h16M4 18h16"/>'};
 const icon=(n)=>'<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+svg[n]+'</svg>';
 const nav=document.createElement('aside');nav.id='kandd-sidebar';nav.className=home?'kandd-expanded':'kandd-collapsed';nav.setAttribute('aria-label','Kandd Learning site navigation');
@@ -65,27 +66,34 @@ logout.addEventListener('click',async()=>{try{if(window.kanddDb)await window.kan
 // Navigation, including the Kandd logo, never signs a user out.
 const idleLimit=5*60*1000, warningAt=4*60*1000;
 const activityKey='kandd-last-activity-v1';
-let idleTimer=null, warningTimer=null, idleActive=false, signingOut=false, lastActivity=Date.now();
+let idleTimer=null, warningTimer=null, idleActive=false, signingOut=false, lastActivity=Date.now(), warningLatched=false;
 const warning=document.createElement('div');warning.id='kandd-idle-warning';warning.hidden=true;
 warning.setAttribute('role','alertdialog');warning.setAttribute('aria-modal','true');warning.setAttribute('aria-labelledby','kandd-idle-title');
 warning.innerHTML='<div class="kandd-idle-panel"><h2 id="kandd-idle-title">Still there?</h2><p>For your security, you will be signed out after five minutes of inactivity.</p><p class="kandd-idle-countdown"><span id="kandd-idle-seconds">60</span> seconds remaining</p><button type="button" id="kandd-idle-stay">Stay Signed In</button></div>';
 function getLastActivity(){try{const t=Number(localStorage.getItem(activityKey));return t>0?t:lastActivity;}catch(e){return lastActivity;}}
-function hideWarning(){warning.hidden=true;}
-function recordActivity(){if(!idleActive||signingOut)return;lastActivity=Date.now();try{localStorage.setItem(activityKey,String(lastActivity));}catch(e){}hideWarning();}
+function hideWarning(){warning.hidden=true;warningLatched=false;}
+function recordActivity(force=false){
+ if(!idleActive||signingOut)return;
+ // Once the four-minute warning begins, only an explicit button click may renew the session.
+ if(!force && (warningLatched || !warning.hidden || Date.now()-getLastActivity()>=warningAt)){checkIdle();return;}
+ lastActivity=Date.now();
+ try{localStorage.setItem(activityKey,String(lastActivity));}catch(e){}
+ hideWarning();
+}
 async function doIdleSignOut(){if(signingOut)return;signingOut=true;hideWarning();
  try{const db=window.kanddDb||(window.supabase&&window.supabase.createClient('https://hfqallzmxsmkiqmolzui.supabase.co','sb_publishable_O7ZvBkAu8JH939O0ylNOkA_Y7aYEnQr'));if(db)await db.auth.signOut();
   try{sessionStorage.setItem('kandd-idle-signed-out','1');}catch(e){}
   location.replace(url('account.html'));
  }catch(e){signingOut=false;alert('Your session has expired. Please use Sign Out to end your session.');}}
 function checkIdle(){if(!idleActive||signingOut)return;
- const elapsed=Date.now()-getLastActivity();
+ const elapsed=Date.now()-(warningLatched?lastActivity:getLastActivity());
  if(elapsed>=idleLimit){doIdleSignOut();return;}
- if(elapsed>=warningAt){warning.hidden=false;const left=Math.max(1,Math.ceil((idleLimit-elapsed)/1000));warning.querySelector('#kandd-idle-seconds').textContent=String(left);}
- else hideWarning();
+ if(elapsed>=warningAt){if(!warningLatched)lastActivity=getLastActivity();warningLatched=true;warning.hidden=false;const left=Math.max(1,Math.ceil((idleLimit-elapsed)/1000));warning.querySelector('#kandd-idle-seconds').textContent=String(left);}
+ else if(!warningLatched)hideWarning();
 }
 function startIdle(){if(idleActive)return;idleActive=true;lastActivity=Date.now();
  // Start a fresh timer at sign-in unless another tab has a recent activity timestamp.
- const existing=getLastActivity();if(Date.now()-existing>idleLimit)recordActivity();else lastActivity=existing;
+ const existing=getLastActivity();lastActivity=existing;
  if(!idleTimer)idleTimer=setInterval(checkIdle,1000);checkIdle();}
 function stopIdle(){idleActive=false;hideWarning();if(idleTimer){clearInterval(idleTimer);idleTimer=null;}}
 // Throttle mouse movement writes to avoid excessive localStorage activity.
@@ -94,7 +102,7 @@ for(const eventName of ['pointerdown','keydown','touchstart','scroll'])document.
 document.addEventListener('pointermove',()=>{if(Date.now()-lastMotion>15000){lastMotion=Date.now();recordActivity();}},{passive:true});
 window.addEventListener('storage',e=>{if(e.key===activityKey)checkIdle();});
 window.addEventListener('pageshow',checkIdle);
-warning.querySelector('#kandd-idle-stay').addEventListener('click',recordActivity);
+warning.querySelector('#kandd-idle-stay').addEventListener('click',e=>{e.stopPropagation();recordActivity(true);});
 const profile=document.createElement('div');profile.id='kandd-account-header';profile.setAttribute('aria-label','Account profile');
 profile.innerHTML='<a class="kandd-profile-link" href="'+url('account.html')+'"><span class="kandd-avatar" aria-hidden="true">?</span><span class="kandd-profile-details"><strong class="kandd-profile-name">Account</strong><small class="kandd-profile-email">Sign in or create an account</small></span></a><button class="kandd-profile-signout" type="button" hidden>Sign Out</button>';
 profile.querySelector('button').addEventListener('click',()=>logout.click());
