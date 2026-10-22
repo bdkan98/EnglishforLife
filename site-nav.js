@@ -9,8 +9,8 @@ const home=current.pathname.replace(/\/+$/,'/').endsWith('/index.html')||current
 const svg={home:'<path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/>',lessons:'<path d="M4 5c3-1 5-1 8 1 3-2 5-2 8-1v14c-3-1-5-1-8 1-3-2-5-2-8-1zM12 6v14"/>',learning:'<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/>',teacher:'<path d="M3 8 12 3l9 5-9 5zM7 11v5c3 3 7 3 10 0v-5M21 8v8"/>',contact:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>',admin:'<path d="m12 2 8 4v6c0 5-3 8-8 10-5-2-8-5-8-10V6zM9 12l2 2 4-4"/>',account:'<circle cx="12" cy="8" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/>',out:'<path d="M10 4H5v16h5M14 8l4 4-4 4M18 12H9"/>',menu:'<path d="M4 6h16M4 12h16M4 18h16"/>'};
 const icon=(n)=>'<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+svg[n]+'</svg>';
 const nav=document.createElement('aside');nav.id='kandd-sidebar';nav.className=home?'kandd-expanded':'kandd-collapsed';nav.setAttribute('aria-label','Kandd Learning site navigation');
-const links=[['home','Homepage','index.html'],['lessons','Explore Lessons','level1.html']];
-const header=document.createElement('div');header.className='kandd-side-head';header.innerHTML='<span class="kandd-side-logo">K</span><span class="kandd-side-name">Kandd Learning</span>';
+const links=[['lessons','Explore Lessons','level1.html']];
+const header=document.createElement('div');header.className='kandd-side-head';header.innerHTML='<a class="kandd-brand-home" href="'+url('index.html')+'" title="Go to Kandd Learning homepage" aria-label="Kandd Learning homepage"><span class="kandd-side-logo">K</span><span class="kandd-side-name">Kandd Learning</span></a>';
 const toggle=document.createElement('button');toggle.type='button';toggle.className='kandd-side-toggle';toggle.setAttribute('aria-label',home?'Collapse navigation':'Expand navigation');toggle.title='Expand or collapse menu';toggle.innerHTML=icon('menu');header.appendChild(toggle);nav.appendChild(header);
 const list=document.createElement('nav');list.setAttribute('aria-label','Main links');nav.appendChild(list);
 function add(key,label,path){const a=document.createElement('a');a.href=url(path);a.className='kandd-side-link';a.title=label;a.innerHTML=icon(key)+'<span class="kandd-side-label"></span>';a.querySelector('span').textContent=label;if(new URL(a.href).pathname===current.pathname)a.setAttribute('aria-current','page');list.appendChild(a);return a;}
@@ -23,6 +23,12 @@ const pronunciation=add('learning','Pronunciation Helper','pronunciation.html');
 const myTeacher=add('teacher','My Teacher','student/my-teacher.html');myTeacher.hidden=true;
 const account=add('account','Sign In / Account','account.html');
 const admin=add('admin','Administrator','admin.html');admin.hidden=true;
+// Reorder links for the signed-in role without duplicating any item.
+function orderLinks(isTeacher){
+ const order=isTeacher?[teacherDash,pronunciation,linksEl,contact,admin,account,logout]:[studentDash,linksEl,pronunciation,myTeacher,applyTeach,contact,admin,account,logout];
+ order.forEach(el=>list.appendChild(el));
+}
+const linksEl=list.querySelector('a[href="'+url('level1.html')+'"]');
 
 const logout=document.createElement('button');logout.type='button';logout.className='kandd-side-link kandd-side-logout';logout.title='Sign Out';logout.innerHTML=icon('out')+'<span class="kandd-side-label">Sign Out</span>';logout.hidden=true;list.appendChild(logout);
 // Hover opens the menu temporarily; the menu button pins it open.
@@ -58,7 +64,7 @@ logout.addEventListener('click',async()=>{try{if(window.kanddDb)await window.kan
 const profile=document.createElement('div');profile.id='kandd-account-header';profile.setAttribute('aria-label','Account profile');
 profile.innerHTML='<a class="kandd-profile-link" href="'+url('account.html')+'"><span class="kandd-avatar" aria-hidden="true">?</span><span class="kandd-profile-details"><strong class="kandd-profile-name">Account</strong><small class="kandd-profile-email">Sign in or create an account</small></span></a><button class="kandd-profile-signout" type="button" hidden>Sign Out</button>';
 profile.querySelector('button').addEventListener('click',()=>logout.click());
-function init(){document.body.prepend(nav);const top=document.querySelector('header.top');if(top){top.appendChild(profile);top.classList.add('kandd-profile-header');}else{const bar=document.createElement('header');bar.className='kandd-global-account-bar';bar.appendChild(profile);document.body.insertBefore(bar,nav.nextSibling);}applyState();updateAccount()}
+function init(){orderLinks(false);document.body.prepend(nav);const top=document.querySelector('header.top');if(top){top.appendChild(profile);top.classList.add('kandd-profile-header');}else{const bar=document.createElement('header');bar.className='kandd-global-account-bar';bar.appendChild(profile);document.body.insertBefore(bar,nav.nextSibling);}applyState();updateAccount()}
 function setProfile(user,firstName){
  const name=profile.querySelector('.kandd-profile-name'),email=profile.querySelector('.kandd-profile-email'),avatar=profile.querySelector('.kandd-avatar'),link=profile.querySelector('.kandd-profile-link'),out=profile.querySelector('.kandd-profile-signout');
  if(user){const display=firstName||user.user_metadata?.full_name||user.user_metadata?.first_name||user.email?.split('@')[0]||'My Account';name.textContent=display;email.textContent=user.email||'My Learning';avatar.textContent=display.charAt(0).toUpperCase();link.href=url('dashboard.html');out.hidden=false;document.documentElement.classList.add('kandd-authenticated');}
@@ -80,6 +86,7 @@ async function updateAccount(){try{
  studentDash.hidden=isTeacher;
  applyTeach.hidden=isTeacher;
  myTeacher.hidden=isTeacher;
+ orderLinks(isTeacher);
  // The profile header should lead to the correct dashboard for each account.
  profile.querySelector('.kandd-profile-link').href=url(isTeacher?'teacher/dashboard.html':'dashboard.html');
  const note=document.querySelector('body:has(#secureTeacherForm) .k-note');if(note)note.hidden=true;

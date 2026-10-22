@@ -41,3 +41,8 @@ body:has(#kandd-sidebar) header.top.kandd-profile-header{min-height:72px}
 html.kandd-side-overlay body{padding-left:66px!important}
 @media(max-width:600px){html.kandd-side-overlay body{padding-left:66px!important}}
 #kandd-sidebar .kandd-side-toggle[aria-pressed="true"]{background:#2b648d;outline:1px solid rgba(255,255,255,.5)}
+
+/* Clickable Kandd brand replaces the Homepage sidebar entry. */
+#kandd-sidebar .kandd-brand-home{display:flex;align-items:center;gap:10px;min-width:0;flex:1;text-decoration:none;color:inherit}
+#kandd-sidebar .kandd-brand-home:focus-visible{outline:2px solid currentColor;outline-offset:3px;border-radius:6px}
+#kandd-sidebar.kandd-collapsed .kandd-brand-home{flex:0 0 auto;justify-content:center}
