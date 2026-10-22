@@ -57,11 +57,6 @@ html.kandd-side-overlay body{padding-left:66px!important}
 #kandd-idle-warning #kandd-idle-stay{border:0;background:#174c75;color:white;padding:13px 24px;border-radius:10px;font-weight:750;cursor:pointer;margin-top:12px}
 #kandd-idle-warning #kandd-idle-stay:focus-visible{outline:3px solid #ffbd2e;outline-offset:3px}
 
-/* Hover-expanded navigation pushes page content instead of covering titles.
-   The existing body padding transition animates the page with the sidebar. */
-html.kandd-side-overlay body{padding-left:242px!important}
-@media(max-width:600px){html.kandd-side-overlay body{padding-left:205px!important}}
-
 /* Inner pages: sidebar K/brand handles homepage navigation.
    Remove redundant Kandd Learning text from page header, not the page title. */
 html:not(.kandd-home) body:has(#kandd-sidebar) header.top .brand,
@@ -71,3 +66,8 @@ html:not(.kandd-home) body:has(#kandd-sidebar) header.top > div.brand {display:n
 body:has(#kandd-sidebar) header.top{justify-content:flex-end}
 body:has(#kandd-sidebar) header.top > span:not(.brand),
 body:has(#kandd-sidebar) header.top .tag{margin-right:auto}
+
+/* Sidebar hover is an overlay: do not animate or shift the main page.
+   Pinned sidebar may still reserve space by the existing expanded rule. */
+html.kandd-side-overlay body { padding-left:66px!important; transition:none!important; }
+@media(max-width:600px){html.kandd-side-overlay body{padding-left:66px!important}}
