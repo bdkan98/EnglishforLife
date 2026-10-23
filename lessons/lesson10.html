@@ -24,7 +24,7 @@
 #kandd-mic-diagnostic .kmd-status,#kandd-speaking-practice .ksp-status{border-radius:12px;line-height:1.6}
 @media(max-width:600px){#kandd-mic-diagnostic.kmd,#kandd-speaking-practice.kandd-speaking{padding:18px}#kandd-mic-diagnostic button{width:100%;margin:6px 0}#kandd-speaking-practice .ksp-buttons{display:grid;grid-template-columns:1fr}#kandd-speaking-practice .ksp-buttons button{width:100%}}
 @media(prefers-reduced-motion:reduce){#kandd-mic-diagnostic button,#kandd-speaking-practice button{transition:none}}
-</style><link rel="stylesheet" href="../site-nav.css"><script defer src="../site-nav.js"></script><link rel="stylesheet" href="../kandd-buttons.css"><link rel="stylesheet" href="../kandd-phase2.css"></head><body>
+</style><link rel="stylesheet" href="../site-nav.css"><script defer src="../site-nav.js"></script><link rel="stylesheet" href="../kandd-buttons.css"><link rel="stylesheet" href="../kandd-phase2.css"><link rel="stylesheet" href="../kandd-exercise-polish.css"></head><body>
 <header class="top"><div class="brand">Kandd Learning</div><div class="tag">Practical Learning. Real Conversations.</div></header><main class="wrap"><a class="home" href="../level1.html">← Level 1 Dashboard</a>
 <section class="hero"><span class="pill">UNIT 3 · LESSON 10</span><h1>My Job</h1><p>Mi trabajo</p><div class="progressrow"><b id="pct">0% complete</b><span class="badge">Listen • Practice • Speak • Use It</span></div><div class="bar"><i id="bar"></i></div></section>
 <div class="tabs"><button class="tab active" data-target="learn">1 · Learn</button><button class="tab" data-target="practice">2 · Practice</button><button class="tab" data-target="speak">3 · Speak</button><button class="tab" data-target="check">4 · Check</button></div>
@@ -53,8 +53,8 @@
 <div class="ksp-buttons"><button id="ksp-listen" type="button">🔊 Listen / Escuchar</button><button class="ksp-record" id="ksp-record" type="button">🎤 Start Speaking / Hablar</button><button id="ksp-retry" type="button">↻ Try Again / Intentar de nuevo</button></div>
 <p aria-live="polite" class="ksp-status" id="ksp-status" role="status">Choose a sentence and select Start Speaking.</p>
 <p aria-live="polite" class="ksp-transcript" id="ksp-transcript"></p>
-<div aria-label="Word matching feedback" class="ksp-words" id="ksp-feedback"></div>
-<p><small>Green = word recognized in the correct position. Orange = word not recognized in that position. This is a word-recognition practice tool, not an accent or pronunciation grade. / Verde = palabra reconocida. Naranja = palabra no reconocida. No califica tu acento.</small></p>
+<div aria-label="Word matching feedback" class="ksp-words" id="ksp-feedback"></div><p class="ksp-explainer" id="ksp-color-key" hidden><small>Green = word recognized in the correct position. Orange = word not recognized in that position. This is a word-recognition practice tool, not an accent or pronunciation grade. / Verde = palabra reconocida. Naranja = palabra no reconocida. No califica tu acento.</small></p>
+
 <p><small>Your microphone audio is processed by your browser's speech recognition service, which may send audio to its provider. This exercise does not save or upload recordings to Kandd Learning. / El servicio de reconocimiento de voz de tu navegador puede procesar el audio. Kandd Learning no guarda grabaciones.</small></p>
 </article><button class="btn" onclick="done('speak','check')">Speaking Challenge Complete →</button></section>
 <section class="panel" id="check"><article><h2>✅ Quick Check</h2><div id="quiz"></div><button class="btn" onclick="grade()">Check My Answers</button><div class="result" id="result"></div></article></section>
@@ -63,7 +63,7 @@ const quiz=[["Ask about someone's job:", ["What do you do for work?", "What job 
 let parts=JSON.parse(localStorage.getItem('lesson10Parts')||'{}');
 function update(){let x=['learn','practice','speak','check'].filter(k=>parts[k]).length,p=Math.round(x/4*100);bar.style.width=p+'%';pct.textContent=p+'% complete'}
 function done(x,y){parts[x]=true;localStorage.setItem('lesson10Parts',JSON.stringify(parts));update();showTab(y)}
-document.getElementById('quiz').innerHTML=quiz.map((x,i)=>`<div class="question"><b>${i+1}. ${x[0]}</b>${x[1].map(o=>`<label><input type="radio" name="q${i}" value="${o}"> ${o}</label>`).join('')}</div>`).join('');
+document.getElementById('quiz').innerHTML=quiz.map((x,i)=>`<div class="question"><b>${i+1}. ${x[0]}</b>${[...x[1]].sort(()=>Math.random()-.5).map(o=>`<label><input type="radio" name="q${i}" value="${o}"> ${o}</label>`).join('')}</div>`).join('');
 function grade(){let s=0;quiz.forEach((x,i)=>{let a=document.querySelector(`input[name=q${i}]:checked`);if(a&&a.value===x[2])s++});localStorage.setItem('lesson10Score',String(s));if(s>=4){parts.check=true;localStorage.setItem('lesson10Parts',JSON.stringify(parts));localStorage.setItem('lesson10Complete','yes');result.className='result success';result.innerHTML=`🎉 ${s}/5 — Lesson complete! <a href="../level1.html"><u>Dashboard</u></a>`;update()}else{result.className='result retry';result.textContent=s+'/5 — Review and try again.'}}
 update();</script><script>
 /* Kandd Learning cloud progress — Lesson 10. Original lesson activities remain unchanged. */
@@ -108,7 +108,7 @@ update();</script><script>
       const completed=score>=4||Boolean(existing&&existing.completed);
       const bestScore=existing&&existing.score!==null?Math.max(score,Number(existing.score)):score;
       const ok=await kanddSaveProgress('lesson',String(lessonNumber),completed,bestScore,{source:'lesson-quiz'});
-      message(ok?'✓ Saved to your Kandd Learning account. Your progress will appear on other devices.':'Cloud save failed. Your result is on this device only. Please check your connection and try again.',ok);
+      message(ok?'✓ Saved to your Kandd Learning account. ':'Cloud save failed. Your result is on this device only. Please check your connection and try again.',ok);
     }catch(err){console.error('Cloud save error',err);message('Cloud save failed. Please try submitting the quiz again.',false);}
     finally{cloudBusy=false;}
   };
@@ -183,4 +183,4 @@ r.onend=()=>{if(id!==token)return;recognition=null;if(!got)report('warn','Microp
 }catch(e){report('warn','Microphone audio works, but the speech test could not start. Try again.','El audio funciona, pero no pudo iniciarse el reconocimiento. Inténtalo otra vez.');clean()}}
 check.addEventListener('click',run);
 })();
-</script></body></html>
+</script><script>(function(){const feedback=document.getElementById('ksp-feedback'),legend=document.getElementById('ksp-color-key');if(!feedback||!legend)return;const refresh=()=>{legend.hidden=!feedback.querySelector('.ksp-match,.ksp-missing')};new MutationObserver(refresh).observe(feedback,{childList:true,subtree:true});refresh()})();</script></body></html>
