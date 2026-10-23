@@ -77,3 +77,28 @@ function saveScore(n,score){
  s.defer=true;
  document.head.appendChild(s);
 })();
+
+
+/* Randomize Match It translations, avoiding answer-by-position shortcuts. */
+(function(){
+ function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+ function prepare(){
+  const rows=[...document.querySelectorAll('#practice .activity-row')].filter(r=>r.querySelector('select[id^="m"]'));
+  if(!rows.length)return;
+  const selects=rows.map(r=>r.querySelector('select[id^="m"]'));
+  const source=[...selects[0].options].filter(o=>o.value).map(o=>({value:o.value,text:o.textContent}));
+  if(source.length<2)return;
+  const original=source.map(o=>o.value);
+  // All Match It dropdowns use the same shuffled set, so there are no positional hints.
+  // A non-zero rotation guarantees no item remains in its original position.
+  const shift=1+Math.floor(Math.random()*(source.length-1));
+  const rotated=source.map((_,i)=>source[(i+shift)%source.length]);
+  selects.forEach(select=>{
+   const placeholder=[...select.options].find(o=>!o.value);
+   select.replaceChildren();
+   if(placeholder)select.appendChild(placeholder.cloneNode(true));
+   rotated.forEach(item=>{const opt=document.createElement('option');opt.value=item.value;opt.textContent=item.text;select.appendChild(opt)});
+  });
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',prepare,{once:true});else prepare();
+})();

@@ -1,0 +1,14 @@
+/* Sidebar returns to its original visual size while page remains compact. */
+#kandd-sidebar {zoom:1.25 !important;}
+@media(max-width:600px){#kandd-sidebar{zoom:1.111111 !important;}}
+/* Compensate for sidebar zoom so page content never sits underneath it. */
+html.kandd-side-collapsed body{padding-left:82.5px !important;}
+html.kandd-side-expanded body{padding-left:302.5px !important;}
+@media(max-width:600px){html.kandd-side-collapsed body{padding-left:73.33px !important;}html.kandd-side-expanded body{padding-left:227.78px !important;}}
+/* Comfortable question and answer spacing throughout lessons, especially Lesson 6. */
+#practice .question{display:flex;flex-direction:column;align-items:flex-start;gap:10px;margin:0 0 24px !important;padding:14px 16px !important;border-radius:12px;}
+#practice .question>b{display:block;line-height:1.5;margin:0 !important;}
+#practice .question>select{display:block;min-width:min(260px,100%);margin:0 !important;line-height:1.4;}
+#practice .activity-row{gap:12px;margin-bottom:12px;}
+#practice .activity-row select{min-width:min(210px,100%);}
+@media(max-width:600px){#practice .question>select{width:100%;}}
