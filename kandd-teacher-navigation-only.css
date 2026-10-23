@@ -1,0 +1,4 @@
+/* Add navigation behavior without changing the original dashboard card design. */
+.tc-stats .kandd-stat-jump{cursor:pointer}
+.tc-stats .kandd-stat-jump:focus-visible{outline:3px solid #347fc3;outline-offset:3px}
+#pendingRequests,#myStudents,#classInsights{scroll-margin-top:80px}
