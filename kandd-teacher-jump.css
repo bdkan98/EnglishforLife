@@ -1,0 +1,8 @@
+/* Teacher dashboard: make existing three statistics navigable without changing their data. */
+.tc-stats .kandd-stat-link{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.25rem;text-decoration:none;color:inherit;background:var(--card,#fff);border-radius:14px;padding:1rem;min-width:0;box-shadow:0 3px 14px rgba(10,40,70,.09);border:2px solid transparent;cursor:pointer;transition:border-color .15s,transform .15s}
+.tc-stats .kandd-stat-link:hover{border-color:#438bbd;transform:translateY(-2px)}
+.tc-stats .kandd-stat-link:focus-visible{outline:3px solid #347fc3;outline-offset:3px}
+.tc-stats .kandd-stat-link strong,.tc-stats .kandd-stat-link span{display:block}
+.tc-stats .kandd-stat-hint{font-size:.78em;color:#326e9c;margin-top:.3rem}
+#pendingRequests,#myStudents,#classInsights{scroll-margin-top:80px}
+@media(prefers-reduced-motion:no-preference){html:has(.tc-stats){scroll-behavior:smooth}}
