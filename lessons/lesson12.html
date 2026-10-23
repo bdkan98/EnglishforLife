@@ -24,7 +24,7 @@
 #kandd-mic-diagnostic .kmd-status,#kandd-speaking-practice .ksp-status{border-radius:12px;line-height:1.6}
 @media(max-width:600px){#kandd-mic-diagnostic.kmd,#kandd-speaking-practice.kandd-speaking{padding:18px}#kandd-mic-diagnostic button{width:100%;margin:6px 0}#kandd-speaking-practice .ksp-buttons{display:grid;grid-template-columns:1fr}#kandd-speaking-practice .ksp-buttons button{width:100%}}
 @media(prefers-reduced-motion:reduce){#kandd-mic-diagnostic button,#kandd-speaking-practice button{transition:none}}
-</style><link rel="stylesheet" href="../site-nav.css"><script defer src="../site-nav.js"></script><link rel="stylesheet" href="../kandd-buttons.css"><link rel="stylesheet" href="../kandd-phase2.css"><link rel="stylesheet" href="../kandd-exercise-polish.css"><link rel="stylesheet" href="../kandd-exercise-polish.css?v=2"></head><body>
+</style><link rel="stylesheet" href="../site-nav.css"><script defer src="../site-nav.js"></script><link rel="stylesheet" href="../kandd-buttons.css"><link rel="stylesheet" href="../kandd-phase2.css"><link rel="stylesheet" href="../kandd-exercise-polish.css"><link rel="stylesheet" href="../kandd-exercise-polish.css?v=2"><script>function shuffleChoices(choices){const a=[...choices];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a;}</script><link rel="stylesheet" href="../kandd-compact.css?v=1"></head><body>
 <header class="top"><div class="brand">Kandd Learning</div><div class="tag">Practical Learning. Real Conversations.</div></header><main class="wrap"><a class="home" href="../level1.html">← Level 1 Dashboard</a>
 <section class="hero"><span class="pill">UNIT 3 · LESSON 12</span><h1>Conversation Challenge</h1><p>Reto de conversación</p><div class="progressrow"><b id="pct">0% complete</b><span class="badge">Listen • Practice • Speak • Use It</span></div><div class="bar"><i id="bar"></i></div></section>
 <div class="tabs"><button class="tab active" data-target="learn">1 · Learn</button><button class="tab" data-target="practice">2 · Practice</button><button class="tab" data-target="speak">3 · Speak</button><button class="tab" data-target="check">4 · Check</button></div>
@@ -184,5 +184,5 @@ r.onend=()=>{if(id!==token)return;recognition=null;if(!got)report('warn','Microp
 check.addEventListener('click',run);
 })();
 </script><script>(function(){const feedback=document.getElementById('ksp-feedback'),legend=document.getElementById('ksp-color-key');if(!feedback||!legend)return;const refresh=()=>{legend.hidden=!feedback.querySelector('.ksp-match,.ksp-missing')};new MutationObserver(refresh).observe(feedback,{childList:true,subtree:true});refresh()})();</script><script>
-function shuffleChoices(choices){const a=[...choices];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a;}
+
 </script></body></html>
