@@ -22,7 +22,7 @@ const applyTeach=add('teacher','Apply to Teach','teacher-apply.html');
 const contact=add('contact','Contact Us','contact.html');
 const pronunciation=add('learning','Pronunciation Helper','pronunciation.html');
 const myTeacher=add('teacher','My Teacher','student/my-teacher.html');myTeacher.hidden=true;
-const account=add('account','Sign In / Account','account.html');
+const account=add('account','Sign In','login.html');
 const admin=add('admin','Administrator','admin.html');admin.hidden=true;
 // Reorder links for the signed-in role without duplicating any item.
 function orderLinks(isTeacher){
@@ -138,7 +138,7 @@ async function updateAccount(){try{
  let firstName='';try{const {data:p}=await db.from('profiles').select('first_name').eq('user_id',user.id).maybeSingle();firstName=p?.first_name||'';}catch(e){}
  setProfile(user,firstName);
  // Homepage has a static Student Sign In link; reflect active sessions instead.
- if(home){document.querySelectorAll('header.top a[href$="account.html"]').forEach(a=>{
+ if(home){document.querySelectorAll('header.top a[href$="login.html"]').forEach(a=>{
    if(/sign in|log in|student account/i.test(a.textContent.trim())){
      a.textContent='My Dashboard';
      a.href=url('dashboard.html');

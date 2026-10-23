@@ -1,0 +1,5 @@
+/* Requested 20% reduction to site-wide visual scale. Responsive layout preserved. */
+html {zoom: .8;}
+@media (max-width: 600px) { html {zoom: .9;} } 
+/* Keep form controls accessible despite compact overall design. */
+button,input,select,textarea {max-width:100%;}
