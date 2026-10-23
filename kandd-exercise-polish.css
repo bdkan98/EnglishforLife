@@ -1,0 +1,18 @@
+/* Kandd Level 1 exercise feedback and consistent dropdown styling */
+.activity-row select,.kandd-speaking select,select.kandd-lesson-select{
+ appearance:none;-webkit-appearance:none;min-height:44px;max-width:100%;
+ border:1.5px solid #a7bfd3;border-radius:10px;
+ background-color:#fff;color:#17324b;font:inherit;
+ padding:10px 38px 10px 13px;
+ background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23173f63' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+ background-repeat:no-repeat;background-position:right 12px center;
+ box-shadow:0 1px 2px rgba(17,54,80,.08)
+}
+.activity-row select:focus-visible,.kandd-speaking select:focus-visible,select.kandd-lesson-select:focus-visible{outline:3px solid #78b6e8;outline-offset:2px}
+.activity-row select.kandd-match-correct{border-color:#24834e;background-color:#edf9f0}
+.activity-row select.kandd-match-incorrect{border-color:#b24e2b;background-color:#fff3ee}
+.kandd-match-result{display:inline-block;margin:6px 0 6px 10px;font-size:.9em;font-weight:700}
+.kandd-match-result.is-correct{color:#176a38}
+.kandd-match-result.is-incorrect{color:#9b3e1c}
+.kandd-speaking .ksp-explainer{margin:10px 0;line-height:1.5}
+.kandd-speaking .ksp-explainer[hidden]{display:none}

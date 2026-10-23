@@ -31,9 +31,33 @@ function speakText(text,button,mode='normal'){
  setTimeout(()=>speechSynthesis.speak(u),80);
 }
 function checkMatching(id,answers){
- let ok=0;answers.forEach((a,i)=>{const e=document.getElementById(id+i);if(e&&e.value===a)ok++});
- const f=document.getElementById(id+'Feedback');f.textContent=ok===answers.length?'✓ Excellent! All answers are correct.':`${ok}/${answers.length} correct. Try again.`;
- f.className='feedback '+(ok===answers.length?'success':'retry');
+ let ok=0;
+ answers.forEach((answer,i)=>{
+  const select=document.getElementById(id+i);
+  if(!select)return;
+  const correct=select.value===answer;
+  const chosen=!!select.value;
+  if(correct)ok++;
+  select.classList.toggle('kandd-match-correct',correct);
+  select.classList.toggle('kandd-match-incorrect',chosen&&!correct);
+  select.setAttribute('aria-invalid',chosen&&!correct?'true':'false');
+  let note=document.getElementById(id+i+'-match-result');
+  if(!note){
+   note=document.createElement('span');
+   note.id=id+i+'-match-result';
+   note.className='kandd-match-result';
+   note.setAttribute('role','status');
+   select.insertAdjacentElement('afterend',note);
+  }
+  note.className='kandd-match-result '+(correct?'is-correct':'is-incorrect');
+  note.textContent=correct?'✓ Correct / Correcto':(chosen?'✕ Try again / Inténtalo de nuevo':'Choose an answer / Elige una respuesta');
+ });
+ const feedback=document.getElementById(id+'Feedback');
+ if(feedback){
+  feedback.textContent=ok===answers.length?'✓ Excellent! All answers are correct. / ¡Excelente! Todas son correctas.':ok+'/'+answers.length+' correct. Review the marked matches and try again. / Revisa las respuestas marcadas.';
+  feedback.className='feedback '+(ok===answers.length?'success':'retry');
+  feedback.setAttribute('role','status');
+ }
 }
 function saveScore(n,score){
  localStorage.setItem('lesson'+n+'Score',String(score));
