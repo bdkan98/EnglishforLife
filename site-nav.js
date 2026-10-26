@@ -21,12 +21,13 @@ const studentDash=add('learning','My Learning','dashboard.html');studentDash.hid
 const applyTeach=add('teacher','Apply to Teach','teacher-apply.html');
 const contact=add('contact','Contact Us','contact.html');
 const pronunciation=add('learning','Pronunciation Helper','pronunciation.html');
+const translator=add('learning','Spanish ↔ English Translator','translator.html');
 const myTeacher=add('teacher','My Teacher','student/my-teacher.html');myTeacher.hidden=true;
 const account=add('account','Sign In','login.html');
 const admin=add('admin','Administrator','admin.html');admin.hidden=true;
 // Reorder links for the signed-in role without duplicating any item.
 function orderLinks(isTeacher){
- const order=isTeacher?[teacherDash,pronunciation,linksEl,contact,admin,account,logout]:[studentDash,pronunciation,myTeacher,linksEl,applyTeach,contact,admin,account,logout];
+ const order=isTeacher?[teacherDash,pronunciation,translator,linksEl,contact,admin,account,logout]:[studentDash,pronunciation,translator,myTeacher,linksEl,applyTeach,contact,admin,account,logout];
  order.forEach(el=>list.appendChild(el));
 }
 const linksEl=list.querySelector('a[href="'+url('level1.html')+'"]');
