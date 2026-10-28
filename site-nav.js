@@ -3,6 +3,11 @@
 if(window.__kanddSidebarLoaded)return;window.__kanddSidebarLoaded=true;
 const script=document.currentScript;
 const root=new URL('./',script.src);
+function injectStyle(file){if(document.querySelector('[data-kandd-style="'+file+'"]'))return;const el=document.createElement('link');el.rel='stylesheet';el.href=new URL(file,root).href;el.dataset.kanddStyle=file;document.head.appendChild(el)}
+function injectScript(file){if(document.querySelector('[data-kandd-script="'+file+'"]'))return;const el=document.createElement('script');el.src=new URL(file,root).href;el.defer=true;el.dataset.kanddScript=file;document.head.appendChild(el)}
+injectStyle('kandd-floating-tools.css');
+injectScript('kandd-floating-tools.js');
+if(!document.querySelector('script[src*="pronunciation-helper"]'))injectScript('pronunciation-helper.js');
 const url=(p)=>new URL(p,root).href;
 const current=new URL(location.href);
 const home=current.pathname.replace(/\/+$/,'/').endsWith('/index.html')||current.pathname===root.pathname||current.pathname===root.pathname.replace(/\/$/,'');
@@ -39,8 +44,13 @@ const pinKey='kandd-sidebar-pinned-v1';
 let pinned=false;
 try{pinned=localStorage.getItem(pinKey)==='true';}catch(e){}
 let hovering=false;
+const mobileMenu=()=>window.matchMedia('(max-width: 767px), (hover: none)').matches;
+let mobileCloseTimer=null;
+function clearMobileClose(){if(mobileCloseTimer){clearTimeout(mobileCloseTimer);mobileCloseTimer=null}}
+function scheduleMobileClose(){clearMobileClose();if(!mobileMenu())return;mobileCloseTimer=setTimeout(()=>{pinned=false;hovering=false;try{localStorage.setItem(pinKey,'false')}catch(e){}applyState()},3500)}
+
 function applyState(){
- const expanded=home||pinned||hovering;
+ const expanded=(home&&!mobileMenu())||pinned||hovering;
  nav.classList.toggle('kandd-expanded',expanded);
  nav.classList.toggle('kandd-collapsed',!expanded);
  const doc=document.documentElement;
@@ -56,12 +66,19 @@ toggle.addEventListener('click',()=>{
  pinned=!pinned;
  try{localStorage.setItem(pinKey,String(pinned));}catch(e){}
  applyState();
+ if(mobileMenu()&&pinned)scheduleMobileClose();else clearMobileClose();
 });
 nav.addEventListener('pointerenter',e=>{if(e.pointerType==='mouse'||e.pointerType==='pen'){hovering=true;applyState();}});
 nav.addEventListener('pointerleave',e=>{if(e.pointerType==='mouse'||e.pointerType==='pen'){hovering=false;applyState();}});
 // Keyboard users can explore the expanded menu with Tab.
 nav.addEventListener('focusin',()=>{hovering=true;applyState();});
 nav.addEventListener('focusout',e=>{if(!nav.contains(e.relatedTarget)){hovering=false;applyState();}});
+// On touch devices, the menu retracts automatically if no link is selected.
+nav.addEventListener('pointerdown',e=>{if(mobileMenu()&&e.target.closest('a,button')!==toggle){clearMobileClose()}},true);
+document.addEventListener('pointerdown',e=>{if(mobileMenu()&&!nav.contains(e.target)&&(pinned||hovering)){clearMobileClose();pinned=false;hovering=false;try{localStorage.setItem(pinKey,'false')}catch(err){}applyState()}},true);
+window.addEventListener('resize',()=>{if(mobileMenu()){if(pinned)scheduleMobileClose()}else clearMobileClose();applyState()});
+if(mobileMenu()){pinned=false;hovering=false;applyState()}
+
 logout.addEventListener('click',async()=>{try{localStorage.removeItem('kandd-last-activity-v1');}catch(e){}try{if(window.kanddDb)await window.kanddDb.auth.signOut();else if(window.supabase){const client=window.supabase.createClient('https://hfqallzmxsmkiqmolzui.supabase.co','sb_publishable_O7ZvBkAu8JH939O0ylNOkA_Y7aYEnQr');await client.auth.signOut();}location.href=url('index.html')}catch(e){alert('Could not sign out. Please try again.')}});
 // Five-minute INACTIVITY sign-out; warning at four minutes with a live countdown.
 // Navigation, including the Kandd logo, never signs a user out.

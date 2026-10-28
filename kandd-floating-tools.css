@@ -1,0 +1,37 @@
+/* Compact floating translator, placed beside the existing pronunciation launcher. */
+#kandd-translator-launcher{position:fixed;right:16px;bottom:72px;z-index:2147482000;border:0;border-radius:24px;padding:11px 16px;background:#174c78;color:#fff;font:600 14px/1.2 system-ui,sans-serif;box-shadow:0 4px 16px #0003;cursor:pointer}
+#kandd-translator-panel{position:fixed;right:16px;bottom:125px;z-index:2147482001;width:min(370px,calc(100vw - 32px));max-height:min(78vh,650px);overflow:auto;box-sizing:border-box;background:#fff;color:#17324b;border:1px solid #d4e1ea;border-radius:16px;padding:17px;box-shadow:0 12px 36px #0004;font:14px/1.45 system-ui,sans-serif}
+#kandd-translator-panel[hidden]{display:none!important}
+#kandd-translator-panel .kandd-tool-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px}
+#kandd-translator-panel .kandd-tool-heading strong{font-size:17px}
+#kandd-translator-panel label{display:block;font-weight:650;margin:10px 0 5px}
+#kandd-translator-panel textarea,#kandd-translator-panel select{box-sizing:border-box;width:100%;padding:9px;border:1px solid #a8bfd0;border-radius:9px;background:#fff;color:#17324b;font:inherit}
+#kandd-translator-panel .kandd-tool-line{display:flex;gap:8px;align-items:center}
+#kandd-translator-panel .kandd-tool-line select{flex:1;min-width:0}
+#kandd-translator-panel button{border:0;border-radius:9px;background:#174c78;color:#fff;padding:9px 11px;cursor:pointer;font:600 13px system-ui,sans-serif}
+#kandd-translator-panel #kandd-translator-close{font-size:23px;background:transparent;color:#17324b;padding:0 6px}
+#kandd-translator-panel #kandd-tool-output{min-height:38px;padding:10px;border-radius:9px;background:#f2f7fa;white-space:pre-wrap;overflow-wrap:anywhere}
+#kandd-translator-panel small{display:block;margin-top:9px;color:#52677b}
+#kandd-translator-panel button:focus-visible,#kandd-translator-launcher:focus-visible{outline:3px solid #78b6e8;outline-offset:2px}
+@media(max-width:600px){#kandd-translator-launcher{right:10px;bottom:74px}#kandd-translator-panel{right:10px;bottom:126px;width:calc(100vw - 20px);max-height:70dvh}}
+.kandd-pronounce-launcher{position:fixed;bottom:20px;right:20px;z-index:9998;background:#173f67;color:white;border:0;border-radius:999px;padding:13px 19px;box-shadow:0 7px 25px #122c4a55;font-weight:800;cursor:pointer}
+.kandd-pronounce-panel[hidden]{display:none!important}
+.kandd-pronounce-panel{position:fixed;bottom:78px;right:20px;width:min(400px,calc(100vw - 32px));max-height:calc(100vh - 110px);overflow:auto;z-index:9999;background:white;border:1px solid #dce5ee;border-radius:20px;padding:20px;box-shadow:0 12px 40px #17223840;color:#172238}
+.kandd-pronounce-heading{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.kandd-pronounce-close{border:0;background:#e8f0f7;border-radius:9px;padding:2px 11px;font-size:25px;cursor:pointer}
+.kandd-pronounce-panel p{font-size:.92rem;color:#536477;margin:10px 0}
+.kandd-pronounce-panel label{font-weight:750;display:block;margin:12px 0 5px}
+.kandd-pronounce-search{display:flex;gap:7px}
+.kandd-pronounce-search input{min-width:0;flex:1;border:1px solid #bdcad9;border-radius:9px;padding:10px;font:inherit}
+.kandd-pronounce-panel button{cursor:pointer}
+.kandd-pronounce-search button,.kandd-pronounce-actions button{background:#e8f0f7;color:#173f67;border:0;border-radius:9px;padding:9px;font-weight:750}
+.kandd-pronounce-actions{display:flex;gap:7px;flex-wrap:wrap;margin:12px 0}
+#kandd-pronounce-result{background:#f4f8fc;border-radius:12px;padding:13px;min-height:58px;overflow-wrap:anywhere}
+#kandd-pronounce-result strong{display:block;font-size:1.15rem}
+.kandd-pronounce-panel small{display:block;color:#536477;margin-top:10px}
+@media(max-width:600px){.kandd-pronounce-launcher{bottom:12px;right:12px}.kandd-pronounce-panel{bottom:68px;right:12px}}
+@media print{.kandd-pronounce-launcher,.kandd-pronounce-panel{display:none!important}}
+/* Keep both quick-access buttons visible as a stack. */
+#kandd-pronounce-launcher{z-index:2147482000}
+#kandd-pronounce-panel{z-index:2147482001}
+@media(max-width:600px){#kandd-pronounce-launcher{right:10px}#kandd-pronounce-panel{right:10px;max-height:70dvh}}
