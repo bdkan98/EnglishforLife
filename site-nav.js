@@ -13,7 +13,7 @@ const url=(p)=>new URL(p,root).href;
 const current=new URL(location.href);
 const home=current.pathname.replace(/\/+$/,'/').endsWith('/index.html')||current.pathname===root.pathname||current.pathname===root.pathname.replace(/\/$/,'');
 if(home)document.documentElement.classList.add('kandd-home');
-const svg={home:'<path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/>',lessons:'<path d="M4 5c3-1 5-1 8 1 3-2 5-2 8-1v14c-3-1-5-1-8 1-3-2-5-2-8-1zM12 6v14"/>',pronunciation:'<path d="M5 9v6h4l5 4V5L9 9H5z"/><path d="M17 9a4 4 0 0 1 0 6M19 6a8 8 0 0 1 0 12"/>',translator:'<path d="M4 5h12M10 3v2M6 9c2 5 5 8 10 10M15 9c-2 5-5 8-10 10"/><path d="M14 14h7M17.5 11l3.5 9M17.5 11L14 20"/>',learning:'<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/>',teacher:'<path d="M3 8 12 3l9 5-9 5zM7 11v5c3 3 7 3 10 0v-5M21 8v8"/>',contact:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>',admin:'<path d="m12 2 8 4v6c0 5-3 8-8 10-5-2-8-5-8-10V6zM9 12l2 2 4-4"/>',account:'<circle cx="12" cy="8" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/>',out:'<path d="M10 4H5v16h5M14 8l4 4-4 4M18 12H9"/>',menu:'<path d="M4 6h16M4 12h16M4 18h16"/>'};
+const svg={home:'<path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/>',lessons:'<path d="M4 5c3-1 5-1 8 1 3-2 5-2 8-1v14c-3-1-5-1-8 1-3-2-5-2-8-1zM12 6v14"/>',pronunciation:'<path d="M5 9v6h4l5 4V5L9 9H5z"/><path d="M17 9a4 4 0 0 1 0 6M19 6a8 8 0 0 1 0 12"/>',translator:'<path d="M4 5h12M10 3v2M6 9c2 5 5 8 10 10M15 9c-2 5-5 8-10 10"/><path d="M14 14h7M17.5 11l3.5 9M17.5 11L14 20"/>',learning:'<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/>',applyTeach:'<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h3M14 15v5M11.5 17.5h5"/>',teacher:'<path d="M3 8 12 3l9 5-9 5zM7 11v5c3 3 7 3 10 0v-5M21 8v8"/>',contact:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>',admin:'<path d="m12 2 8 4v6c0 5-3 8-8 10-5-2-8-5-8-10V6zM9 12l2 2 4-4"/>',account:'<circle cx="12" cy="8" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/>',out:'<path d="M10 4H5v16h5M14 8l4 4-4 4M18 12H9"/>',menu:'<path d="M4 6h16M4 12h16M4 18h16"/>'};
 const icon=(n)=>'<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+svg[n]+'</svg>';
 const nav=document.createElement('aside');nav.id='kandd-sidebar';nav.className=home?'kandd-expanded':'kandd-collapsed';nav.setAttribute('aria-label','Kandd Learning site navigation');
 const links=[['lessons','Explore Lessons','level1.html']];
@@ -24,7 +24,7 @@ function add(key,label,path){const a=document.createElement('a');a.href=url(path
 links.forEach(x=>add(...x));
 const teacherDash=add('teacher','Dashboard','teacher/dashboard.html');teacherDash.hidden=true;
 const studentDash=add('learning','My Learning','dashboard.html');studentDash.hidden=true;
-const applyTeach=add('teacher','Apply to Teach','teacher-apply.html');
+const applyTeach=add('applyTeach','Apply to Teach','teacher-apply.html');
 const contact=add('contact','Contact Us','contact.html');
 const pronunciation=add('pronunciation','Pronunciation Helper','pronunciation.html');
 const translator=add('translator','Spanish ↔ English Translator','translator.html');

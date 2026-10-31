@@ -14,3 +14,13 @@ html.kandd-side-expanded body,html.kandd-side-collapsed body{padding-left:66px!i
  html.kandd-side-expanded body,html.kandd-side-collapsed body{padding-left:66px!important}
  #kandd-sidebar.kandd-collapsed .kandd-side-link:hover::after{display:none}
 }
+
+/* Keep long navigation labels legible inside the expanded mobile sidebar.
+   Only the label wraps; the icon and existing menu behavior are unchanged. */
+@media (max-width:767px){
+ #kandd-sidebar.kandd-expanded { width:min(270px, calc(100vw - 76px)) !important; max-width:calc(100vw - 76px); overflow-x:hidden !important; }
+ #kandd-sidebar.kandd-expanded nav { min-width:0; overflow-x:hidden !important; }
+ #kandd-sidebar.kandd-expanded .kandd-side-link { min-width:0; white-space:normal !important; align-items:center; gap:10px; }
+ #kandd-sidebar.kandd-expanded .kandd-side-label { display:block; min-width:0; flex:1 1 auto; white-space:normal !important; overflow-wrap:anywhere; line-height:1.35; }
+ #kandd-sidebar.kandd-expanded .kandd-side-link svg { flex-shrink:0; }
+}
