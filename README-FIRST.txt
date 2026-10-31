@@ -1,24 +1,15 @@
-KANDD LEARNING — LESSONS 1–4 NO CONTRACTIONS + SITE-WIDE TRANSLATOR
+KANDD LEARNING — NAVIGATION INTERACTION AND ICONS
+Upload site-nav.js and kandd-sidebar-behavior.css to the repository ROOT. Keep other files unchanged.
 
-Upload these files to the existing GitHub Pages repository, preserving paths:
-  lessons/lesson1.html
-  lessons/lesson2.html
-  lessons/lesson3.html
-  lessons/lesson4.html
-  site-nav.js
-  translator.html
+- My Learning: document/checklist icon
+- Pronunciation Helper: speaker/sound icon
+- Spanish ↔ English Translator: translation/language icon
+- Floating pronunciation launcher remains speaker; floating translator remains globe.
+- Hover over a collapsed sidebar link: only that item's text tooltip appears; full menu does not expand and page does not move.
+- Hamburger opens/closes the full sidebar; expanded menu overlays the page instead of pushing it.
+- Mobile hamburger-opened menu remains open until the hamburger is clicked again, a link is selected, or the user taps outside. Escape also closes it.
+- Other navigation/auth features retained.
 
-Only these six files are included. The other lessons, teacher dashboard, and stylesheets remain untouched.
+TEST: desktop collapsed hover over each icon; hamburger open/close; mobile hamburger stays open longer than 3.5 seconds; outside tap closes; lesson and teacher links work; floating tools remain functional.
 
-Lesson text and quiz strings were expanded to remove common contractions; answer keys and the number of questions are unchanged. For example, "I'm" becomes "I am" and "What's" becomes "What is". This applies to displayed phrases, option values, and speaking text.
-
-The translator is linked in the existing site-wide sidebar for students and teachers. It translates Spanish ↔ English using the public third-party MyMemory API (internet connection required). The API is rate-limited and not guaranteed to be continuously available. Text is transmitted to MyMemory; do not use for private data. No Supabase changes or API key are required.
-
-TEST AFTER DEPLOY:
-1. Hard-refresh Ctrl+Shift+R; verify new Translator sidebar link on homepage, lessons, and teacher dashboard.
-2. Spanish→English and English→Spanish translation; switch directions, copy, and clear.
-3. Lessons 1–4 show no contractions in dialogues, speaking phrases, dropdown choices, and Quick Checks.
-4. Verify quiz answers grade correctly and Match It works; verify lesson completion is retained.
-5. Check sidebar role-specific visibility, sign-in, and teacher dashboard.
-
-JavaScript syntax and ZIP integrity checked locally; external translation API and deployed site were NOT tested live.
+NOTE: This deliberately replaces the previous automatic mobile 3.5-second collapse with persistent explicit hamburger opening, per the latest request. No Supabase changes.

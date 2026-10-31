@@ -6,27 +6,28 @@ const root=new URL('./',script.src);
 function injectStyle(file){if(document.querySelector('[data-kandd-style="'+file+'"]'))return;const el=document.createElement('link');el.rel='stylesheet';el.href=new URL(file,root).href;el.dataset.kanddStyle=file;document.head.appendChild(el)}
 function injectScript(file){if(document.querySelector('[data-kandd-script="'+file+'"]'))return;const el=document.createElement('script');el.src=new URL(file,root).href;el.defer=true;el.dataset.kanddScript=file;document.head.appendChild(el)}
 injectStyle('kandd-floating-tools.css');
+injectStyle('kandd-sidebar-behavior.css');
 injectScript('kandd-floating-tools.js');
 if(!document.querySelector('script[src*="pronunciation-helper"]'))injectScript('pronunciation-helper.js');
 const url=(p)=>new URL(p,root).href;
 const current=new URL(location.href);
 const home=current.pathname.replace(/\/+$/,'/').endsWith('/index.html')||current.pathname===root.pathname||current.pathname===root.pathname.replace(/\/$/,'');
 if(home)document.documentElement.classList.add('kandd-home');
-const svg={home:'<path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/>',lessons:'<path d="M4 5c3-1 5-1 8 1 3-2 5-2 8-1v14c-3-1-5-1-8 1-3-2-5-2-8-1zM12 6v14"/>',learning:'<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/>',teacher:'<path d="M3 8 12 3l9 5-9 5zM7 11v5c3 3 7 3 10 0v-5M21 8v8"/>',contact:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>',admin:'<path d="m12 2 8 4v6c0 5-3 8-8 10-5-2-8-5-8-10V6zM9 12l2 2 4-4"/>',account:'<circle cx="12" cy="8" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/>',out:'<path d="M10 4H5v16h5M14 8l4 4-4 4M18 12H9"/>',menu:'<path d="M4 6h16M4 12h16M4 18h16"/>'};
+const svg={home:'<path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/>',lessons:'<path d="M4 5c3-1 5-1 8 1 3-2 5-2 8-1v14c-3-1-5-1-8 1-3-2-5-2-8-1zM12 6v14"/>',pronunciation:'<path d="M5 9v6h4l5 4V5L9 9H5z"/><path d="M17 9a4 4 0 0 1 0 6M19 6a8 8 0 0 1 0 12"/>',translator:'<path d="M4 5h12M10 3v2M6 9c2 5 5 8 10 10M15 9c-2 5-5 8-10 10"/><path d="M14 14h7M17.5 11l3.5 9M17.5 11L14 20"/>',learning:'<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/>',teacher:'<path d="M3 8 12 3l9 5-9 5zM7 11v5c3 3 7 3 10 0v-5M21 8v8"/>',contact:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>',admin:'<path d="m12 2 8 4v6c0 5-3 8-8 10-5-2-8-5-8-10V6zM9 12l2 2 4-4"/>',account:'<circle cx="12" cy="8" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/>',out:'<path d="M10 4H5v16h5M14 8l4 4-4 4M18 12H9"/>',menu:'<path d="M4 6h16M4 12h16M4 18h16"/>'};
 const icon=(n)=>'<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+svg[n]+'</svg>';
 const nav=document.createElement('aside');nav.id='kandd-sidebar';nav.className=home?'kandd-expanded':'kandd-collapsed';nav.setAttribute('aria-label','Kandd Learning site navigation');
 const links=[['lessons','Explore Lessons','level1.html']];
 const header=document.createElement('div');header.className='kandd-side-head';header.innerHTML='<a class="kandd-brand-home" href="'+url('index.html')+'" title="Go to Kandd Learning homepage" aria-label="Kandd Learning homepage"><span class="kandd-side-logo">K</span><span class="kandd-side-name">Kandd Learning</span></a>';
 const toggle=document.createElement('button');toggle.type='button';toggle.className='kandd-side-toggle';toggle.setAttribute('aria-label',home?'Collapse navigation':'Expand navigation');toggle.title='Expand or collapse menu';toggle.innerHTML=icon('menu');header.appendChild(toggle);nav.appendChild(header);
 const list=document.createElement('nav');list.setAttribute('aria-label','Main links');nav.appendChild(list);
-function add(key,label,path){const a=document.createElement('a');a.href=url(path);a.className='kandd-side-link';a.title=label;a.innerHTML=icon(key)+'<span class="kandd-side-label"></span>';a.querySelector('span').textContent=label;if(new URL(a.href).pathname===current.pathname)a.setAttribute('aria-current','page');list.appendChild(a);return a;}
+function add(key,label,path){const a=document.createElement('a');a.href=url(path);a.className='kandd-side-link';a.title=label;a.dataset.hoverLabel=label;a.innerHTML=icon(key)+'<span class="kandd-side-label"></span>';a.querySelector('span').textContent=label;if(new URL(a.href).pathname===current.pathname)a.setAttribute('aria-current','page');list.appendChild(a);return a;}
 links.forEach(x=>add(...x));
 const teacherDash=add('teacher','Dashboard','teacher/dashboard.html');teacherDash.hidden=true;
 const studentDash=add('learning','My Learning','dashboard.html');studentDash.hidden=true;
 const applyTeach=add('teacher','Apply to Teach','teacher-apply.html');
 const contact=add('contact','Contact Us','contact.html');
-const pronunciation=add('learning','Pronunciation Helper','pronunciation.html');
-const translator=add('learning','Spanish ↔ English Translator','translator.html');
+const pronunciation=add('pronunciation','Pronunciation Helper','pronunciation.html');
+const translator=add('translator','Spanish ↔ English Translator','translator.html');
 const myTeacher=add('teacher','My Teacher','student/my-teacher.html');myTeacher.hidden=true;
 const account=add('account','Sign In','login.html');
 const admin=add('admin','Administrator','admin.html');admin.hidden=true;
@@ -38,46 +39,37 @@ function orderLinks(isTeacher){
 const linksEl=list.querySelector('a[href="'+url('level1.html')+'"]');
 
 const logout=document.createElement('button');logout.type='button';logout.className='kandd-side-link kandd-side-logout';logout.title='Sign Out';logout.innerHTML=icon('out')+'<span class="kandd-side-label">Sign Out</span>';logout.hidden=true;list.appendChild(logout);
-// Hover opens the menu temporarily; the menu button pins it open.
-// Pin preference is remembered across pages on this browser.
+// The hamburger is the ONLY way to expand the full navigation. Hover on a
+// collapsed item shows its own label, without resizing or shifting the page.
 const pinKey='kandd-sidebar-pinned-v1';
 let pinned=false;
-try{pinned=localStorage.getItem(pinKey)==='true';}catch(e){}
-let hovering=false;
+try{pinned=localStorage.getItem(pinKey)==='true'}catch(e){}
 const mobileMenu=()=>window.matchMedia('(max-width: 767px), (hover: none)').matches;
-let mobileCloseTimer=null;
-function clearMobileClose(){if(mobileCloseTimer){clearTimeout(mobileCloseTimer);mobileCloseTimer=null}}
-function scheduleMobileClose(){clearMobileClose();if(!mobileMenu())return;mobileCloseTimer=setTimeout(()=>{pinned=false;hovering=false;try{localStorage.setItem(pinKey,'false')}catch(e){}applyState()},3500)}
-
 function applyState(){
- const expanded=(home&&!mobileMenu())||pinned||hovering;
+ const expanded=pinned;
  nav.classList.toggle('kandd-expanded',expanded);
  nav.classList.toggle('kandd-collapsed',!expanded);
- const doc=document.documentElement;
- doc.classList.toggle('kandd-side-expanded',expanded);
- doc.classList.toggle('kandd-side-collapsed',!expanded);
- // A temporary hover floats above the page; pinning reserves full width.
- doc.classList.toggle('kandd-side-overlay',expanded&&!home&&!pinned);
- toggle.setAttribute('aria-pressed',String(pinned));
- toggle.setAttribute('aria-label',pinned?'Unpin navigation menu':'Pin navigation menu open');
- toggle.title=pinned?'Unpin menu (auto-collapse when pointer leaves)':'Pin menu open';
+ document.documentElement.classList.toggle('kandd-side-expanded',expanded);
+ document.documentElement.classList.toggle('kandd-side-collapsed',!expanded);
+ // Always overlay the page when expanded; never push its contents sideways.
+ document.documentElement.classList.toggle('kandd-side-overlay',expanded);
+ toggle.setAttribute('aria-expanded',String(expanded));
+ toggle.setAttribute('aria-label',expanded?'Close navigation menu':'Open navigation menu');
+ toggle.title=expanded?'Close menu':'Open full menu';
 }
+function closeMenu(){pinned=false;try{localStorage.setItem(pinKey,'false')}catch(e){}applyState()}
 toggle.addEventListener('click',()=>{
  pinned=!pinned;
- try{localStorage.setItem(pinKey,String(pinned));}catch(e){}
+ try{localStorage.setItem(pinKey,String(pinned))}catch(e){}
  applyState();
- if(mobileMenu()&&pinned)scheduleMobileClose();else clearMobileClose();
 });
-nav.addEventListener('pointerenter',e=>{if(e.pointerType==='mouse'||e.pointerType==='pen'){hovering=true;applyState();}});
-nav.addEventListener('pointerleave',e=>{if(e.pointerType==='mouse'||e.pointerType==='pen'){hovering=false;applyState();}});
-// Keyboard users can explore the expanded menu with Tab.
-nav.addEventListener('focusin',()=>{hovering=true;applyState();});
-nav.addEventListener('focusout',e=>{if(!nav.contains(e.relatedTarget)){hovering=false;applyState();}});
-// On touch devices, the menu retracts automatically if no link is selected.
-nav.addEventListener('pointerdown',e=>{if(mobileMenu()&&e.target.closest('a,button')!==toggle){clearMobileClose()}},true);
-document.addEventListener('pointerdown',e=>{if(mobileMenu()&&!nav.contains(e.target)&&(pinned||hovering)){clearMobileClose();pinned=false;hovering=false;try{localStorage.setItem(pinKey,'false')}catch(err){}applyState()}},true);
-window.addEventListener('resize',()=>{if(mobileMenu()){if(pinned)scheduleMobileClose()}else clearMobileClose();applyState()});
-if(mobileMenu()){pinned=false;hovering=false;applyState()}
+// Explicit hamburger openings stay open on mobile until dismissed or navigated.
+document.addEventListener('pointerdown',e=>{if(pinned&&!nav.contains(e.target))closeMenu()},true);
+list.addEventListener('click',e=>{if(e.target.closest('a'))closeMenu()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&pinned){closeMenu();toggle.focus()}});
+window.addEventListener('resize',applyState);
+if(mobileMenu())pinned=false;
+applyState();
 
 logout.addEventListener('click',async()=>{try{localStorage.removeItem('kandd-last-activity-v1');}catch(e){}try{if(window.kanddDb)await window.kanddDb.auth.signOut();else if(window.supabase){const client=window.supabase.createClient('https://hfqallzmxsmkiqmolzui.supabase.co','sb_publishable_O7ZvBkAu8JH939O0ylNOkA_Y7aYEnQr');await client.auth.signOut();}location.href=url('index.html')}catch(e){alert('Could not sign out. Please try again.')}});
 // Five-minute INACTIVITY sign-out; warning at four minutes with a live countdown.

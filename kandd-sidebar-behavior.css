@@ -1,0 +1,16 @@
+/* Only the hamburger expands the menu. Expanded menu floats above content. */
+html.kandd-side-expanded body,html.kandd-side-collapsed body{padding-left:66px!important;transition:none!important}
+#kandd-sidebar{overflow:visible!important}
+#kandd-sidebar nav{overflow:visible!important}
+#kandd-sidebar.kandd-expanded{z-index:9005;box-shadow:10px 0 26px #102a4340}
+#kandd-sidebar.kandd-collapsed .kandd-side-link{position:relative}
+#kandd-sidebar.kandd-collapsed .kandd-side-link:hover::after,
+#kandd-sidebar.kandd-collapsed .kandd-side-link:focus-visible::after{
+ content:attr(data-hover-label);position:absolute;left:calc(100% + 12px);top:50%;transform:translateY(-50%);
+ background:#12385f;color:white;border-radius:9px;padding:10px 14px;white-space:nowrap;
+ font:700 13px/1.3 system-ui,sans-serif;box-shadow:0 5px 16px #0003;pointer-events:none;z-index:9010;
+}
+@media(max-width:767px){
+ html.kandd-side-expanded body,html.kandd-side-collapsed body{padding-left:66px!important}
+ #kandd-sidebar.kandd-collapsed .kandd-side-link:hover::after{display:none}
+}
