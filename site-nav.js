@@ -7,6 +7,7 @@ function injectStyle(file){if(document.querySelector('[data-kandd-style="'+file+
 function injectScript(file){if(document.querySelector('[data-kandd-script="'+file+'"]'))return;const el=document.createElement('script');el.src=new URL(file,root).href;el.defer=true;el.dataset.kanddScript=file;document.head.appendChild(el)}
 injectStyle('kandd-floating-tools.css');
 injectStyle('kandd-sidebar-behavior.css');
+injectStyle('kandd-brand-gradient.css');
 injectScript('kandd-floating-tools.js');
 if(!document.querySelector('script[src*="pronunciation-helper"]'))injectScript('pronunciation-helper.js');
 const url=(p)=>new URL(p,root).href;
@@ -17,7 +18,7 @@ const svg={home:'<path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1
 const icon=(n)=>'<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+svg[n]+'</svg>';
 const nav=document.createElement('aside');nav.id='kandd-sidebar';nav.className=home?'kandd-expanded':'kandd-collapsed';nav.setAttribute('aria-label','Kandd Learning site navigation');
 const links=[['lessons','Explore Lessons','level1.html']];
-const header=document.createElement('div');header.className='kandd-side-head';header.innerHTML='<a class="kandd-brand-home" href="'+url('index.html')+'" title="Go to Kandd Learning homepage" aria-label="Kandd Learning homepage"><span class="kandd-side-logo">K</span><span class="kandd-side-name">Kandd Learning</span></a>';
+const header=document.createElement('div');header.className='kandd-side-head';header.innerHTML='<a class="kandd-brand-home" href="'+url('index.html')+'" title="Go to Kandd Learning homepage" aria-label="Kandd Learning homepage"><span class="kandd-side-logo">K</span><img class="kandd-brand-image" src="' + url('kandd-logo.png') + '" alt="Kandd Learning"/></a>';
 const toggle=document.createElement('button');toggle.type='button';toggle.className='kandd-side-toggle';toggle.setAttribute('aria-label',home?'Collapse navigation':'Expand navigation');toggle.title='Expand or collapse menu';toggle.innerHTML=icon('menu');header.appendChild(toggle);nav.appendChild(header);
 const list=document.createElement('nav');list.setAttribute('aria-label','Main links');nav.appendChild(list);
 function add(key,label,path){const a=document.createElement('a');a.href=url(path);a.className='kandd-side-link';a.title=label;a.dataset.hoverLabel=label;a.innerHTML=icon(key)+'<span class="kandd-side-label"></span>';a.querySelector('span').textContent=label;if(new URL(a.href).pathname===current.pathname)a.setAttribute('aria-current','page');list.appendChild(a);return a;}
@@ -33,7 +34,7 @@ const account=add('account','Sign In','login.html');
 const admin=add('admin','Administrator','admin.html');admin.hidden=true;
 // Reorder links for the signed-in role without duplicating any item.
 function orderLinks(isTeacher){
- const order=isTeacher?[teacherDash,pronunciation,translator,linksEl,contact,admin,account,logout]:[studentDash,pronunciation,translator,myTeacher,linksEl,applyTeach,contact,admin,account,logout];
+ const order=isTeacher?[teacherDash,linksEl,pronunciation,translator,contact,admin,account,logout]:home?[linksEl,studentDash,pronunciation,translator,myTeacher,applyTeach,contact,admin,account,logout]:[studentDash,pronunciation,translator,myTeacher,linksEl,applyTeach,contact,admin,account,logout];
  order.forEach(el=>list.appendChild(el));
 }
 const linksEl=list.querySelector('a[href="'+url('level1.html')+'"]');
