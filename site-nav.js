@@ -5,12 +5,12 @@ const script=document.currentScript;
 const root=new URL('./',script.src);
 function injectStyle(file){if(document.querySelector('[data-kandd-style="'+file+'"]'))return;const el=document.createElement('link');el.rel='stylesheet';el.href=new URL(file,root).href;el.dataset.kanddStyle=file;document.head.appendChild(el)}
 function injectScript(file){if(document.querySelector('[data-kandd-script="'+file+'"]'))return;const el=document.createElement('script');el.src=new URL(file,root).href;el.defer=true;el.dataset.kanddScript=file;document.head.appendChild(el)}
-injectStyle('kandd-floating-tools.css');
-injectStyle('kandd-sidebar-behavior.css');
-injectStyle('kandd-brand-gradient.css?v=header-menu-3');
-injectStyle('kandd-header-menu-fixes.css?v=3');
-injectStyle('kandd-seamless-sitewide.css?v=1');
-injectStyle('kandd-stable-layout.css?v=2');
+
+
+
+
+
+
 injectScript('kandd-password-toggle.js?v=3');
 injectScript('kandd-floating-tools.js');
 if(!document.querySelector('script[src*="pronunciation-helper"]'))injectScript('pronunciation-helper.js');
@@ -20,7 +20,7 @@ const home=current.pathname.replace(/\/+$/,'/').endsWith('/index.html')||current
 if(home)document.documentElement.classList.add('kandd-home');
 const svg={home:'<path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/>',lessons:'<path d="M4 5c3-1 5-1 8 1 3-2 5-2 8-1v14c-3-1-5-1-8 1-3-2-5-2-8-1zM12 6v14"/>',pronunciation:'<path d="M5 9v6h4l5 4V5L9 9H5z"/><path d="M17 9a4 4 0 0 1 0 6M19 6a8 8 0 0 1 0 12"/>',translator:'<path d="M4 5h12M10 3v2M6 9c2 5 5 8 10 10M15 9c-2 5-5 8-10 10"/><path d="M14 14h7M17.5 11l3.5 9M17.5 11L14 20"/>',learning:'<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/>',applyTeach:'<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h3M14 15v5M11.5 17.5h5"/>',teacher:'<path d="M3 8 12 3l9 5-9 5zM7 11v5c3 3 7 3 10 0v-5M21 8v8"/>',contact:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>',admin:'<path d="m12 2 8 4v6c0 5-3 8-8 10-5-2-8-5-8-10V6zM9 12l2 2 4-4"/>',account:'<circle cx="12" cy="8" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/>',out:'<path d="M10 4H5v16h5M14 8l4 4-4 4M18 12H9"/>',menu:'<path d="M4 6h16M4 12h16M4 18h16"/>'};
 const icon=(n)=>'<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+svg[n]+'</svg>';
-const nav=document.createElement('aside');nav.classList.add('kandd-nav-loading');nav.id='kandd-sidebar';nav.className=home?'kandd-expanded':'kandd-collapsed';nav.setAttribute('aria-label','Kandd Learning site navigation');
+const nav=document.createElement('aside');nav.id='kandd-sidebar';nav.className='kandd-nav-loading '+(home?'kandd-expanded':'kandd-collapsed');nav.setAttribute('aria-label','Kandd Learning site navigation');
 const links=[['lessons','Explore Lessons','level1.html']];
 const header=document.createElement('div');header.className='kandd-side-head';header.innerHTML='<a class="kandd-brand-home" href="'+url('index.html')+'" title="Go to Kandd Learning homepage" aria-label="Kandd Learning homepage"><span class="kandd-side-logo"><img class="kandd-side-k-image" src="' + url('kandd-k.png')+'?v=logo-fix-2' + '" alt="Kandd"/></span><img class="kandd-brand-image" src="' + url('kandd-logo.png')+'?v=logo-fix-2' + '" alt="Kandd Learning"/></a>';
 const toggle=document.createElement('button');toggle.type='button';toggle.className='kandd-side-toggle';toggle.setAttribute('aria-label',home?'Collapse navigation':'Expand navigation');toggle.title='Expand or collapse menu';toggle.innerHTML=icon('menu');header.appendChild(toggle);nav.appendChild(header);
