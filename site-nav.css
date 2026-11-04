@@ -158,3 +158,10 @@ html body #kandd-sidebar.kandd-collapsed .kandd-brand-image {
   /* K occupies approximately the first 30px of the 139px full logo. */
   clip-path:inset(0 calc(100% - 30px) 0 0)!important;
 }
+
+/* Precise collapsed crop: show only the original K glyph.
+   The lower swoosh begins beneath the glyph and the next letter begins
+   just beyond the K. Keep the image itself unchanged across both states. */
+html body #kandd-sidebar.kandd-collapsed .kandd-brand-image {
+  clip-path:inset(0 calc(100% - 29px) 11px 0)!important;
+}
