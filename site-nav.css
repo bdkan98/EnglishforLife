@@ -165,3 +165,29 @@ html body #kandd-sidebar.kandd-collapsed .kandd-brand-image {
 html body #kandd-sidebar.kandd-collapsed .kandd-brand-image {
   clip-path:inset(0 calc(100% - 29px) 11px 0)!important;
 }
+
+/* FINAL: pixel-identical K, extracted from the original full logo PNG.
+   Both images have the same 900x329 canvas and render at exactly 139px wide.
+   No crop, no swoosh, no neighboring letters, no layout shift. */
+html body #kandd-sidebar.kandd-collapsed .kandd-brand-image {
+  display:none!important;
+}
+html body #kandd-sidebar.kandd-collapsed .kandd-side-logo {
+  display:block!important;
+  position:absolute!important;left:0!important;top:0!important;
+  width:139px!important;height:auto!important;
+  overflow:visible!important;background:transparent!important;
+}
+html body #kandd-sidebar.kandd-collapsed .kandd-side-k-image {
+  display:block!important;position:absolute!important;
+  left:0!important;top:0!important;width:139px!important;height:auto!important;
+  max-width:none!important;clip-path:none!important;transform:none!important;
+  content:url("kandd-k-exact.png")!important;
+}
+html body #kandd-sidebar.kandd-expanded .kandd-side-logo,
+html body #kandd-sidebar.kandd-expanded .kandd-side-k-image {
+  display:none!important;
+}
+html body #kandd-sidebar.kandd-expanded .kandd-brand-image {
+  display:block!important;clip-path:none!important;
+}
