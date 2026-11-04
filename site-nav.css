@@ -127,3 +127,34 @@ html body #kandd-sidebar .kandd-side-k-image {display:block!important; width:36p
 html body #kandd-sidebar .kandd-brand-image {display:none!important;}
 html body #kandd-sidebar.kandd-expanded .kandd-side-k-image {display:none!important;}
 html body #kandd-sidebar.kandd-expanded .kandd-brand-image {display:block!important; position:absolute!important; left:0!important; top:0!important; width:139px!important; height:auto!important; max-width:none!important; clip-path:none!important; transform:none!important;}
+
+/* Exact K lock: both modes render the SAME full-logo PNG at identical
+   coordinates and dimensions. Collapsed mode only masks everything after K.
+   This avoids any differences in PNG crop, scale, or anti-aliasing. */
+html body #kandd-sidebar .kandd-brand-home,
+html body #kandd-sidebar.kandd-expanded .kandd-brand-home,
+html body #kandd-sidebar.kandd-collapsed .kandd-brand-home {
+  position:absolute!important; top:14px!important; left:14px!important;
+  display:block!important; padding:0!important; margin:0!important;
+  height:51px!important; min-height:51px!important;
+  transform:none!important; overflow:visible!important;
+}
+html body #kandd-sidebar .kandd-side-logo,
+html body #kandd-sidebar .kandd-side-k-image {
+  display:none!important;
+}
+html body #kandd-sidebar .kandd-brand-image,
+html body #kandd-sidebar.kandd-expanded .kandd-brand-image,
+html body #kandd-sidebar.kandd-collapsed .kandd-brand-image {
+  display:block!important; position:absolute!important;
+  top:0!important; left:0!important; width:139px!important;
+  height:auto!important; max-width:none!important;
+  transform:none!important; clip-path:none!important;
+  opacity:1!important; visibility:visible!important;
+}
+html body #kandd-sidebar.kandd-expanded .kandd-brand-home {width:139px!important;}
+html body #kandd-sidebar.kandd-collapsed .kandd-brand-home {width:30px!important;}
+html body #kandd-sidebar.kandd-collapsed .kandd-brand-image {
+  /* K occupies approximately the first 30px of the 139px full logo. */
+  clip-path:inset(0 calc(100% - 30px) 0 0)!important;
+}
