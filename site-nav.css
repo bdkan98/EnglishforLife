@@ -91,3 +91,29 @@ html.kandd-side-overlay body { padding-left:66px!important; transition:none!impo
 html.kandd-side-expanded body,
 html.kandd-side-collapsed body,
 html.kandd-side-overlay body { transition:none!important; }
+
+/* Identical logo origin in collapsed and expanded modes. */
+html body #kandd-sidebar .kandd-side-head {
+  position:relative!important; min-height:94px!important;
+  height:94px!important; box-sizing:border-box!important;
+  padding:0!important; display:block!important;
+}
+html body #kandd-sidebar .kandd-brand-home,
+html body #kandd-sidebar.kandd-collapsed .kandd-brand-home,
+html body #kandd-sidebar.kandd-expanded .kandd-brand-home {
+  position:absolute!important; top:14px!important; left:14px!important;
+  margin:0!important; padding:0!important; transform:none!important;
+  justify-content:flex-start!important; align-items:center!important;
+  width:auto!important; height:36px!important; min-height:36px!important;
+}
+html body #kandd-sidebar .kandd-side-logo {
+  margin:0!important; padding:0!important; transform:none!important;
+  width:36px!important; height:36px!important; flex:0 0 36px!important;
+}
+html body #kandd-sidebar .kandd-side-toggle {
+  position:absolute!important; right:9px!important; top:54px!important;
+  margin:0!important; transform:none!important;
+}
+html body #kandd-sidebar.kandd-expanded .kandd-side-toggle {
+  top:54px!important;
+}
