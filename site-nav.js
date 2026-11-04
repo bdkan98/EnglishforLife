@@ -10,6 +10,7 @@ injectStyle('kandd-sidebar-behavior.css');
 injectStyle('kandd-brand-gradient.css?v=header-menu-3');
 injectStyle('kandd-header-menu-fixes.css?v=3');
 injectStyle('kandd-seamless-sitewide.css?v=1');
+injectStyle('kandd-stable-layout.css?v=2');
 injectScript('kandd-password-toggle.js?v=3');
 injectScript('kandd-floating-tools.js');
 if(!document.querySelector('script[src*="pronunciation-helper"]'))injectScript('pronunciation-helper.js');
@@ -124,15 +125,9 @@ warning.querySelector('#kandd-idle-stay').addEventListener('click',e=>{e.stopPro
 const profile=document.createElement('div');profile.id='kandd-account-header';profile.setAttribute('aria-label','Account profile');
 profile.innerHTML='<a class="kandd-profile-link" href="'+url('account.html')+'"><span class="kandd-avatar" aria-hidden="true">?</span><span class="kandd-profile-details"><strong class="kandd-profile-name">Account</strong><small class="kandd-profile-email">Sign in or create an account</small></span></a><button class="kandd-profile-signout" type="button" hidden>Sign Out</button>';
 profile.querySelector('button').addEventListener('click',()=>logout.click());
-function init(){orderLinks(false);document.body.prepend(nav);document.body.appendChild(warning);const top=document.querySelector('header.top');if(top){
-  // Replace the old wordmark on every page, even if a page uses different header markup.
-  const brandmark=top.querySelector('.brandmark, .kandd-top-brand-link');
-  const textBrand=brandmark || [...top.querySelectorAll('.brand')].find(el=>/Kandd Learning/i.test(el.textContent.trim()));
-  if(textBrand){
-    const link=document.createElement('a');link.href=url('index.html');link.className='kandd-top-brand-link';link.setAttribute('aria-label','Kandd Learning homepage');
-    const img=document.createElement('img');img.src=url('kandd-logo.png')+'?v=logo-fix-2';img.alt='Kandd';img.className='kandd-top-brand-image';
-    link.appendChild(img);textBrand.replaceWith(link);
-  }
+function init(){orderLinks(false);applyState();document.body.prepend(nav);document.body.appendChild(warning);const top=document.querySelector('header.top');if(top){
+  // Sidebar is the only place where the Kandd logo is shown.
+  // Hide any old header wordmark before the page is displayed via shared CSS.
  top.appendChild(profile);top.classList.add('kandd-profile-header');}else{const bar=document.createElement('header');bar.className='kandd-global-account-bar';bar.appendChild(profile);document.body.insertBefore(bar,nav.nextSibling);}applyState();updateAccount()}
 function setProfile(user,firstName){
  const name=profile.querySelector('.kandd-profile-name'),email=profile.querySelector('.kandd-profile-email'),avatar=profile.querySelector('.kandd-avatar'),link=profile.querySelector('.kandd-profile-link'),out=profile.querySelector('.kandd-profile-signout');

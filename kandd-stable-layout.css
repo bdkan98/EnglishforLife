@@ -1,0 +1,24 @@
+/* Stable shared layout, preloaded before first paint on affected pages. */
+:root{--kandd-side-width:66px;--kandd-side-wide:242px}
+html body #kandd-sidebar.kandd-collapsed{width:66px!important;min-width:66px!important;max-width:66px!important;}
+html body #kandd-sidebar.kandd-expanded{width:242px!important;min-width:242px!important;max-width:242px!important;}
+html body #kandd-sidebar{box-sizing:border-box!important;transition:none!important;}
+html body #kandd-sidebar .kandd-side-head{min-height:94px!important;box-sizing:border-box!important;}
+/* Header retains navigation and account controls, but never a second logo. */
+html body header.top .brandmark,
+html body header.top .kandd-top-brand-link,
+html body header.top > a.brand,
+html body header.top > .brand,
+html body header.top > .brandicon{display:none!important;}
+html body header.top{box-sizing:border-box;}
+html body header.top .kandd-account-header{min-width:170px;}
+/* Avoid transition-driven icon drift and unexpected movement on reload. */
+html body #kandd-sidebar .kandd-side-link,
+html body #kandd-sidebar .kandd-side-link svg,
+html body #kandd-sidebar .kandd-side-toggle,
+html body #kandd-sidebar .kandd-side-logo,
+html body #kandd-sidebar .kandd-brand-image,
+html body #kandd-sidebar .kandd-side-k-image{transition:none!important;animation:none!important;}
+/* Prevent header and sidebar borders from appearing at the join. */
+html body header.top,html body #kandd-sidebar{border:0!important;outline:0!important;box-shadow:none!important;}
+@media(max-width:767px){html body #kandd-sidebar.kandd-expanded{width:min(270px,calc(100vw - 76px))!important;min-width:0!important;max-width:calc(100vw - 76px)!important;}}
