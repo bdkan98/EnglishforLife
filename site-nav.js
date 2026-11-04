@@ -18,7 +18,7 @@ const svg={home:'<path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1
 const icon=(n)=>'<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+svg[n]+'</svg>';
 const nav=document.createElement('aside');nav.id='kandd-sidebar';nav.className=home?'kandd-expanded':'kandd-collapsed';nav.setAttribute('aria-label','Kandd Learning site navigation');
 const links=[['lessons','Explore Lessons','level1.html']];
-const header=document.createElement('div');header.className='kandd-side-head';header.innerHTML='<a class="kandd-brand-home" href="'+url('index.html')+'" title="Go to Kandd Learning homepage" aria-label="Kandd Learning homepage"><span class="kandd-side-logo">K</span><img class="kandd-brand-image" src="' + url('kandd-logo.png') + '" alt="Kandd Learning"/></a>';
+const header=document.createElement('div');header.className='kandd-side-head';header.innerHTML='<a class="kandd-brand-home" href="'+url('index.html')+'" title="Go to Kandd Learning homepage" aria-label="Kandd Learning homepage"><span class="kandd-side-logo"><img class="kandd-side-k-image" src="' + url('kandd-k.png') + '" alt="Kandd"/></span><img class="kandd-brand-image" src="' + url('kandd-logo.png') + '" alt="Kandd Learning"/></a>';
 const toggle=document.createElement('button');toggle.type='button';toggle.className='kandd-side-toggle';toggle.setAttribute('aria-label',home?'Collapse navigation':'Expand navigation');toggle.title='Expand or collapse menu';toggle.innerHTML=icon('menu');header.appendChild(toggle);nav.appendChild(header);
 const list=document.createElement('nav');list.setAttribute('aria-label','Main links');nav.appendChild(list);
 function add(key,label,path){const a=document.createElement('a');a.href=url(path);a.className='kandd-side-link';a.title=label;a.dataset.hoverLabel=label;a.innerHTML=icon(key)+'<span class="kandd-side-label"></span>';a.querySelector('span').textContent=label;if(new URL(a.href).pathname===current.pathname)a.setAttribute('aria-current','page');list.appendChild(a);return a;}
@@ -120,7 +120,16 @@ warning.querySelector('#kandd-idle-stay').addEventListener('click',e=>{e.stopPro
 const profile=document.createElement('div');profile.id='kandd-account-header';profile.setAttribute('aria-label','Account profile');
 profile.innerHTML='<a class="kandd-profile-link" href="'+url('account.html')+'"><span class="kandd-avatar" aria-hidden="true">?</span><span class="kandd-profile-details"><strong class="kandd-profile-name">Account</strong><small class="kandd-profile-email">Sign in or create an account</small></span></a><button class="kandd-profile-signout" type="button" hidden>Sign Out</button>';
 profile.querySelector('button').addEventListener('click',()=>logout.click());
-function init(){orderLinks(false);document.body.prepend(nav);document.body.appendChild(warning);const top=document.querySelector('header.top');if(top){top.appendChild(profile);top.classList.add('kandd-profile-header');}else{const bar=document.createElement('header');bar.className='kandd-global-account-bar';bar.appendChild(profile);document.body.insertBefore(bar,nav.nextSibling);}applyState();updateAccount()}
+function init(){orderLinks(false);document.body.prepend(nav);document.body.appendChild(warning);const top=document.querySelector('header.top');if(top){
+ // Replace the header's text-based Kandd Learning brand with the new transparent wordmark.
+ const brandmark=top.querySelector('.brandmark');
+ const textBrand=brandmark || [...top.querySelectorAll('.brand')].find(el=>/^Kandd Learning$/i.test(el.textContent.trim()));
+ if(textBrand){
+   const link=document.createElement('a');link.href=url('index.html');link.className='kandd-top-brand-link';link.setAttribute('aria-label','Kandd Learning homepage');
+   const img=document.createElement('img');img.src=url('kandd-logo.png');img.alt='Kandd';img.className='kandd-top-brand-image';link.appendChild(img);
+   textBrand.replaceWith(link);
+ }
+ top.appendChild(profile);top.classList.add('kandd-profile-header');}else{const bar=document.createElement('header');bar.className='kandd-global-account-bar';bar.appendChild(profile);document.body.insertBefore(bar,nav.nextSibling);}applyState();updateAccount()}
 function setProfile(user,firstName){
  const name=profile.querySelector('.kandd-profile-name'),email=profile.querySelector('.kandd-profile-email'),avatar=profile.querySelector('.kandd-avatar'),link=profile.querySelector('.kandd-profile-link'),out=profile.querySelector('.kandd-profile-signout');
  if(user){startIdle();const display=firstName||user.user_metadata?.full_name||user.user_metadata?.first_name||user.email?.split('@')[0]||'My Account';name.textContent=display;email.textContent=user.email||'My Learning';avatar.textContent=display.charAt(0).toUpperCase();link.href=url('dashboard.html');out.hidden=false;document.documentElement.classList.add('kandd-authenticated');}

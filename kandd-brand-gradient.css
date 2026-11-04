@@ -1,34 +1,22 @@
-/* Kandd logo and subtle warm-to-blue corner gradient. The far right of the
-   top header and the bottom of the sidebar remain the original #12385f. */
+/* Smooth Kandd corner gradient; no solid rectangle behind the icon list. */
 #kandd-sidebar {
- background:linear-gradient(180deg,#f9f5ee 0px,#f4e8d7 94px,#315474 220px,#12385f 440px,#12385f 100%) !important;
+ background:linear-gradient(to bottom,#faf5ed 0px,#f4e8d7 94px,#d4c9c0 150px,#7891a3 265px,#315474 390px,#12385f 570px,#12385f 100%) !important;
 }
-/* Use a white inset behind the full-color wordmark so its speech bubbles stay clear. */
-#kandd-sidebar .kandd-side-head {box-sizing:border-box;min-height:94px;align-items:center;gap:6px;}
-#kandd-sidebar .kandd-brand-home {display:flex;align-items:center;min-width:0;flex:1 1 auto;text-decoration:none;}
-#kandd-sidebar .kandd-brand-image {display:block;width:100%;max-width:170px;height:auto;object-fit:contain;background:white;border-radius:9px;padding:4px;box-sizing:border-box;}
-#kandd-sidebar .kandd-side-toggle {color:#173d5e;background:#ffffffc7;flex-shrink:0;}
-#kandd-sidebar.kandd-expanded .kandd-side-logo {display:none;}
-#kandd-sidebar.kandd-collapsed .kandd-brand-image {display:none;}
-#kandd-sidebar.kandd-collapsed .kandd-side-head {min-height:108px;}
-#kandd-sidebar.kandd-collapsed .kandd-side-logo {display:grid;background:white;color:#173f67;}
+#kandd-sidebar nav,
+#kandd-sidebar.kandd-expanded nav,
+#kandd-sidebar.kandd-collapsed nav {
+ background:transparent !important;
+ border-radius:0 !important;
+ box-shadow:none !important;
+}
+/* Dark labels over the light gradient; pale labels on the navy portion. */
 #kandd-sidebar .kandd-side-link {color:#f4f8fc;}
-#kandd-sidebar nav {margin-top:24px;}
-/* Keep navigation icons in a dark blue field rather than the light gradient. */
-#kandd-sidebar.kandd-expanded nav {margin-top:24px;}
-#kandd-sidebar.kandd-collapsed nav {margin-top:24px;}
-body:has(#kandd-sidebar) header.top.kandd-profile-header,
-body:has(#kandd-sidebar) .kandd-global-account-bar {
- background:linear-gradient(90deg,#f8efe2 0%,#e6d4bc 8%,#56728a 28%,#12385f 57%,#12385f 100%) !important;
-}
-/* The original top-header content uses light text; keep it on the dark section. */
-body:has(#kandd-sidebar) header.top.kandd-profile-header {padding-left:max(32px, 9vw);box-sizing:border-box;}
-@media(max-width:767px){
- #kandd-sidebar .kandd-side-head {min-height:94px;}
- #kandd-sidebar nav,#kandd-sidebar.kandd-expanded nav {margin-top:24px;}
- #kandd-sidebar.kandd-collapsed nav {margin-top:24px;}
- body:has(#kandd-sidebar) header.top.kandd-profile-header {padding-left:16px;}
-}
-
-#kandd-sidebar nav {background:#12385f;border-radius:14px;margin-left:5px;margin-right:5px;padding-top:12px;padding-bottom:12px;}
-#kandd-sidebar.kandd-collapsed nav {margin-left:2px;margin-right:2px;}
+#kandd-sidebar .kandd-side-head {min-height:94px;}
+#kandd-sidebar .kandd-brand-image {background:transparent!important;border-radius:0!important;padding:0!important;max-width:170px;}
+#kandd-sidebar.kandd-collapsed .kandd-side-logo {background:transparent!important;padding:0!important;display:grid;place-items:center;}
+#kandd-sidebar .kandd-side-k-image {width:35px;height:44px;object-fit:contain;display:block;}
+/* Replace the redundant text brand with the new transparent logo. */
+header.top .kandd-top-brand-image {display:block;width:clamp(115px,14vw,200px);height:auto;max-height:66px;object-fit:contain;}
+header.top .kandd-top-brand-link {display:inline-flex;align-items:center;text-decoration:none;flex-shrink:0;}
+@media(max-width:767px){header.top .kandd-top-brand-image {width:115px;max-height:52px;}}
+#kandd-sidebar .kandd-side-link {text-shadow:0 1px 2px #12385f88;}
