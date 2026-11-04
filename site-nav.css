@@ -117,3 +117,12 @@ html body #kandd-sidebar .kandd-side-toggle {
 html body #kandd-sidebar.kandd-expanded .kandd-side-toggle {
   top:54px!important;
 }
+
+/* Screenshot-calibrated alignment: the visible K in the full logo is slightly
+   farther right and higher than the isolated K, despite identical containers.
+   Adjust the full logo artwork only; do not move its anchor or hamburger. */
+html body #kandd-sidebar.kandd-expanded .kandd-brand-image {
+  position:relative!important;
+  left:-3px!important;
+  top:3px!important;
+}
