@@ -71,3 +71,51 @@ body:has(#kandd-sidebar) header.top .tag{margin-right:auto}
    Pinned sidebar may still reserve space by the existing expanded rule. */
 html.kandd-side-overlay body { padding-left:66px!important; transition:none!important; }
 @media(max-width:600px){html.kandd-side-overlay body{padding-left:66px!important}}
+
+/* Kandd first-paint stabilization (November 2026) */
+/* Shared fixed-coordinate gradient: both header and sidebar sample the same
+   viewport-anchored background, so the corner color meets without a seam. */
+html body #kandd-sidebar,
+html body header.top,
+html body header.top.kandd-profile-header,
+html body header.kandd-global-account-bar {
+  background-color:#12385f !important;
+  background-image:
+    radial-gradient(ellipse 650px 640px at 0px 0px,
+      #faf5ed 0%,#f4e8d7 17%,#d4c9c0 30%,
+      #7891a3 48%,#315474 70%,rgba(18,56,95,0) 100%),
+    linear-gradient(#12385f,#12385f) !important;
+  background-attachment:fixed !important;
+  background-position:0 0 !important;
+  background-repeat:no-repeat !important;
+  border:0 !important;
+  border-top:0 !important;
+  border-right:0 !important;
+  border-bottom:0 !important;
+  box-shadow:none !important;
+  outline:0 !important;
+}
+html body header.top::before,html body header.top::after{
+  box-shadow:none !important;
+}
+/* Standard navigation dimensions on every page. */
+html body #kandd-sidebar.kandd-collapsed{width:66px!important;min-width:66px!important;max-width:66px!important;}
+html body #kandd-sidebar.kandd-expanded{width:242px!important;min-width:242px!important;max-width:242px!important;}
+html body #kandd-sidebar .kandd-side-head{min-height:94px!important;}
+html body:has(#kandd-sidebar){background-color:#f6f8fc;}
+
+/* First-paint layout: reserve the collapsed sidebar space before deferred JS runs. */
+html body{padding-left:66px!important;transition:none!important;}
+html body header.top .brandmark,
+html body header.top .kandd-top-brand-link,
+html body header.top .k-nav{display:none!important;}
+html body header.top{min-height:72px;justify-content:flex-end;box-sizing:border-box;}
+html body #kandd-sidebar{transition:none!important;}
+html body #kandd-sidebar .kandd-side-link,
+html body #kandd-sidebar .kandd-side-link svg,
+html body #kandd-sidebar .kandd-side-toggle,
+html body #kandd-sidebar .kandd-side-logo{transition:none!important;animation:none!important;}
+/* The menu is built before role permissions are resolved. Do not display
+   intermediate link ordering while the authenticated role is being checked. */
+#kandd-sidebar.kandd-nav-loading nav{visibility:hidden!important;}
+@media print{html body{padding-left:0!important;}}
