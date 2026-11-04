@@ -118,11 +118,32 @@ html body #kandd-sidebar.kandd-expanded .kandd-side-toggle {
   top:54px!important;
 }
 
-/* Screenshot-calibrated alignment: the visible K in the full logo is slightly
-   farther right and higher than the isolated K, despite identical containers.
-   Adjust the full logo artwork only; do not move its anchor or hamburger. */
-html body #kandd-sidebar.kandd-expanded .kandd-brand-image {
-  position:relative!important;
-  left:-3px!important;
-  top:3px!important;
+
+/* Pixel-consistent brand: the SAME standalone K is always visible in both
+   sidebar states. The full logo supplies only the remaining letters/artwork. */
+html body #kandd-sidebar .kandd-brand-home { overflow:visible!important; }
+html body #kandd-sidebar .kandd-side-logo {
+  position:relative!important; display:block!important;
+  flex:0 0 32px!important; width:32px!important; height:39px!important;
+  background:transparent!important; border-radius:0!important;
+  overflow:visible!important; z-index:2!important;
 }
+html body #kandd-sidebar .kandd-side-k-image {
+  display:block!important; position:absolute!important; left:0!important; top:0!important;
+  width:32px!important; height:39px!important; max-width:none!important;
+  object-fit:fill!important; transform:none!important;
+  opacity:1!important; visibility:visible!important;
+}
+html body #kandd-sidebar .kandd-brand-image {
+  display:none!important;
+}
+html body #kandd-sidebar.kandd-expanded .kandd-brand-image {
+  display:block!important; position:absolute!important;
+  left:0!important; top:0!important; width:139px!important; height:auto!important;
+  max-width:none!important; transform:none!important;
+  /* Hide the full logo's K; the identical standalone K stays in front. */
+  clip-path:inset(0 0 0 21%)!important;
+  z-index:1!important;
+}
+/* The full-logo asset contains a little transparent padding at the top. */
+html body #kandd-sidebar .kandd-brand-home {height:45px!important;}
