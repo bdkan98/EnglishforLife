@@ -1,0 +1,16 @@
+/* Match the approved sidebar gradient across the top header. */
+header.top, header.top.kandd-profile-header {
+ background:linear-gradient(90deg,#faf5ed 0%,#e7ded2 10%,#7891a3 35%,#315474 67%,#12385f 100%) !important;
+}
+/* Hide the header logo while the full sidebar overlays it, avoiding a duplicate partial wordmark. */
+html.kandd-side-expanded header.top .kandd-top-brand-link,
+html.kandd-side-expanded header.top .brandmark {visibility:hidden !important;}
+/* Keep header controls legible on the dark half. */
+header.top .k-nav, header.top .kandd-account-header {position:relative;z-index:1;}
+/* Allow brand to remain visible when sidebar is collapsed. */
+html.kandd-side-collapsed header.top .kandd-top-brand-link {visibility:visible !important;}
+/* Password reveal control; avoid covering typed text. */
+.kandd-password-field{position:relative;display:block;}
+.kandd-password-field input[type=password],.kandd-password-field input[type=text]{padding-right:85px!important;box-sizing:border-box;}
+.kandd-password-toggle{position:absolute;right:8px;top:50%;transform:translateY(-50%);border:1px solid #b6c2ce;border-radius:7px;background:#fff;color:#12385f;padding:5px 9px;cursor:pointer;font:600 12px system-ui,sans-serif;z-index:1;}
+.kandd-password-toggle:focus-visible{outline:2px solid #315474;outline-offset:2px;}

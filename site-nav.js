@@ -7,7 +7,9 @@ function injectStyle(file){if(document.querySelector('[data-kandd-style="'+file+
 function injectScript(file){if(document.querySelector('[data-kandd-script="'+file+'"]'))return;const el=document.createElement('script');el.src=new URL(file,root).href;el.defer=true;el.dataset.kanddScript=file;document.head.appendChild(el)}
 injectStyle('kandd-floating-tools.css');
 injectStyle('kandd-sidebar-behavior.css');
-injectStyle('kandd-brand-gradient.css?v=logo-fix-2');
+injectStyle('kandd-brand-gradient.css?v=header-menu-3');
+injectStyle('kandd-header-menu-fixes.css?v=3');
+injectScript('kandd-password-toggle.js?v=3');
 injectScript('kandd-floating-tools.js');
 if(!document.querySelector('script[src*="pronunciation-helper"]'))injectScript('pronunciation-helper.js');
 const url=(p)=>new URL(p,root).href;
@@ -65,11 +67,12 @@ toggle.addEventListener('click',()=>{
  applyState();
 });
 // Explicit hamburger openings stay open on mobile until dismissed or navigated.
-document.addEventListener('pointerdown',e=>{if(pinned&&!nav.contains(e.target))closeMenu()},true);
-list.addEventListener('click',e=>{if(e.target.closest('a'))closeMenu()});
+// Only the hamburger closes an explicitly expanded sidebar.
+// Navigation retains the explicit hamburger-open state across page changes.
+// Do not collapse when a navigation link is selected.
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&pinned){closeMenu();toggle.focus()}});
 window.addEventListener('resize',applyState);
-if(mobileMenu())pinned=false;
+// Keep saved menu state on mobile as well as desktop.
 applyState();
 
 logout.addEventListener('click',async()=>{try{localStorage.removeItem('kandd-last-activity-v1');}catch(e){}try{if(window.kanddDb)await window.kanddDb.auth.signOut();else if(window.supabase){const client=window.supabase.createClient('https://hfqallzmxsmkiqmolzui.supabase.co','sb_publishable_O7ZvBkAu8JH939O0ylNOkA_Y7aYEnQr');await client.auth.signOut();}location.href=url('index.html')}catch(e){alert('Could not sign out. Please try again.')}});
