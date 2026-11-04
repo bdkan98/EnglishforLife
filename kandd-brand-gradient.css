@@ -20,3 +20,17 @@ header.top .kandd-top-brand-image {display:block;width:clamp(115px,14vw,200px);h
 header.top .kandd-top-brand-link {display:inline-flex;align-items:center;text-decoration:none;flex-shrink:0;}
 @media(max-width:767px){header.top .kandd-top-brand-image {width:115px;max-height:52px;}}
 #kandd-sidebar .kandd-side-link {text-shadow:0 1px 2px #12385f88;}
+
+/* Logo display corrections: applies on desktop and mobile. */
+#kandd-sidebar .kandd-brand-home{display:flex!important;align-items:center;min-width:0;min-height:44px;flex:1 1 auto;text-decoration:none;overflow:visible;}
+#kandd-sidebar .kandd-brand-image{display:block!important;width:148px!important;max-width:100%!important;max-height:58px!important;height:auto!important;object-fit:contain!important;object-position:left center;background:transparent!important;}
+#kandd-sidebar.kandd-expanded .kandd-side-logo{display:none!important;}
+#kandd-sidebar.kandd-collapsed .kandd-brand-image{display:none!important;}
+#kandd-sidebar.kandd-collapsed .kandd-brand-home{flex:0 0 36px;justify-content:center;}
+#kandd-sidebar.kandd-collapsed .kandd-side-logo{display:grid!important;width:36px!important;height:44px!important;flex:0 0 36px!important;place-items:center;background:transparent!important;border:0!important;box-shadow:none!important;}
+#kandd-sidebar.kandd-collapsed .kandd-side-k-image{display:block!important;width:32px!important;height:43px!important;object-fit:contain!important;}
+#kandd-sidebar .kandd-side-head{gap:5px!important;}
+#kandd-sidebar.kandd-expanded .kandd-side-toggle{flex:0 0 30px;margin-left:auto;}
+header.top .kandd-top-brand-link{display:inline-flex!important;align-items:center;flex:0 1 auto;min-width:0;text-decoration:none;}
+header.top .kandd-top-brand-image{display:block!important;width:clamp(125px,15vw,200px)!important;max-width:100%!important;max-height:68px!important;height:auto!important;object-fit:contain!important;background:transparent!important;border:0!important;box-shadow:none!important;}
+@media(max-width:767px){#kandd-sidebar.kandd-expanded .kandd-brand-image{width:145px!important;max-height:50px!important;}header.top .kandd-top-brand-image{width:130px!important;max-height:54px!important;}}
