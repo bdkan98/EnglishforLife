@@ -9,6 +9,7 @@ injectStyle('kandd-floating-tools.css');
 injectStyle('kandd-sidebar-behavior.css');
 injectStyle('kandd-brand-gradient.css?v=header-menu-3');
 injectStyle('kandd-header-menu-fixes.css?v=3');
+injectStyle('kandd-seamless-sitewide.css?v=1');
 injectScript('kandd-password-toggle.js?v=3');
 injectScript('kandd-floating-tools.js');
 if(!document.querySelector('script[src*="pronunciation-helper"]'))injectScript('pronunciation-helper.js');
@@ -41,7 +42,7 @@ function orderLinks(isTeacher){
 }
 const linksEl=list.querySelector('a[href="'+url('level1.html')+'"]');
 
-const logout=document.createElement('button');logout.type='button';logout.className='kandd-side-link kandd-side-logout';logout.title='Sign Out';logout.innerHTML=icon('out')+'<span class="kandd-side-label">Sign Out</span>';logout.hidden=true;list.appendChild(logout);
+const logout=document.createElement('button');logout.type='button';logout.className='kandd-side-link kandd-side-logout';logout.title='Sign Out';logout.dataset.hoverLabel='Sign Out';logout.innerHTML=icon('out')+'<span class="kandd-side-label">Sign Out</span>';logout.hidden=true;list.appendChild(logout);
 // The hamburger is the ONLY way to expand the full navigation. Hover on a
 // collapsed item shows its own label, without resizing or shifting the page.
 const pinKey='kandd-sidebar-pinned-v1';

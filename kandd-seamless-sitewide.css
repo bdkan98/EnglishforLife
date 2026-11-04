@@ -1,0 +1,49 @@
+/* Shared fixed-coordinate gradient: both header and sidebar sample the same
+   viewport-anchored background, so the corner color meets without a seam. */
+html body #kandd-sidebar,
+html body header.top,
+html body header.top.kandd-profile-header,
+html body header.kandd-global-account-bar {
+  background-color:#12385f !important;
+  background-image:
+    radial-gradient(ellipse 650px 640px at 0px 0px,
+      #faf5ed 0%,#f4e8d7 17%,#d4c9c0 30%,
+      #7891a3 48%,#315474 70%,rgba(18,56,95,0) 100%),
+    linear-gradient(#12385f,#12385f) !important;
+  background-attachment:fixed !important;
+  background-position:0 0 !important;
+  background-repeat:no-repeat !important;
+  border:0 !important;
+  border-top:0 !important;
+  border-right:0 !important;
+  border-bottom:0 !important;
+  box-shadow:none !important;
+  outline:0 !important;
+}
+html body header.top::before,html body header.top::after{
+  box-shadow:none !important;
+}
+/* Standard navigation dimensions on every page. */
+html body #kandd-sidebar.kandd-collapsed{width:66px!important;min-width:66px!important;max-width:66px!important;}
+html body #kandd-sidebar.kandd-expanded{width:242px!important;min-width:242px!important;max-width:242px!important;}
+html body #kandd-sidebar .kandd-side-head{min-height:94px!important;}
+html body:has(#kandd-sidebar){background-color:#f6f8fc;}
+/* Sign Out uses the same label bubble as ordinary links in collapsed mode. */
+#kandd-sidebar.kandd-collapsed button.kandd-side-logout{
+ position:relative!important;overflow:visible!important;
+}
+#kandd-sidebar.kandd-collapsed button.kandd-side-logout:hover::after,
+#kandd-sidebar.kandd-collapsed button.kandd-side-logout:focus-visible::after{
+ content:attr(data-hover-label);position:absolute;left:calc(100% + 12px);
+ top:50%;transform:translateY(-50%);background:#12385f;color:#fff;
+ border-radius:9px;padding:10px 14px;white-space:nowrap;
+ font:700 13px/1.3 system-ui,sans-serif;box-shadow:0 5px 16px #0003;
+ pointer-events:none;z-index:9010;
+}
+@media(max-width:767px){
+ html body #kandd-sidebar.kandd-expanded{
+ width:min(270px,calc(100vw - 76px))!important;
+ min-width:0!important;max-width:calc(100vw - 76px)!important;
+ }
+ #kandd-sidebar.kandd-collapsed button.kandd-side-logout:hover::after{display:none;}
+}
