@@ -1,22 +1,9 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><title>Account | Kandd Learning</title><link href="styles.css" rel="stylesheet"/><link href="site-nav.css" rel="stylesheet"/><link href="kandd-page-polish.css" rel="stylesheet"/><link href="kandd-compact.css" rel="stylesheet"/><script defer="" src="site-nav.js"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><style id="kandd-account-layout-only">
-/* Account-only normalization; shared colors and logos remain untouched. */
-body:has(#kandd-sidebar) > header.top.kandd-profile-header {
-  box-sizing:border-box!important; height:72px!important; min-height:72px!important;
-  max-height:72px!important; padding-top:0!important; padding-bottom:0!important;
-  align-items:center!important;
-}
-body:has(#kandd-sidebar) #kandd-sidebar {
-  box-sizing:border-box!important; width:66px!important; height:100dvh!important;
-  min-height:100vh!important;
-}
-body:has(#kandd-sidebar) #kandd-sidebar.kandd-expanded {width:242px!important;}
-@media(max-width:600px){body:has(#kandd-sidebar) #kandd-sidebar.kandd-expanded{width:205px!important;}}
-/* Preserve the existing left-create / right-sign-in visual layout. */
-.grid2 > .kandd-account-signup{order:1;}
-.grid2 > .kandd-account-login{order:2;}
-.kandd-account-signup form,.kandd-account-login form{margin:0;}
-@media(max-width:780px){.grid2 > .kandd-account-signup{order:1}.grid2 > .kandd-account-login{order:2}}
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><title>Account | Kandd Learning</title><link href="styles.css" rel="stylesheet"/><link href="site-nav.css" rel="stylesheet"/><link href="kandd-page-polish.css" rel="stylesheet"/><link href="kandd-compact.css?v=1" rel="stylesheet"/><link href="kandd-sidebar-matching-layout.css?v=1" rel="stylesheet"/><script defer="" src="site-nav.js?v=logo-fix-2"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><style id="kandd-account-form-order-only">
+/* Keep the existing Create Account / Sign In arrangement without overriding shared navigation geometry. */
+.grid2 > .kandd-account-signup {order:1;}
+.grid2 > .kandd-account-login {order:2;}
+.kandd-account-signup form,.kandd-account-login form {margin:0;}
 </style></head><body><header class="top"><div class="tag">English that starts with your language.</div></header><main class="wrap kandd-polished-page"><a class="home" href="index.html">← Home</a><section class="hero"><span class="pill">LEARNER ACCOUNT</span><h1>Learn anywhere. Keep your progress.</h1><p>Create an account so your lessons and scores can follow you from one device to another.</p></section><div class="grid2"><article class="kandd-account-login"><form autocomplete="on" id="kandd-login-form" method="post" onsubmit="event.preventDefault();login();"><h2>Sign In</h2><label>Email<input autocomplete="section-login username" class="forminput" id="loginEmail" inputmode="email" name="username" type="email"/></label><label>Password<input autocomplete="section-login current-password" class="forminput" id="loginPassword" name="password" type="password"/></label><button class="btn" type="submit">Sign In</button><p><a href="forgot-password.html">Forgot your password?</a></p><div class="feedback" id="loginMsg"></div></form></article><article class="kandd-account-signup"><form autocomplete="on" id="kandd-signup-form" method="post" onsubmit="event.preventDefault();signup();"><h2>Create Account</h2><label>First name<input autocomplete="section-registration given-name" class="forminput" id="first" name="given-name"/></label><label>Email<input autocomplete="section-registration email" class="forminput" id="signupEmail" inputmode="email" name="registration-email" type="email"/></label><label>Password<input autocomplete="section-registration new-password" class="forminput" id="signupPassword" minlength="8" name="registration-password" type="password"/></label><label>My native language<select class="forminput" id="native"><option value="es">Español</option><option value="fr">Français — coming soon</option><option value="de">Deutsch — coming soon</option><option value="pt">Português — coming soon</option><option value="it">Italiano — coming soon</option></select></label><button class="btn" type="submit">Create Account</button><div class="feedback" id="signupMsg"></div></form></article></div></main><script src="supabase-client.js"></script><script>
 (async()=>{if(await kanddUser())location.href='dashboard.html'})();
 async function signup(){signupMsg.textContent='Creating your account…';const email=signupEmail.value.trim(),password=signupPassword.value,first_name=first.value.trim(),native_language=native.value;if(!first_name||!email||password.length<8){signupMsg.className='feedback retry';signupMsg.textContent='Enter your first name, email, and a password of at least 8 characters.';return}const {data,error}=await kanddDb.auth.signUp({email,password,options:{emailRedirectTo:'https://bdkan98.github.io/EnglishforLife/account.html',data:{first_name,native_language}}});if(error){signupMsg.className='feedback retry';signupMsg.textContent=error.message;return}signupMsg.className='feedback success';signupMsg.textContent=data.session?'Account created! Opening your dashboard…':'Check your email to confirm your account, then return here to sign in.';if(data.session)setTimeout(()=>location.href='dashboard.html',800)}
