@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Teacher Approvals | Kandd Learning</title><link rel="stylesheet" href="styles.css"><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><link rel="stylesheet" href="site-nav.css"><script defer src="site-nav.js"></script><style>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Administrator Dashboard | Kandd Learning</title><link rel="stylesheet" href="styles.css"><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><link rel="stylesheet" href="site-nav.css"><script defer src="site-nav.js"></script><style>
 /* Teacher approval notes: scoped styling; no changes to global site styles. */
 #apps article{box-sizing:border-box;max-width:100%;padding:22px 24px;margin:18px 0;border:1px solid #dbe4ee;border-radius:18px;background:#fff;box-shadow:0 3px 12px rgba(16,45,76,.05)}
 #apps .admin-note-group{margin:20px 0 8px;max-width:100%}
@@ -19,7 +19,22 @@
 #studentProgressDialog .kandd-dialog-footer{text-align:right;margin-top:16px}
 #studentProgressDialog button:focus-visible{outline:3px solid #e4a11a;outline-offset:3px}
 @media(max-width:600px){#studentProgressPanel{padding:10px!important}#studentProgressDialog{padding:15px!important;max-height:92vh!important}}#studentManagement button:focus-visible,#studentManagement select:focus-visible{outline:3px solid #f5ad29;outline-offset:2px}
-</style><link rel="stylesheet" href="kandd-compact.css?v=1"><link rel="stylesheet" href="kandd-sidebar-matching-layout.css?v=1"></head><body><header class="top"><a href="index.html" class="brand">Kandd Learning</a><span class="tag">Administrator · Teacher Approvals</span></header><main class="wrap"><a href="index.html" class="home">← Home</a><section class="hero"><span class="pill">PRIVATE ADMINISTRATION</span><h1>Teacher Applications</h1><p>Review and approve teacher access. Only designated administrator accounts can load or change applications.</p><button class="btn secondary" onclick="loadApps()">Refresh Applications</button><p id="status" role="status"></p></section><div id="apps"></div><section class="hero" id="studentManagement"><span class="pill">ADMINISTRATOR · STUDENTS</span><h2>Student Management</h2><p>View all registered learners, including independent students without a teacher. Progress is read-only.</p><div class="kandd-admin-student-actions"><button class="btn secondary" id="refreshStudents" type="button">Refresh Students</button><label for="studentFilter">Show students <select id="studentFilter"><option value="all">All Students</option><option value="independent">Independent Students</option><option value="connected">Teacher-Connected Students</option></select></label></div><p id="studentStatus" role="status">Checking administrator access…</p><div style="overflow-x:auto"><table class="kandd-admin-student-table"><thead><tr><th>Student</th><th>Teacher status</th><th>Lessons complete</th><th>Registered</th><th>Last activity</th><th>Progress</th></tr></thead><tbody id="studentRows"></tbody></table></div><section id="studentProgressPanel" hidden role="presentation"><div id="studentProgressDialog" role="dialog" aria-modal="true" aria-labelledby="studentProgressTitle" tabindex="-1"><div class="kandd-dialog-heading"><h3 id="studentProgressTitle">Student progress</h3><button type="button" class="kandd-dialog-close" id="closeStudentProgressX" aria-label="Close student progress">×</button></div><p id="studentProgressStatus" role="status"></p><div style="overflow-x:auto"><table class="kandd-admin-student-table"><thead><tr><th>Activity</th><th>Status</th><th>Score</th><th>Last updated</th></tr></thead><tbody id="studentProgressRows"></tbody></table></div><div class="kandd-dialog-footer"><button type="button" class="btn secondary" id="closeStudentProgressButton">Close</button></div></div></section></section></main><script src="supabase-client.js"></script><script>
+
+/* Administrator sections: visual-only, no shared layout changes */
+.kandd-admin-fold{border:1px solid #c6d5e5;border-radius:15px;background:#fff;margin:20px 0;overflow:hidden;box-shadow:0 3px 12px rgba(16,45,76,.05)}
+.kandd-admin-fold>summary{cursor:pointer;display:flex;align-items:center;flex-wrap:wrap;gap:12px;padding:19px 22px;color:#153c62;font-weight:800;font-size:1.17rem;background:#e8f0f8;list-style:none}
+.kandd-admin-fold>summary::-webkit-details-marker{display:none}
+.kandd-admin-fold>summary::before{content:'▸';font-size:1.3rem;color:#153c62}
+.kandd-admin-fold[open]>summary::before{content:'▾'}
+.kandd-admin-fold .fold-hint{font-size:.85rem;font-weight:550;color:#365570}
+.kandd-admin-fold>.fold-body{padding:15px 20px 22px}
+.kandd-admin-fold:focus-within>summary{outline-offset:-3px}
+#contactInboxItems article{border:1px solid #cbd8e7;border-radius:12px;padding:16px;margin:12px 0;background:#f7fafd;overflow-wrap:anywhere}
+#contactInboxItems article.unread{border-left:5px solid #1d6094}
+#contactInboxItems .contact-meta{font-size:.88rem;color:#37536c}
+#contactInboxItems .contact-message{white-space:pre-wrap;line-height:1.5}
+.kandd-admin-fold>summary:focus-visible{outline:3px solid #e4a11a;outline-offset:-3px}
+</style><link rel="stylesheet" href="kandd-compact.css?v=1"><link rel="stylesheet" href="kandd-sidebar-matching-layout.css?v=1"></head><body><header class="top"><a href="index.html" class="brand">Kandd Learning</a><span class="tag">Administrator Dashboard</span></header><main class="wrap"><a href="index.html" class="home">← Home</a><h1>Administrator Dashboard</h1><details class="kandd-admin-fold" id="teacherFold"><summary>Teacher Management <span class="fold-hint">Applications and approvals</span></summary><div class="fold-body"><section class="hero"><span class="pill">PRIVATE ADMINISTRATION</span><h2>Teacher Applications</h2><p>Review and approve teacher access. Only designated administrator accounts can load or change applications.</p><button class="btn secondary" onclick="loadApps()">Refresh Applications</button><p id="status" role="status"></p></section><div id="apps"></div></div></details><details class="kandd-admin-fold" id="studentFold"><summary>Student Management <span class="fold-hint">Registered learners and progress</span></summary><div class="fold-body"><section class="hero" id="studentManagement"><span class="pill">ADMINISTRATOR · STUDENTS</span><h2>Student Management</h2><p>View all registered learners, including independent students without a teacher. Progress is read-only.</p><div class="kandd-admin-student-actions"><button class="btn secondary" id="refreshStudents" type="button">Refresh Students</button><label for="studentFilter">Show students <select id="studentFilter"><option value="all">All Students</option><option value="independent">Independent Students</option><option value="connected">Teacher-Connected Students</option></select></label></div><p id="studentStatus" role="status">Checking administrator access…</p><div style="overflow-x:auto"><table class="kandd-admin-student-table"><thead><tr><th>Student</th><th>Teacher status</th><th>Lessons complete</th><th>Registered</th><th>Last activity</th><th>Progress</th></tr></thead><tbody id="studentRows"></tbody></table></div><section id="studentProgressPanel" hidden role="presentation"><div id="studentProgressDialog" role="dialog" aria-modal="true" aria-labelledby="studentProgressTitle" tabindex="-1"><div class="kandd-dialog-heading"><h3 id="studentProgressTitle">Student progress</h3><button type="button" class="kandd-dialog-close" id="closeStudentProgressX" aria-label="Close student progress">×</button></div><p id="studentProgressStatus" role="status"></p><div style="overflow-x:auto"><table class="kandd-admin-student-table"><thead><tr><th>Activity</th><th>Status</th><th>Score</th><th>Last updated</th></tr></thead><tbody id="studentProgressRows"></tbody></table></div><div class="kandd-dialog-footer"><button type="button" class="btn secondary" id="closeStudentProgressButton">Close</button></div></div></section></section></div></details><details class="kandd-admin-fold" id="contactFold"><summary>Contact Us Inbox <span class="fold-hint" id="contactUnreadLabel">Private messages from visitors and learners</span></summary><div class="fold-body"><p>Contact Us submissions are stored privately here. They do not send an email notification.</p><button class="btn secondary" type="button" id="refreshContactInbox">Refresh Inbox</button><p id="contactInboxStatus" role="status">Checking inbox…</p><div id="contactInboxItems"></div></div></details></main><script src="supabase-client.js"></script><script>
 const statusEl=document.getElementById('status'),container=document.getElementById('apps');
 async function loadApps(){container.replaceChildren();statusEl.textContent='Checking administrator access…';
  try{const user=await kanddUser();if(!user){statusEl.textContent='Sign in before opening the administrator dashboard.';return}
@@ -55,4 +70,29 @@ document.addEventListener('keydown',e=>{const panel=document.getElementById('stu
 document.getElementById('studentFilter').addEventListener('change',renderAdminStudents);
 document.getElementById('refreshStudents').addEventListener('click',loadAdminStudents);
 loadAdminStudents();
+</script><script>
+/* Private Contact Us inbox: data returned only after server-side admin check. */
+const inboxStatus=document.getElementById('contactInboxStatus');
+const inboxList=document.getElementById('contactInboxItems');
+async function loadContactInbox(){
+ inboxStatus.textContent='Loading messages…';inboxList.replaceChildren();
+ try{
+  const {data,error}=await kanddDb.rpc('kandd_admin_contact_inbox');if(error)throw error;
+  const rows=data||[],unread=rows.filter(r=>!r.is_read).length;
+  document.getElementById('contactUnreadLabel').textContent=unread?unread+' unread message'+(unread===1?'':'s'):'Private messages from visitors and learners';
+  inboxStatus.textContent=rows.length+' message'+(rows.length===1?'':'s')+' · '+unread+' unread';
+  if(!rows.length){inboxList.textContent='No contact messages yet.';return;}
+  for(const m of rows){
+   const card=document.createElement('article');if(!m.is_read)card.className='unread';
+   const title=document.createElement('h3');title.textContent=m.topic+' · '+m.sender_name;card.append(title);
+   const meta=document.createElement('p');meta.className='contact-meta';meta.textContent=m.sender_role+' · '+new Date(m.created_at).toLocaleString()+' · ';
+   const email=document.createElement('a');email.href='mailto:'+encodeURIComponent(m.sender_email);email.textContent=m.sender_email;meta.append(email);card.append(meta);
+   const body=document.createElement('p');body.className='contact-message';body.textContent=m.message;card.append(body);
+   if(!m.is_read){const b=document.createElement('button');b.className='btn secondary';b.type='button';b.textContent='Mark as read';b.addEventListener('click',async()=>{b.disabled=true;const r=await kanddDb.rpc('kandd_admin_mark_contact_read',{p_message_id:m.message_id});if(r.error){alert(r.error.message);b.disabled=false;return}await loadContactInbox()});card.append(b)}
+   inboxList.append(card);
+  }
+ }catch(e){inboxStatus.textContent='Unable to load inbox: '+e.message}
+}
+document.getElementById('refreshContactInbox').addEventListener('click',loadContactInbox);
+loadContactInbox();
 </script></body></html>
