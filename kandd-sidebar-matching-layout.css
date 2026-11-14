@@ -12,3 +12,9 @@ html.kandd-side-expanded body{padding-left:302.5px !important;}
 #practice .activity-row{gap:12px;margin-bottom:12px;}
 #practice .activity-row select{min-width:min(210px,100%);}
 @media(max-width:600px){#practice .question>select{width:100%;}}
+
+/* Keep the mobile overlay aligned with the zoomed sidebar without changing
+   the established logo sizing or lesson layout. */
+@media(max-width:600px){
+  html body #kandd-sidebar {overscroll-behavior-y:contain;}
+}
