@@ -35,11 +35,5 @@ header.top .kandd-top-brand-link{display:inline-flex!important;align-items:cente
 header.top .kandd-top-brand-image{display:block!important;width:clamp(125px,15vw,200px)!important;max-width:100%!important;max-height:68px!important;height:auto!important;object-fit:contain!important;background:transparent!important;border:0!important;box-shadow:none!important;}
 @media(max-width:767px){#kandd-sidebar.kandd-expanded .kandd-brand-image{width:145px!important;max-height:50px!important;}header.top .kandd-top-brand-image{width:130px!important;max-height:54px!important;}}
 
-/* Stationary sidebar gradient: viewport-anchored, independent of menu scrolling.
-   Fixed background coordinates prevent the navy portion from sliding upward. */
-html body #kandd-sidebar {
-  background-attachment:fixed !important;
-  background-position:left top !important;
-  background-repeat:no-repeat !important;
-  overscroll-behavior-y:contain;
-}
+/* The stationary gradient is now rendered by #kandd-sidebar::before in
+   site-nav.css. Do not use background-attachment:fixed on mobile. */

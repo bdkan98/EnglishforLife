@@ -272,3 +272,66 @@ html body #kandd-sidebar .kandd-side-link svg {flex-shrink:0;}
   html body #kandd-sidebar.kandd-expanded .kandd-side-link {gap:9px; padding:10px 8px; font-size:12px;}
   html body #kandd-sidebar.kandd-expanded .kandd-side-label {overflow-wrap:anywhere;}
 }
+
+/* Stationary gradient + centered hamburger: 2026-11-13.
+   The sidebar itself NEVER scrolls. Only its navigation list scrolls.
+   This avoids mobile rubber-band scrolling the background gradient. */
+html body #kandd-sidebar {
+  position:fixed !important;
+  top:0 !important;
+  bottom:0 !important;
+  height:100vh !important;
+  height:100dvh !important;
+  overflow:hidden !important;
+  overscroll-behavior:none !important;
+  isolation:isolate;
+  background:#12385f !important;
+}
+/* The non-scrolling layer owns the original gradient; no background-attachment:fixed. */
+html body #kandd-sidebar::before {
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  background:linear-gradient(to bottom,#faf5ed 0px,#f4e8d7 94px,#d4c9c0 150px,#7891a3 265px,#315474 390px,#12385f 570px,#12385f 100%);
+}
+html body #kandd-sidebar .kandd-side-head {
+  flex:0 0 132px !important;
+  height:132px !important;
+  min-height:132px !important;
+  position:relative !important;
+  z-index:1;
+}
+/* Logo remains at its existing upper-left position. The hamburger's center
+   is halfway between the bottom of the logo area and the first nav icon. */
+html body #kandd-sidebar .kandd-side-toggle,
+html body #kandd-sidebar.kandd-expanded .kandd-side-toggle {
+  position:absolute !important;
+  top:94px !important;
+  left:50% !important;
+  right:auto !important;
+  width:32px !important;
+  height:32px !important;
+  transform:translateX(-50%) !important;
+  margin:0 !important;
+  z-index:2;
+}
+html body #kandd-sidebar nav {
+  position:relative !important;
+  z-index:1;
+  flex:1 1 auto !important;
+  min-height:0 !important;
+  width:100% !important;
+  overflow-y:auto !important;
+  overflow-x:hidden !important;
+  overscroll-behavior-y:contain !important;
+  -webkit-overflow-scrolling:touch;
+  box-sizing:border-box !important;
+}
+html body #kandd-sidebar .kandd-side-link {flex-shrink:0;}
+@media(max-width:767px) {
+  html body #kandd-sidebar {height:100vh !important;height:100dvh !important;}
+  html body #kandd-sidebar .kandd-side-toggle,
+  html body #kandd-sidebar.kandd-expanded .kandd-side-toggle {top:94px !important;}
+}
