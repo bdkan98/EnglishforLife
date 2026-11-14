@@ -34,3 +34,12 @@ header.top .kandd-top-brand-link {display:inline-flex;align-items:center;text-de
 header.top .kandd-top-brand-link{display:inline-flex!important;align-items:center;flex:0 1 auto;min-width:0;text-decoration:none;}
 header.top .kandd-top-brand-image{display:block!important;width:clamp(125px,15vw,200px)!important;max-width:100%!important;max-height:68px!important;height:auto!important;object-fit:contain!important;background:transparent!important;border:0!important;box-shadow:none!important;}
 @media(max-width:767px){#kandd-sidebar.kandd-expanded .kandd-brand-image{width:145px!important;max-height:50px!important;}header.top .kandd-top-brand-image{width:130px!important;max-height:54px!important;}}
+
+/* Stationary sidebar gradient: viewport-anchored, independent of menu scrolling.
+   Fixed background coordinates prevent the navy portion from sliding upward. */
+html body #kandd-sidebar {
+  background-attachment:fixed !important;
+  background-position:left top !important;
+  background-repeat:no-repeat !important;
+  overscroll-behavior-y:contain;
+}
