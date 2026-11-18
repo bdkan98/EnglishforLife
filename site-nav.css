@@ -336,24 +336,11 @@ html body #kandd-sidebar .kandd-side-link {flex-shrink:0;}
   html body #kandd-sidebar.kandd-expanded .kandd-side-toggle {top:94px !important;}
 }
 
-/* Seamless sidebar edge: remove visual divider without changing layout or gradient. */
+/* Kandd seamless sidebar edge — 2026-11-17.
+   Fade only the last 5 CSS pixels of the sidebar into the page/header
+   behind it. This eliminates the hard vertical gradient boundary without
+   changing width, zoom, logo, navigation, or the approved gradient stops. */
 html body #kandd-sidebar {
-  box-shadow: none !important;
-  border-right: 0 !important;
-  outline: none !important;
-}
-
-/* Fractional-pixel seam correction: sidebar is zoomed to 125%,
-   so its 66px edge lands at 82.5 device-independent pixels.
-   Bleed the existing gradient 1 CSS pixel over the content edge.
-   This does not move the sidebar, logo, nav, or page content. */
-html body #kandd-sidebar.kandd-collapsed {
-  width:67px !important;
-}
-html body #kandd-sidebar.kandd-expanded {
-  width:243px !important;
-}
-html body #kandd-sidebar {
-  box-shadow:none !important;
-  border-right:none !important;
+  -webkit-mask-image: linear-gradient(to right, #000 0, #000 calc(100% - 5px), transparent 100%) !important;
+  mask-image: linear-gradient(to right, #000 0, #000 calc(100% - 5px), transparent 100%) !important;
 }
