@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+
+<html><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><title>Lesson 10 | Kandd Learning</title><link href="../styles.css" rel="stylesheet"/><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><style>.kandd-vocab-word{font:inherit;font-weight:700;color:inherit;background:transparent;border:0;border-bottom:2px dotted currentColor;padding:2px 1px;cursor:pointer;text-align:left}.kandd-vocab-word:hover,.kandd-vocab-word:focus-visible{color:#1261a0;outline-offset:3px}@media print{.kandd-vocab-word{border:0}}</style><style>
+.kmd{border:2px solid #c8d9e8;border-radius:14px;padding:18px;margin:18px 0;background:#f6faff;color:#172b42}
+.kmd h3{margin-top:0}.kmd button{border:0;border-radius:8px;padding:12px 16px;background:#145c91;color:white;font-weight:700;cursor:pointer;margin:6px 8px 6px 0}
+.kmd button:disabled{opacity:.55;cursor:wait}.kmd-status{padding:12px;border-radius:8px;background:#e8eff7;white-space:pre-line;line-height:1.6;margin:12px 0}
+.kmd-status[data-state="ok"]{background:#dff4e7;color:#174d2d}.kmd-status[data-state="warn"]{background:#fff1d9;color:#684100}.kmd-status[data-state="error"]{background:#fce6e6;color:#792222}
+.kmd-meter{height:12px;border-radius:9px;background:#d3deeb;overflow:hidden;margin:10px 0}.kmd-meter>div{height:100%;width:0;background:#238558;transition:width .1s}
+.kmd small{display:block;line-height:1.5}.kmd a{color:#145c91;text-decoration:underline}
+</style><style id="kandd-site-button-theme">
+/* Kandd Learning: consistent microphone and speaking controls (visual-only update) */
+#kandd-mic-diagnostic.kmd,
+#kandd-speaking-practice.kandd-speaking{background:#fff;border:1px solid #e7ecf2;border-radius:20px;padding:24px;box-shadow:0 6px 22px #16283d0a;color:#172238;margin:18px 0}
+#kandd-mic-diagnostic h3,#kandd-speaking-practice h3{color:#173f67;letter-spacing:-.02em;font-size:1.25rem;margin:0 0 12px}
+#kandd-mic-diagnostic button,#kandd-speaking-practice button{appearance:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;max-width:100%;min-height:45px;border:0;border-radius:13px;padding:12px 19px;background:#173f67;color:#fff;font:inherit;font-weight:850;line-height:1.3;text-align:center;cursor:pointer;box-shadow:0 4px 12px #173f6725;transition:background .16s,transform .16s,box-shadow .16s;margin:6px 8px 6px 0}
+#kandd-mic-diagnostic button:hover:not(:disabled),#kandd-speaking-practice button:hover:not(:disabled){background:#235b88;transform:translateY(-1px);box-shadow:0 6px 16px #173f6730}
+#kandd-mic-diagnostic button:focus-visible,#kandd-speaking-practice button:focus-visible,#ksp-phrase:focus-visible{outline:3px solid #e4ae38;outline-offset:3px}
+#kandd-mic-diagnostic button:disabled,#kandd-speaking-practice button:disabled{opacity:.52;cursor:not-allowed;transform:none;box-shadow:none}
+#kandd-mic-diagnostic #kmd-stop,#kandd-speaking-practice #ksp-retry,#kandd-speaking-practice #ksp-listen{background:#e8f0f7;color:#173f67;box-shadow:none;border:1px solid #d4e1ed}
+#kandd-mic-diagnostic #kmd-stop:hover:not(:disabled),#kandd-speaking-practice #ksp-retry:hover:not(:disabled),#kandd-speaking-practice #ksp-listen:hover:not(:disabled){background:#d8e7f3;box-shadow:none}
+#kandd-speaking-practice #ksp-phrase{display:block;width:100%;max-width:100%;margin:9px 0 15px;padding:12px 14px;border:1px solid #cfd8e3;border-radius:11px;background:#fff;color:#172238;font:inherit;line-height:1.4}
+#kandd-speaking-practice .ksp-buttons{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0}
+#kandd-speaking-practice .ksp-buttons button{margin:0}
+#kandd-mic-diagnostic .kmd-status,#kandd-speaking-practice .ksp-status{border-radius:12px;line-height:1.6}
+@media(max-width:600px){#kandd-mic-diagnostic.kmd,#kandd-speaking-practice.kandd-speaking{padding:18px}#kandd-mic-diagnostic button{width:100%;margin:6px 0}#kandd-speaking-practice .ksp-buttons{display:grid;grid-template-columns:1fr}#kandd-speaking-practice .ksp-buttons button{width:100%}}
+@media(prefers-reduced-motion:reduce){#kandd-mic-diagnostic button,#kandd-speaking-practice button{transition:none}}
+</style><link href="../site-nav.css" rel="stylesheet"/><script defer="" src="../site-nav.js"></script><link href="../kandd-buttons.css" rel="stylesheet"/><link href="../kandd-phase2.css" rel="stylesheet"/><link href="../kandd-exercise-polish.css" rel="stylesheet"/><link href="../kandd-exercise-polish.css?v=2" rel="stylesheet"/><script>function shuffleChoices(choices){const a=[...choices];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a;}</script><link href="../kandd-compact.css?v=1" rel="stylesheet"/><link href="../kandd-sidebar-matching-layout.css?v=1" rel="stylesheet"/><style>
+.kandd-bilingual-note{padding:12px 16px;border-left:4px solid #315474;background:#f4f8fb;border-radius:8px;line-height:1.55;margin:12px 0 18px}
+.kandd-bilingual-note span{color:#35516b}.kandd-real-life{border:1px solid #d8e4ed;border-radius:16px;padding:20px;margin:20px 0;background:#f8fbfe}
+.kandd-real-life select{display:block;width:100%;max-width:440px;padding:12px;margin:10px 0;border:1px solid #aebfd0;border-radius:9px;background:white;font:inherit}
+.kandd-real-life button{border:0;border-radius:10px;padding:12px 16px;background:#173f67;color:#fff;font:inherit;font-weight:700;cursor:pointer}
+.kandd-real-life button:focus-visible{outline:3px solid #e4ae38;outline-offset:3px}
+.kandd-scenario-text{padding:14px;margin:12px 0;background:white;border:1px solid #d8e4ed;border-radius:10px;line-height:1.7}
+.kandd-quiz-explanation{display:block;padding:8px 10px;margin:8px 0 14px;border-radius:8px;background:#eef3f8;color:#183650;font-size:.93rem;line-height:1.5}
+.kandd-quiz-explanation.correct{background:#e2f4e8}.kandd-quiz-explanation.incorrect{background:#fff0df}
+</style></head><body>
+<header class="top"><div class="brand">Kandd Learning</div><div class="tag">Practical Learning. Real Conversations.</div></header><main class="wrap"><a class="home" href="../level1.html">← Level 1 Dashboard</a>
+<section class="hero"><span class="pill">UNIT 3 · LESSON 10</span><h1>My Job</h1><p>Mi trabajo</p><div class="progressrow"><b id="pct">0% complete</b><span class="badge">Listen • Practice • Speak • Use It</span></div><div class="bar"><i id="bar"></i></div></section>
+<div class="tabs"><button class="tab active" data-target="learn">1 · Learn</button><button class="tab" data-target="practice">2 · Practice</button><button class="tab" data-target="speak">3 · Speak</button><button class="tab" data-target="check">4 · Check</button></div>
+<section class="panel active" id="learn"><p class="kandd-bilingual-note"><b>Listen to each phrase and review the vocabulary.</b><br/><span lang="es">Escucha cada frase y repasa el vocabulario.</span></p><article><h2>🎯 Today's Goal</h2><p>Describe your job, workplace, schedule, and basic responsibilities.</p><p><small><b>Meta de hoy:</b> Practica las frases y el vocabulario antes de continuar.</small></p></article><div class="grid2"><article><h2>🔊 Useful Phrases</h2><div class="phrase"><div class="phrase-text"><b>What do you do for work?</b><span>¿En qué trabajas?</span></div><div class="audio-controls"><button class="speak normal" data-text="What do you do for work?" onclick="speakText(this.dataset.text,this,'normal')">🔊 Normal</button><button class="speak slow" data-text="What do you do for work?" onclick="speakText(this.dataset.text,this,'slow')">🐢 Slow</button></div></div><div class="phrase"><div class="phrase-text"><b>I work at a restaurant.</b><span>Trabajo en un restaurante.</span></div><div class="audio-controls"><button class="speak normal" data-text="I work at a restaurant." onclick="speakText(this.dataset.text,this,'normal')">🔊 Normal</button><button class="speak slow" data-text="I work at a restaurant." onclick="speakText(this.dataset.text,this,'slow')">🐢 Slow</button></div></div><div class="phrase"><div class="phrase-text"><b>I'm a manager.</b><span>Soy gerente.</span></div><div class="audio-controls"><button class="speak normal" data-text="I'm a manager." onclick="speakText(this.dataset.text,this,'normal')">🔊 Normal</button><button class="speak slow" data-text="I'm a manager." onclick="speakText(this.dataset.text,this,'slow')">🐢 Slow</button></div></div><div class="phrase"><div class="phrase-text"><b>I start at eight and finish at four.</b><span>Empiezo a las ocho y termino a las cuatro.</span></div><div class="audio-controls"><button class="speak normal" data-text="I start at eight and finish at four." onclick="speakText(this.dataset.text,this,'normal')">🔊 Normal</button><button class="speak slow" data-text="I start at eight and finish at four." onclick="speakText(this.dataset.text,this,'slow')">🐢 Slow</button></div></div><div class="phrase"><div class="phrase-text"><b>I'm responsible for helping customers.</b><span>Soy responsable de ayudar a los clientes.</span></div><div class="audio-controls"><button class="speak normal" data-text="I'm responsible for helping customers." onclick="speakText(this.dataset.text,this,'normal')">🔊 Normal</button><button class="speak slow" data-text="I'm responsible for helping customers." onclick="speakText(this.dataset.text,this,'slow')">🐢 Slow</button></div></div></article><article class="tip"><h2>🇪🇸 Spanish-Speaker Tip</h2><p>Spanish often uses <b>soy</b> with a profession. In English, most singular jobs need <b>a/an</b>: “I'm <b>a</b> manager.” “I'm <b>an</b> electrician.”</p></article></div><article><h2>Key Words</h2><div class="vocab"><span><button aria-label="Pronounce job" class="kandd-vocab-word" data-translation="trabajo" data-word="job" type="button">job 🔊</button><small>trabajo</small></span><span><button aria-label="Pronounce manager" class="kandd-vocab-word" data-translation="gerente" data-word="manager" type="button">manager 🔊</button><small>gerente</small></span><span><button aria-label="Pronounce customer" class="kandd-vocab-word" data-translation="cliente" data-word="customer" type="button">customer 🔊</button><small>cliente</small></span><span><button aria-label="Pronounce coworker" class="kandd-vocab-word" data-translation="compañero de trabajo" data-word="coworker" type="button">coworker 🔊</button><small>compañero de trabajo</small></span><span><button aria-label="Pronounce shift" class="kandd-vocab-word" data-translation="turno" data-word="shift" type="button">shift 🔊</button><small>turno</small></span><span><button aria-label="Pronounce responsible for" class="kandd-vocab-word" data-translation="responsable de" data-word="responsible for" type="button">responsible for 🔊</button><small>responsable de</small></span><span><button aria-label="Pronounce help" class="kandd-vocab-word" data-translation="ayudar" data-word="help" type="button">help 🔊</button><small>ayudar</small></span><span><button aria-label="Pronounce workplace" class="kandd-vocab-word" data-translation="lugar de trabajo" data-word="workplace" type="button">workplace 🔊</button><small>lugar de trabajo</small></span></div></article><button class="btn" onclick="done('learn','practice')">Finished Learning →</button></section>
+<section class="panel" id="practice"><p class="kandd-bilingual-note"><b>Complete the activities, then check your answers.</b><br/><span lang="es">Completa las actividades y revisa tus respuestas.</span></p><article><h2>🧩 Build Your Job Introduction</h2><p>Complete these with your own information and say them aloud:</p><div class="rolecard">I work at/in ______.<br/>I'm a/an ______.<br/>I start work at ______.<br/>I'm responsible for ______.<br/>One thing I like about my job is ______.</div></article><article><h2>Which Sounds Natural?</h2><div class="question"><b>Choose the best sentence.</b><select id="j0"><option value="">Choose…</option><option>I'm a manager.</option><option>I'm manager.</option></select></div><div class="question"><b>Choose the best question.</b><select id="j1"><option value="">Choose…</option><option>What do you do for work?</option><option>What you work?</option></select></div><button class="btn" id="kandd-check-j" type="button">Check</button><div id="jFeedback"></div></article><article class="kandd-real-life" id="kandd-real-life-10"><h2>👷 My Job Introduction / Mi presentación laboral</h2><p>Choose an example and practice introducing yourself. / Elige un ejemplo y practica cómo presentarte.</p><label for="kandd-scenario-10"><b>Choose a scenario / Elige una situación:</b></label><select id="kandd-scenario-10"><option value="0">Restaurant / Restaurante</option><option value="1">Store / Tienda</option><option value="2">Office / Oficina</option></select><div class="kandd-scenario-text" id="kandd-scenario-text-10"></div><button id="kandd-scenario-listen-10" type="button">🔊 Listen / Escuchar</button><p><small>Listen, repeat, and practice with a partner if possible. / Escucha, repite y practica con otra persona si es posible.</small></p></article><button class="btn" onclick="done('practice','speak')">Finish Practice →</button></section>
+<section class="panel" id="speak"><p class="kandd-bilingual-note"><b>Practice the conversation aloud, then try the microphone activity.</b><br/><span lang="es">Practica la conversación en voz alta y después usa el micrófono.</span></p><article aria-labelledby="kmd-title" class="kmd" id="kandd-mic-diagnostic">
+<h3 id="kmd-title">🎤 Microphone Setup Check / Verificar micrófono</h3>
+<p>Check your microphone before speaking. / Verifica tu micrófono antes de hablar.</p>
+<button id="kmd-check" type="button">🎤 Check My Microphone / Probar micrófono</button>
+<button disabled="" id="kmd-stop" type="button">■ Stop Test / Detener prueba</button>
+<div aria-live="polite" class="kmd-status" id="kmd-status" role="status">Not checked yet. / Aún no verificado.</div>
+<div aria-label="Microphone input level" class="kmd-meter" role="img"><div id="kmd-level"></div></div>
+<p aria-live="polite" id="kmd-heard"></p>
+<details><summary>Help with microphone settings / Ayuda con la configuración</summary>
+<p><b>Windows:</b> Settings → Privacy &amp; security → Microphone; allow microphone access and desktop apps. Also check Settings → System → Sound → Input.</p>
+<p><b>Windows:</b> Configuración → Privacidad y seguridad → Micrófono. Permite el acceso. Comprueba Sistema → Sonido → Entrada.</p>
+<p><b>Mac:</b> System Settings → Privacy &amp; Security → Microphone. / Configuración del Sistema → Privacidad y seguridad → Micrófono.</p>
+<p><b>Chrome/Edge:</b> Select the site controls icon next to the address → Site settings → Microphone → Allow, then refresh. / Selecciona el icono junto a la dirección → Configuración del sitio → Micrófono → Permitir y actualiza la página.</p>
+</details>
+<small>Testing may request microphone permission. Audio is checked on your device and is not saved by Kandd Learning. The optional speech test may send audio to your browser's speech recognition provider. / La prueba puede pedir permiso. Kandd Learning no guarda grabaciones. El reconocimiento de voz puede enviar audio al proveedor del navegador.</small>
+</article><article><h2>💬 Meet a New Coworker</h2><div class="dialogue"><p><b>A:</b> Hi, I'm Rosa. What's your name?</p><p><b>B:</b> I'm Daniel.</p><p><b>A:</b> What do you do here?</p><p><b>B:</b> I'm a cook. What about you?</p><p><b>A:</b> I'm a shift manager.</p></div></article><article><h2>🎯 Live It</h2><div class="challenge">Give a 30-second introduction about your real job, a past job, or a job you would like. Include your workplace, job title, schedule, and two responsibilities.</div></article><article aria-labelledby="ksp-title" class="kandd-speaking" id="kandd-speaking-practice">
+<h3 id="ksp-title">🎤 Speaking Practice / Práctica oral</h3>
+<p>Listen, then say the English sentence. / Escucha y luego di la oración en inglés.</p>
+<label for="ksp-phrase"><strong>Choose a sentence / Elige una oración:</strong></label>
+<select id="ksp-phrase"><option value="What do you do for work?">What do you do for work? — ¿En qué trabajas?</option><option value="I work at a restaurant.">I work at a restaurant. — Trabajo en un restaurante.</option><option value="I'm a manager.">I'm a manager. — Soy gerente.</option><option value="I start at eight and finish at four.">I start at eight and finish at four. — Empiezo a las ocho y termino a las cuatro.</option><option value="I'm responsible for helping customers.">I'm responsible for helping customers. — Soy responsable de ayudar a los clientes.</option></select>
+<div class="ksp-buttons"><button id="ksp-listen" type="button">🔊 Listen / Escuchar</button><button class="ksp-record" id="ksp-record" type="button">🎤 Start Speaking / Hablar</button><button id="ksp-retry" type="button">↻ Try Again / Intentar de nuevo</button></div>
+<p aria-live="polite" class="ksp-status" id="ksp-status" role="status">Choose a sentence and select Start Speaking.</p>
+<p aria-live="polite" class="ksp-transcript" id="ksp-transcript"></p>
+<div aria-label="Word matching feedback" class="ksp-words" id="ksp-feedback"></div><p class="ksp-explainer" hidden="" id="ksp-color-key"><small>Green = word recognized in the correct position. Orange = word not recognized in that position. This is a word-recognition practice tool, not an accent or pronunciation grade. / Verde = palabra reconocida. Naranja = palabra no reconocida. No califica tu acento.</small></p>
+<p><small>Your microphone audio is processed by your browser's speech recognition service, which may send audio to its provider. This exercise does not save or upload recordings to Kandd Learning. / El servicio de reconocimiento de voz de tu navegador puede procesar el audio. Kandd Learning no guarda grabaciones.</small></p>
+</article><button class="btn" onclick="done('speak','check')">Speaking Challenge Complete →</button></section>
+<section class="panel" id="check"><p class="kandd-bilingual-note"><b>Answer all five questions before checking your score.</b><br/><span lang="es">Responde las cinco preguntas antes de revisar tu puntuación.</span></p><article><h2>✅ Quick Check</h2><p>Choose the best answer. After grading, review each explanation. / Elige la mejor respuesta. Después de calificar, revisa cada explicación.</p><div id="quiz"></div><button class="btn" onclick="grade()">Check My Answers</button><div class="result" id="result"></div></article></section>
+<section aria-label="Optional extra practice" class="kandd-practice-promo"><h2>Ready for Extra Practice?</h2><p>Reinforce Lesson 10 with five optional questions. Your regular lesson quiz and completion status will not change.</p><a class="btn" href="lesson10-practice.html">Start Lesson 10 Extra Practice →</a></section></main><footer>Kandd Learning · Practical Learning. Real Conversations.</footer><script src="../supabase-client.js"></script><script src="../common.js"></script><script>
+const quiz=[["How do you ask about a job?", ["What do you do for work?", "What you do for work?", "What are you do for work?"], "What do you do for work?"], ["Which is correct?", ["I'm a manager.", "I'm manager.", "I'm an manager."], "I'm a manager."], ["What does “shift” mean?", ["turno", "cliente", "descanso"], "turno"], ["Which sentence describes a responsibility?", ["I help customers.", "I start at eight.", "I work on Monday."], "I help customers."], ["Which schedule sentence is correct?", ["I start at eight and finish at four.", "I start in eight and finish at four.", "I start at eight and finish on four."], "I start at eight and finish at four."]];
+let parts=JSON.parse(localStorage.getItem('lesson10Parts')||'{}');
+function update(){let x=['learn','practice','speak','check'].filter(k=>parts[k]).length,p=Math.round(x/4*100);bar.style.width=p+'%';pct.textContent=p+'% complete'}
+function done(x,y){parts[x]=true;localStorage.setItem('lesson10Parts',JSON.stringify(parts));update();showTab(y)}
+document.getElementById('quiz').innerHTML=quiz.map((x,i)=>`<div class="question"><b>${i+1}. ${x[0]}</b>${shuffleChoices(x[1]).map(o=>`<label><input type="radio" name="q${i}" value="${o}"> ${o}</label>`).join('')}</div>`).join('');
+function grade(){let s=0;quiz.forEach((x,i)=>{let a=document.querySelector(`input[name=q${i}]:checked`);if(a&&a.value===x[2])s++});localStorage.setItem('lesson10Score',String(s));if(s>=4){parts.check=true;localStorage.setItem('lesson10Parts',JSON.stringify(parts));localStorage.setItem('lesson10Complete','yes');result.className='result success';result.innerHTML=`🎉 ${s}/5 — Lesson complete! <a href="../level1.html"><u>Dashboard</u></a>`;update()}else{result.className='result retry';result.textContent=s+'/5 — Review and try again.'}}
+update();</script><script>(function(){
+const explanations=["Use “do” to form this question. / Usa “do” para formar esta pregunta.", "Singular professions usually need a/an. / Las profesiones singulares suelen llevar a/an.", "A shift is a period of work. / Un turno es un período de trabajo.", "Helping customers is a task at work. / Ayudar a los clientes es una responsabilidad.", "Use “at” for clock times. / Usa “at” con las horas."];
+const original=window.grade;
+window.grade=function(){
+ const missing=[0,1,2,3,4].filter(i=>!document.querySelector('input[name="q'+i+'"]:checked'));
+ if(missing.length){const r=document.getElementById('result');r.className='result retry';r.textContent='Please answer all five questions. / Responde las cinco preguntas.';return false;}
+ original();
+ quiz.forEach((item,i)=>{const node=document.querySelector('input[name="q'+i+'"]:checked');const question=document.querySelector('input[name="q'+i+'"]')?.closest('.question');if(!question)return;question.querySelectorAll('.kandd-quiz-explanation').forEach(el=>el.remove());const ok=node.value===item[2];const note=document.createElement('div');note.className='kandd-quiz-explanation '+(ok?'correct':'incorrect');note.textContent=(ok?'✓ Correct / Correcto. ':'✗ Review / Repasa. Correct answer / Respuesta correcta: '+item[2]+'. ')+explanations[i];question.appendChild(note)});
+ return true;
+};
+})();</script><script>
+/* Kandd Learning cloud progress — Lesson 10. Original lesson activities remain unchanged. */
+(function(){
+  const lessonNumber=10;
+  const originalGrade=grade;
+  let cloudBusy=false;
+  const status=document.createElement('div');
+  status.id='kandd-cloud-status';
+  status.setAttribute('role','status');
+  status.setAttribute('aria-live','polite');
+  status.style.cssText='margin-top:12px;font-weight:600;line-height:1.5';
+  document.getElementById('result').insertAdjacentElement('afterend',status);
+  function message(text,good){status.textContent=text;status.style.color=good?'#176b44':'#a04421';}
+  async function loadCloud(){
+    try{
+      const user=await kanddUser();
+      if(!user){message('Sign in to save your progress across devices. Progress on this device remains local.',false);return;}
+      const rows=await kanddLoadProgress();
+      const saved=rows.find(r=>r.item_type==='lesson'&&String(r.item_key)===String(lessonNumber));
+      if(saved&&saved.completed){
+        parts.check=true;
+        localStorage.setItem('lesson'+lessonNumber+'Parts',JSON.stringify(parts));
+        localStorage.setItem('lesson'+lessonNumber+'Complete','yes');
+        if(saved.score!==null&&saved.score!==undefined)localStorage.setItem('lesson'+lessonNumber+'Score',String(saved.score));
+        update();
+        message('✓ Lesson completion loaded from your Kandd Learning account.',true);
+      } else {message('Signed in — your next passing quiz will be saved to your account.',true);}
+    }catch(err){console.error('Cloud load error',err);message('Unable to check cloud progress. Please refresh and try again.',false);}
+  }
+  grade=async function(){
+    if(cloudBusy)return;
+    cloudBusy=true;
+    try{
+      if(originalGrade()===false)return;
+      const score=Number(localStorage.getItem('lesson'+lessonNumber+'Score'));
+      if(!Number.isFinite(score))return;
+      message('Saving your quiz result to Kandd Learning…',true);
+      const user=await kanddUser();
+      if(!user){message('Quiz scored on this device only. Sign in to save across devices.',false);return;}
+      const existing=(await kanddLoadProgress()).find(r=>r.item_type==='lesson'&&String(r.item_key)===String(lessonNumber));
+      const completed=score>=4||Boolean(existing&&existing.completed);
+      const bestScore=existing&&existing.score!==null?Math.max(score,Number(existing.score)):score;
+      const ok=await kanddSaveProgress('lesson',String(lessonNumber),completed,bestScore,{source:'lesson-quiz'});
+      message(ok?'✓ Saved to your Kandd Learning account. ':'Cloud save failed. Your result is on this device only. Please check your connection and try again.',ok);
+    }catch(err){console.error('Cloud save error',err);message('Cloud save failed. Please try submitting the quiz again.',false);}
+    finally{cloudBusy=false;}
+  };
+  loadCloud();
+})();
+</script><script>document.querySelectorAll('.kandd-vocab-word').forEach(button=>{button.addEventListener('click',()=>{if(typeof window.kanddOpenPronunciation==='function')window.kanddOpenPronunciation(button.dataset.word,button.dataset.translation);});});</script><script src="../pronunciation-helper.js"></script><script>
+(function(){
+'use strict';
+const root=document.getElementById('kandd-speaking-practice');
+if(!root)return;
+const select=root.querySelector('#ksp-phrase'),listen=root.querySelector('#ksp-listen'),record=root.querySelector('#ksp-record'),retry=root.querySelector('#ksp-retry');
+const status=root.querySelector('#ksp-status'),transcript=root.querySelector('#ksp-transcript'),feedback=root.querySelector('#ksp-feedback');
+const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
+let active=null;
+function normalize(s){return s.toLowerCase().replace(/[’']/g,'').replace(/[^a-z0-9\s]/g,' ').trim().split(/\s+/).filter(Boolean)}
+function clear(){transcript.textContent='';feedback.replaceChildren();status.textContent='Ready to practice. / Listo para practicar.'}
+function stop(){if(active){try{active.abort()}catch(e){}active=null}record.disabled=false;record.textContent='🎤 Start Speaking / Hablar'}
+function render(heard){const expected=normalize(select.value),actual=normalize(heard);transcript.textContent='Heard / Escuchado: '+heard;
+feedback.replaceChildren();
+// Use a longest-common-subsequence alignment to avoid marking every word wrong after one missed word.
+const n=expected.length,m=actual.length,dp=Array.from({length:n+1},()=>Array(m+1).fill(0));
+for(let i=n-1;i>=0;i--)for(let j=m-1;j>=0;j--)dp[i][j]=expected[i]===actual[j]?1+dp[i+1][j+1]:Math.max(dp[i+1][j],dp[i][j+1]);
+const matched=new Set();let i=0,j=0;while(i<n&&j<m){if(expected[i]===actual[j]){matched.add(i);i++;j++}else if(dp[i+1][j]>=dp[i][j+1])i++;else j++}
+expected.forEach((word,k)=>{const el=document.createElement('span');el.textContent=word;el.className=matched.has(k)?'ksp-match':'ksp-missing';feedback.appendChild(el)});
+status.textContent=matched.size===n&&actual.length===n?'Great! All words were recognized. / ¡Muy bien! Se reconocieron todas las palabras.':'Recognized '+matched.size+' of '+n+' target words. Try again! / Se reconocieron '+matched.size+' de '+n+' palabras. ¡Inténtalo otra vez!';
+}
+listen.addEventListener('click',()=>{if(!('speechSynthesis' in window)){status.textContent='Audio is not available in this browser. / Audio no disponible.';return}speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(select.value);u.lang='en-US';u.rate=.85;speechSynthesis.speak(u)});
+function start(){stop();clear();if(!SpeechRecognition){status.textContent='Microphone speech recognition is unavailable here. Try the latest Chrome or Edge. / El reconocimiento de voz no está disponible. Prueba Chrome o Edge.';return}
+if(!window.isSecureContext){status.textContent='Microphone requires HTTPS. / El micrófono requiere HTTPS.';return}
+try{const r=new SpeechRecognition();active=r;r.lang='en-US';r.interimResults=false;r.maxAlternatives=1;r.continuous=false;
+r.onresult=e=>{if(active!==r)return;const heard=e.results[0][0].transcript;render(heard)};
+r.onerror=e=>{if(active!==r)return;const messages={ 'not-allowed':'Microphone permission denied. Allow microphone access in your browser. / Permite el acceso al micrófono.', 'no-speech':'No speech detected. Please try again. / No se detectó voz.', 'audio-capture':'No microphone found. / No se encontró micrófono.', 'network':'Speech recognition network error. / Error de conexión.'};status.textContent=messages[e.error]||('Speech recognition error: '+e.error)};
+r.onend=()=>{if(active===r){active=null;record.disabled=false;record.textContent='🎤 Start Speaking / Hablar';if(!transcript.textContent&&status.textContent.startsWith('Listening'))status.textContent='Nothing recognized. Try again. / No se reconoció voz. Inténtalo otra vez.'}};
+record.disabled=true;record.textContent='🎙️ Listening…';status.textContent='Listening… Say the sentence now. / Escuchando… Di la oración ahora.';r.start();
+}catch(e){stop();status.textContent='Unable to start microphone. / No se pudo iniciar el micrófono.'}}
+record.addEventListener('click',start);retry.addEventListener('click',()=>{stop();start()});select.addEventListener('change',()=>{stop();clear()});
+})();
+</script><script>
+(function(){
+'use strict';
+const root=document.getElementById('kandd-mic-diagnostic');if(!root)return;
+const check=root.querySelector('#kmd-check'),stopButton=root.querySelector('#kmd-stop'),status=root.querySelector('#kmd-status'),level=root.querySelector('#kmd-level'),heard=root.querySelector('#kmd-heard');
+let stream=null,ctx=null,analyser=null,frame=0,recognition=null,token=0,peak=0;
+function report(state,en,es){status.dataset.state=state;status.textContent=en+'\n'+es}
+function clean(){if(frame)cancelAnimationFrame(frame);frame=0;if(recognition){const r=recognition;recognition=null;try{r.abort()}catch(e){}}if(stream){stream.getTracks().forEach(t=>t.stop());stream=null}if(ctx){const c=ctx;ctx=null;c.close().catch(()=>{})}analyser=null;level.style.width='0%';check.disabled=false;stopButton.disabled=true}
+function stop(){token++;clean();report('warn','Test stopped. You can try again.','Prueba detenida. Puedes intentarlo otra vez.')}
+stopButton.addEventListener('click',stop);
+async function run(){token++;const id=token;clean();peak=0;heard.textContent='';check.disabled=true;stopButton.disabled=false;
+if(!window.isSecureContext){report('error','This test needs a secure HTTPS page.','Esta prueba necesita una página HTTPS segura.');clean();return}
+if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){report('error','This browser cannot access the microphone. Try current Chrome or Edge.','Este navegador no puede acceder al micrófono. Prueba Chrome o Edge actualizados.');clean();return}
+report('warn','Requesting microphone access… Select Allow if prompted.','Solicitando acceso al micrófono… Selecciona Permitir si aparece.');
+try{
+stream=await navigator.mediaDevices.getUserMedia({audio:true,video:false});if(id!==token){clean();return}
+const AudioContext=window.AudioContext||window.webkitAudioContext;
+if(!AudioContext){report('warn','Microphone permission works, but audio level testing is unsupported in this browser.','El permiso funciona, pero este navegador no admite la prueba de volumen.');clean();return}
+ctx=new AudioContext();await ctx.resume();if(id!==token){clean();return}
+const source=ctx.createMediaStreamSource(stream);analyser=ctx.createAnalyser();analyser.fftSize=2048;source.connect(analyser);
+const buffer=new Uint8Array(analyser.fftSize);const start=performance.now();
+report('warn','Microphone connected! Speak normally for 4 seconds.','¡Micrófono conectado! Habla normalmente durante 4 segundos.');
+function sample(now){if(id!==token||!analyser)return;analyser.getByteTimeDomainData(buffer);let sum=0;for(const b of buffer){const v=(b-128)/128;sum+=v*v}const rms=Math.sqrt(sum/buffer.length);peak=Math.max(peak,rms);level.style.width=Math.min(100,Math.round(rms*600))+'%';if(now-start<4000){frame=requestAnimationFrame(sample)}else{frame=0;finish()}}
+frame=requestAnimationFrame(sample);
+}catch(e){if(id!==token)return;const denied=e.name==='NotAllowedError'||e.name==='PermissionDeniedError';const missing=e.name==='NotFoundError'||e.name==='DevicesNotFoundError';const busy=e.name==='NotReadableError';report('error',denied?'Microphone access blocked. Allow it in browser and computer privacy settings.':missing?'No microphone was found. Check your input device.':busy?'Microphone is unavailable or being used by another app.':('Microphone test error: '+e.name),denied?'Acceso bloqueado. Permite el micrófono en el navegador y la privacidad del equipo.':missing?'No se encontró un micrófono. Revisa el dispositivo de entrada.':busy?'El micrófono no está disponible o lo usa otra aplicación.':'Error de la prueba del micrófono.');clean()}}
+function finish(){if(!stream)return;stream.getTracks().forEach(t=>t.stop());stream=null;if(ctx){ctx.close().catch(()=>{});ctx=null}analyser=null;level.style.width='0%';
+if(peak<.008){report('error','Permission granted, but no clear microphone sound was detected. Check Windows/Mac input settings, selected microphone, mute switch, and input volume.','Permiso concedido, pero no se detectó sonido claro. Revisa el micrófono seleccionado, el silencio y el volumen de entrada en Windows/Mac.');clean();return}
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+if(!SR){report('warn','Microphone audio works! Speech recognition is not supported here. Try Chrome or Edge for Speaking Practice.','¡El audio funciona! El reconocimiento de voz no está disponible aquí. Prueba Chrome o Edge.');clean();return}
+report('warn','Microphone audio works! Now say: “My name is Ana.”','¡El audio funciona! Ahora di: “My name is Ana”.');
+const id=token;try{const r=new SR();recognition=r;r.lang='en-US';r.continuous=false;r.interimResults=false;r.maxAlternatives=1;let got=false;
+r.onresult=e=>{if(id!==token)return;got=true;const t=e.results[0][0].transcript;heard.textContent='Heard / Escuchado: '+t;report('ok','Microphone and speech recognition are working! You can start Speaking Practice.','¡El micrófono y el reconocimiento de voz funcionan! Ya puedes practicar.')};
+r.onerror=e=>{if(id!==token)return;got=true;const code=e.error;report('warn',code==='no-speech'?'Audio works, but no words were recognized. Try speaking clearly.':code==='not-allowed'?'Speech recognition permission was blocked. Check browser microphone settings.':code==='network'?'Audio works, but the speech service could not connect. Check your internet connection.':'Audio works, but speech recognition reported: '+code,code==='no-speech'?'El audio funciona, pero no se reconocieron palabras. Habla claramente.':code==='not-allowed'?'El permiso de reconocimiento está bloqueado. Revisa el navegador.':code==='network'?'El audio funciona, pero el servicio no se pudo conectar. Revisa internet.':'El reconocimiento de voz informó un error.')};
+r.onend=()=>{if(id!==token)return;recognition=null;if(!got)report('warn','Microphone audio works, but no speech result was returned. Try again.','El audio funciona, pero no hubo resultado de voz. Inténtalo otra vez.');clean()};r.start()
+}catch(e){report('warn','Microphone audio works, but the speech test could not start. Try again.','El audio funciona, pero no pudo iniciarse el reconocimiento. Inténtalo otra vez.');clean()}}
+check.addEventListener('click',run);
+})();
+</script><script>(function(){const feedback=document.getElementById('ksp-feedback'),legend=document.getElementById('ksp-color-key');if(!feedback||!legend)return;const refresh=()=>{legend.hidden=!feedback.querySelector('.ksp-match,.ksp-missing')};new MutationObserver(refresh).observe(feedback,{childList:true,subtree:true});refresh()})();</script><script>
+
+document.getElementById("kandd-check-j").addEventListener("click",()=>checkMatching("j",["I'm a manager.", "What do you do for work?"]));
+</script><script>(function(){
+const options=[["I work at a restaurant. I help customers. I start work at eight.", "Trabajo en un restaurante. Ayudo a los clientes. Empiezo a las ocho."], ["I work at a store. I help customers find products.", "Trabajo en una tienda. Ayudo a los clientes a encontrar productos."], ["I work in an office. I help my coworkers.", "Trabajo en una oficina. Ayudo a mis compañeros de trabajo."]];
+const select=document.getElementById('kandd-scenario-10'),display=document.getElementById('kandd-scenario-text-10'),listen=document.getElementById('kandd-scenario-listen-10');
+function render(){const [en,es]=options[Number(select.value)];display.replaceChildren();const a=document.createElement('p');a.textContent=en;const b=document.createElement('p');b.lang='es';b.textContent=es;display.append(a,b)}
+select.addEventListener('change',render);render();
+listen.addEventListener('click',()=>{if(!('speechSynthesis' in window)){alert('Audio unavailable / Audio no disponible');return}window.speechSynthesis.cancel();const utterance=new SpeechSynthesisUtterance(options[Number(select.value)][0]);utterance.lang='en-US';utterance.rate=.85;window.speechSynthesis.speak(utterance)});
+})();</script></body></html>
