@@ -342,3 +342,18 @@ html body #kandd-sidebar {
   border-right: 0 !important;
   outline: none !important;
 }
+
+/* Fractional-pixel seam correction: sidebar is zoomed to 125%,
+   so its 66px edge lands at 82.5 device-independent pixels.
+   Bleed the existing gradient 1 CSS pixel over the content edge.
+   This does not move the sidebar, logo, nav, or page content. */
+html body #kandd-sidebar.kandd-collapsed {
+  width:67px !important;
+}
+html body #kandd-sidebar.kandd-expanded {
+  width:243px !important;
+}
+html body #kandd-sidebar {
+  box-shadow:none !important;
+  border-right:none !important;
+}
