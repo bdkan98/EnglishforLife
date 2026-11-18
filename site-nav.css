@@ -336,11 +336,5 @@ html body #kandd-sidebar .kandd-side-link {flex-shrink:0;}
   html body #kandd-sidebar.kandd-expanded .kandd-side-toggle {top:94px !important;}
 }
 
-/* Kandd seamless sidebar edge — 2026-11-17.
-   Fade only the last 5 CSS pixels of the sidebar into the page/header
-   behind it. This eliminates the hard vertical gradient boundary without
-   changing width, zoom, logo, navigation, or the approved gradient stops. */
-html body #kandd-sidebar {
-  -webkit-mask-image: linear-gradient(to right, #000 0, #000 calc(100% - 5px), transparent 100%) !important;
-  mask-image: linear-gradient(to right, #000 0, #000 calc(100% - 5px), transparent 100%) !important;
-}
+/* Rollback: remove the edge mask that created a white stripe. */
+html body #kandd-sidebar { -webkit-mask-image:none !important; mask-image:none !important; }
