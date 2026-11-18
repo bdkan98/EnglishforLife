@@ -336,5 +336,19 @@ html body #kandd-sidebar .kandd-side-link {flex-shrink:0;}
   html body #kandd-sidebar.kandd-expanded .kandd-side-toggle {top:94px !important;}
 }
 
-/* Rollback: remove the edge mask that created a white stripe. */
-html body #kandd-sidebar { -webkit-mask-image:none !important; mask-image:none !important; }
+/* Kandd shared-corner gradient: align the header's leftmost color with the
+   existing 125%-zoomed sidebar gradient. No sidebar geometry is changed.
+   The first layer fades horizontally into navy; the second matches the
+   sidebar's existing vertical gradient at the shared corner. */
+html body:has(#kandd-sidebar) header.top,
+html body:has(#kandd-sidebar) header.top.kandd-profile-header {
+  background-color:#12385f !important;
+  background-image:
+    linear-gradient(to right, rgba(18,56,95,0) 0%, rgba(18,56,95,.38) 35%, #12385f 100%),
+    linear-gradient(to bottom, #faf5ed 0px, #f4e8d7 117.5px, #d4c9c0 187.5px, #7891a3 331.25px, #315474 487.5px, #12385f 712.5px, #12385f 100%) !important;
+  background-attachment:scroll !important;
+  background-position:0 0 !important;
+  background-repeat:no-repeat !important;
+  border:0 !important;
+  box-shadow:none !important;
+}
