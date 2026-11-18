@@ -24,17 +24,36 @@
 #kandd-mic-diagnostic .kmd-status,#kandd-speaking-practice .ksp-status{border-radius:12px;line-height:1.6}
 @media(max-width:600px){#kandd-mic-diagnostic.kmd,#kandd-speaking-practice.kandd-speaking{padding:18px}#kandd-mic-diagnostic button{width:100%;margin:6px 0}#kandd-speaking-practice .ksp-buttons{display:grid;grid-template-columns:1fr}#kandd-speaking-practice .ksp-buttons button{width:100%}}
 @media(prefers-reduced-motion:reduce){#kandd-mic-diagnostic button,#kandd-speaking-practice button{transition:none}}
-</style><link rel="stylesheet" href="../site-nav.css"><link rel="stylesheet" href="../kandd-buttons.css"><link rel="stylesheet" href="../kandd-phase2.css"><script defer src="../site-nav.js"></script><link rel="stylesheet" href="../kandd-exercise-polish.css"><link rel="stylesheet" href="../kandd-exercise-polish.css?v=2"><script>function shuffleChoices(choices){const a=[...choices];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a;}</script><link rel="stylesheet" href="../kandd-compact.css?v=1"><link rel="stylesheet" href="../kandd-sidebar-matching-layout.css?v=1"></head><body><header class="top"><div class="brand">Kandd Learning</div><div class="tag">Level 1 · Lesson 6</div></header><main class="wrap"><a class="home" href="../level1.html">← Level 1 Dashboard</a><section class="hero"><span class="pill">LESSON 6</span><h1>Food &amp; Shopping</h1><p>Comida y compras</p><div class="progressrow"><b id="pct">0% complete</b><span class="badge">Listen • Practice • Speak</span></div><div class="bar"><i id="bar"></i></div></section><div class="tabs"><button class="tab active" data-target="learn">1 · Learn</button><button class="tab" data-target="practice">2 · Practice</button><button class="tab" data-target="speak">3 · Speak</button><button class="tab" data-target="check">4 · Check</button></div>
-<section class="panel active" id="learn"><article><h2>🎯 Today's Goal</h2><p>Ask for food, understand prices, quantities, and complete a simple purchase.</p></article><div class="grid2"><article><h2>🔊 Useful Phrases</h2>
+</style><link rel="stylesheet" href="../site-nav.css"><link rel="stylesheet" href="../kandd-buttons.css"><link rel="stylesheet" href="../kandd-phase2.css"><script defer src="../site-nav.js"></script><link rel="stylesheet" href="../kandd-exercise-polish.css"><link rel="stylesheet" href="../kandd-exercise-polish.css?v=2"><script>function shuffleChoices(choices){const a=[...choices];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a;}</script><link rel="stylesheet" href="../kandd-compact.css?v=1"><link rel="stylesheet" href="../kandd-sidebar-matching-layout.css?v=1"><style id="kandd-lesson6-review-style">
+#kandd-shopping-basket .k6-basket-grid{display:grid;gap:10px;margin:16px 0}
+#kandd-shopping-basket .k6-item{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px;border:1px solid #d6e2ec;border-radius:12px}
+#kandd-shopping-basket .k6-item label{font-weight:700}
+#kandd-shopping-basket .k6-item small{display:block;font-weight:400}
+#kandd-shopping-basket select{min-width:85px;padding:8px;border:1px solid #b9c9d8;border-radius:8px}
+#kandd-shopping-basket .k6-total{font-size:1.2rem}
+#kandd-shopping-basket .k6-sentence{background:#eef5fa;border-radius:10px;padding:12px;white-space:pre-line;line-height:1.7}
+.k6-answer-feedback{margin:9px 0 4px;padding:10px;border-radius:8px;line-height:1.5}
+.k6-answer-feedback:empty{display:none}
+.k6-correct{background:#e2f4e8;color:#164f30}.k6-incorrect{background:#fff0db;color:#69420b}
+@media(max-width:480px){#kandd-shopping-basket .k6-item{align-items:flex-start;flex-direction:column}}
+</style></head><body><header class="top"><div class="brand">Kandd Learning</div><div class="tag">Level 1 · Lesson 6</div></header><main class="wrap"><a class="home" href="../level1.html">← Level 1 Dashboard</a><section class="hero"><span class="pill">LESSON 6</span><h1>Food &amp; Shopping</h1><p>Comida y compras</p><div class="progressrow"><b id="pct">0% complete</b><span class="badge">Listen • Practice • Speak</span></div><div class="bar"><i id="bar"></i></div></section><div class="tabs"><button class="tab active" data-target="learn">1 · Learn</button><button class="tab" data-target="practice">2 · Practice</button><button class="tab" data-target="speak">3 · Speak</button><button class="tab" data-target="check">4 · Check</button></div>
+<section class="panel active" id="learn"><article><h2>🎯 Today's Goal / Objetivo de hoy</h2><p>Ask for food, understand prices, quantities, and complete a simple purchase.<br><span lang="es">Pide alimentos, comprende precios y cantidades y realiza una compra sencilla.</span></p></article><div class="grid2"><article><h2>🔊 Useful Phrases / Frases útiles</h2><p>Listen at normal or slow speed and repeat. / <span lang="es">Escucha a velocidad normal o lenta y repite.</span></p>
 <div class="phrase"><div class="phrase-text"><b>How much is this?</b><span>¿Cuánto cuesta esto?</span></div><div class="audio-controls"><button class="speak normal" data-text="How much is this?" onclick="speakText(this.dataset.text,this,'normal')">🔊 Normal</button><button class="speak slow" data-text="How much is this?" onclick="speakText(this.dataset.text,this,'slow')">🐢 Slow</button></div></div>
 <div class="phrase"><div class="phrase-text"><b>I'd like two, please.</b><span>Quisiera dos, por favor.</span></div><div class="audio-controls"><button class="speak normal" data-text="I'd like two, please." onclick="speakText(this.dataset.text,this,'normal')">🔊 Normal</button><button class="speak slow" data-text="I'd like two, please." onclick="speakText(this.dataset.text,this,'slow')">🐢 Slow</button></div></div>
 <div class="phrase"><div class="phrase-text"><b>Do you have any milk?</b><span>¿Tiene leche?</span></div><div class="audio-controls"><button class="speak normal" data-text="Do you have any milk?" onclick="speakText(this.dataset.text,this,'normal')">🔊 Normal</button><button class="speak slow" data-text="Do you have any milk?" onclick="speakText(this.dataset.text,this,'slow')">🐢 Slow</button></div></div>
 <div class="phrase"><div class="phrase-text"><b>Where can I find the bread?</b><span>¿Dónde puedo encontrar el pan?</span></div><div class="audio-controls"><button class="speak normal" data-text="Where can I find the bread?" onclick="speakText(this.dataset.text,this,'normal')">🔊 Normal</button><button class="speak slow" data-text="Where can I find the bread?" onclick="speakText(this.dataset.text,this,'slow')">🐢 Slow</button></div></div>
 <div class="phrase"><div class="phrase-text"><b>That's all, thank you.</b><span>Eso es todo, gracias.</span></div><div class="audio-controls"><button class="speak normal" data-text="That's all, thank you." onclick="speakText(this.dataset.text,this,'normal')">🔊 Normal</button><button class="speak slow" data-text="That's all, thank you." onclick="speakText(this.dataset.text,this,'slow')">🐢 Slow</button></div></div>
-</article><article class="tip"><h2>🇪🇸 Spanish-Speaker Tip</h2><p><b>How much?</b> asks about price or an uncountable amount. <b>How many?</b> asks about countable things: “How many apples?”</p></article></div>
-<article><h2>Shopping Vocabulary</h2><div class="vocab"><span><button aria-label="Pronounce price" class="kandd-vocab-word" data-translation="precio" data-word="price" type="button">price 🔊</button><small>precio</small></span><span><button aria-label="Pronounce cash" class="kandd-vocab-word" data-translation="efectivo" data-word="cash" type="button">cash 🔊</button><small>efectivo</small></span><span><button aria-label="Pronounce card" class="kandd-vocab-word" data-translation="tarjeta" data-word="card" type="button">card 🔊</button><small>tarjeta</small></span><span><button aria-label="Pronounce receipt" class="kandd-vocab-word" data-translation="recibo" data-word="receipt" type="button">receipt 🔊</button><small>recibo</small></span><span><button aria-label="Pronounce bag" class="kandd-vocab-word" data-translation="bolsa" data-word="bag" type="button">bag 🔊</button><small>bolsa</small></span><span><button aria-label="Pronounce pound" class="kandd-vocab-word" data-translation="libra" data-word="pound" type="button">pound 🔊</button><small>libra</small></span><span><button aria-label="Pronounce each" class="kandd-vocab-word" data-translation="cada uno" data-word="each" type="button">each 🔊</button><small>cada uno</small></span><span><button aria-label="Pronounce total" class="kandd-vocab-word" data-translation="total" data-word="total" type="button">total 🔊</button><small>total</small></span></div></article><button class="btn" onclick="done('learn','practice')">Finished Learning →</button></section>
-<section class="panel" id="practice"><article><h2>🛒 Mini Market</h2><p>Use the menu to answer the questions.</p><div class="menu"><div><b>Apples</b><br/>$1.25 each</div><div><b>Bread</b><br/>$3.50</div><div><b>Milk</b><br/>$4.00</div><div><b>Eggs</b><br/>$3.25</div></div><div class="question"><b>How much is the bread?</b><select id="p0"><option value="">Choose…</option><option>$3.50</option><option>$4.00</option></select></div><div class="question"><b>Which item costs $4.00?</b><select id="p1"><option value="">Choose…</option><option>Milk</option><option>Eggs</option></select></div><div class="question"><b>Two apples cost…</b><select id="p2"><option value="">Choose…</option><option>$2.50</option><option>$1.25</option></select></div><button class="btn" type="button" id="kandd-check-p">Check Shopping</button><div id="pFeedback"></div></article>
-<article><h2>🧩 Choose the Polite Request</h2><div class="choicegrid"><button class="choicebtn" onclick="choose(this,true)">I'd like two apples, please.</button><button class="choicebtn" onclick="choose(this,false)">Give me two apples.</button><button class="choicebtn" onclick="choose(this,true)">Where can I find the bread?</button><button class="choicebtn" onclick="choose(this,false)">Bread where?</button></div><div class="feedback" id="polite"></div></article><button class="btn" onclick="done('practice','speak')">Finish Practice →</button></section>
+</article><article class="tip"><h2>🇪🇸 Spanish-Speaker Tip</h2><p><b>How much?</b> asks about price or an uncountable amount. <b>How many?</b> asks about countable things: “How many apples?”</p><p><b>How much is the bread?</b> — <span lang="es">¿Cuánto cuesta el pan?</span><br><b>How many apples do you want?</b> — <span lang="es">¿Cuántas manzanas quieres?</span></p></article></div>
+<article><h2>Shopping Vocabulary / Vocabulario de compras</h2><p>Tap a word to hear its pronunciation. / <span lang="es">Pulsa una palabra para escuchar su pronunciación.</span></p><div class="vocab"><span><button aria-label="Pronounce price" class="kandd-vocab-word" data-translation="precio" data-word="price" type="button">price 🔊</button><small>precio</small></span><span><button aria-label="Pronounce cash" class="kandd-vocab-word" data-translation="efectivo" data-word="cash" type="button">cash 🔊</button><small>efectivo</small></span><span><button aria-label="Pronounce card" class="kandd-vocab-word" data-translation="tarjeta" data-word="card" type="button">card 🔊</button><small>tarjeta</small></span><span><button aria-label="Pronounce receipt" class="kandd-vocab-word" data-translation="recibo" data-word="receipt" type="button">receipt 🔊</button><small>recibo</small></span><span><button aria-label="Pronounce bag" class="kandd-vocab-word" data-translation="bolsa" data-word="bag" type="button">bag 🔊</button><small>bolsa</small></span><span><button aria-label="Pronounce pound" class="kandd-vocab-word" data-translation="libra" data-word="pound" type="button">pound 🔊</button><small>libra</small></span><span><button aria-label="Pronounce each" class="kandd-vocab-word" data-translation="cada uno" data-word="each" type="button">each 🔊</button><small>cada uno</small></span><span><button aria-label="Pronounce total" class="kandd-vocab-word" data-translation="total" data-word="total" type="button">total 🔊</button><small>total</small></span></div></article><button class="btn" onclick="done('learn','practice')">Finished Learning / Terminé de aprender →</button></section>
+<section class="panel" id="practice"><article><h2>🛒 Mini Market / Mini mercado</h2><p>Use the menu to answer the questions. / <span lang="es">Usa la lista de precios para responder las preguntas.</span></p><div class="menu"><div><b>Apples</b><br/>$1.25 each</div><div><b>Bread</b><br/>$3.50</div><div><b>Milk</b><br/>$4.00</div><div><b>Eggs</b><br/>$3.25</div></div><div class="question"><b>How much is the bread?</b><select id="p0"><option value="">Choose…</option><option>$3.50</option><option>$4.00</option></select></div><div class="question"><b>Which item costs $4.00?</b><select id="p1"><option value="">Choose…</option><option>Milk</option><option>Eggs</option></select></div><div class="question"><b>Two apples cost…</b><select id="p2"><option value="">Choose…</option><option>$2.50</option><option>$1.25</option></select></div><button class="btn" type="button" id="kandd-check-p">Check Shopping</button><div id="pFeedback"></div></article>
+<article id="kandd-shopping-basket"><h2>🧺 My Shopping Basket / Mi canasta de compras</h2>
+<p>Choose quantities and practice saying your total in English. / <span lang="es">Elige cantidades y practica cómo decir el total en inglés.</span></p>
+<div class="k6-basket-grid" id="k6-basket-items"></div>
+<p class="k6-total"><strong>Total / Total: <output id="k6-total" aria-live="polite">$0.00</output></strong></p>
+<div class="k6-sentence" id="k6-order" aria-live="polite">Choose at least one item. / Elige al menos un producto.</div>
+<button class="btn" id="k6-listen-order" type="button">🔊 Listen to My Order / Escuchar mi pedido</button>
+<p><small>Practice only; no purchase is made. / <span lang="es">Solo es una práctica; no se realiza ninguna compra.</span></small></p></article>
+<article><h2>🧩 Choose the Polite Request / Elige la petición amable</h2><p>Select a polite, complete English request. / <span lang="es">Selecciona una petición amable y completa en inglés.</span></p><div class="choicegrid"><button class="choicebtn" onclick="choose(this,true)">I'd like two apples, please.</button><button class="choicebtn" onclick="choose(this,false)">Give me two apples.</button><button class="choicebtn" onclick="choose(this,true)">Where can I find the bread?</button><button class="choicebtn" onclick="choose(this,false)">Bread where?</button></div><div class="feedback" id="polite"></div></article><button class="btn" onclick="done('practice','speak')">Finish Practice / Terminé de practicar →</button></section>
 <section class="panel" id="speak"><article aria-labelledby="kmd-title" class="kmd" id="kandd-mic-diagnostic">
 <h3 id="kmd-title">🎤 Microphone Setup Check / Verificar micrófono</h3>
 <p>Check your microphone before speaking. / Verifica tu micrófono antes de hablar.</p>
@@ -50,7 +69,14 @@
 <p><b>Chrome/Edge:</b> Select the site controls icon next to the address → Site settings → Microphone → Allow, then refresh. / Selecciona el icono junto a la dirección → Configuración del sitio → Micrófono → Permitir y actualiza la página.</p>
 </details>
 <small>Testing may request microphone permission. Audio is checked on your device and is not saved by Kandd Learning. The optional speech test may send audio to your browser's speech recognition provider. / La prueba puede pedir permiso. Kandd Learning no guarda grabaciones. El reconocimiento de voz puede enviar audio al proveedor del navegador.</small>
-</article><article><h2>💬 Role Play: At the Store</h2><div class="rolecard"><b>Customer:</b> Ask where an item is. Ask the price. Buy a quantity. Ask for a bag or receipt.</div><br/><div class="rolecard"><b>Worker:</b> Tell the customer where the item is, give a price, and complete the purchase.</div><p>Switch roles after two minutes.</p></article><article><h2>🎯 Live It</h2><div class="challenge">Create a pretend shopping list with five items. Ask your partner where to find three items and how much two items cost.</div></article><article aria-labelledby="ksp-title" class="kandd-speaking" id="kandd-speaking-practice">
+</article><article><h2>💬 Role Play: At the Store / Diálogo en la tienda</h2><div class="rolecard"><b>Customer / Cliente:</b> Ask where an item is. Ask the price. Buy a quantity. Ask for a bag or receipt.<br><span lang="es">Pregunta dónde está un producto y cuánto cuesta. Compra una cantidad y pide una bolsa o un recibo.</span></div><br/><div class="rolecard"><b>Worker / Empleado:</b> Tell the customer where the item is, give a price, and complete the purchase.<br><span lang="es">Indica dónde está el producto, di el precio y completa la venta.</span></div><p>Switch roles after two minutes. / <span lang="es">Cambien de papel después de dos minutos.</span></p></article><article><h2>🗣️ Complete Purchase / Compra completa</h2><p>Read both parts, then switch roles. / <span lang="es">Lee ambas partes y después cambia de papel.</span></p>
+<div class="dialogue"><p><b>Customer / Cliente:</b> Excuse me, where can I find the apples?<br><span lang="es">Disculpe, ¿dónde puedo encontrar las manzanas?</span></p>
+<p><b>Worker / Empleado:</b> They're over there, next to the bread.<br><span lang="es">Están allí, al lado del pan.</span></p>
+<p><b>Customer:</b> How much are they?<br><span lang="es">¿Cuánto cuestan?</span></p>
+<p><b>Worker:</b> They're one dollar and twenty-five cents each.<br><span lang="es">Cuestan un dólar con veinticinco centavos cada una.</span></p>
+<p><b>Customer:</b> I'd like two, please. Can I have a bag and a receipt?<br><span lang="es">Quisiera dos, por favor. ¿Me puede dar una bolsa y un recibo?</span></p>
+<p><b>Worker:</b> Of course. That's two dollars and fifty cents.<br><span lang="es">Claro. Son dos dólares con cincuenta centavos.</span></p>
+<p><b>Customer:</b> That's all, thank you!<br><span lang="es">Eso es todo, ¡gracias!</span></p></div></article><article><h2>🎯 Live It / Ponlo en práctica</h2><div class="challenge">Create a pretend shopping list with five items. Ask your partner where to find three items and how much two items cost.<br><span lang="es">Crea una lista de compras imaginaria con cinco productos. Pregunta dónde encontrar tres y cuánto cuestan dos.</span></div></article><article aria-labelledby="ksp-title" class="kandd-speaking" id="kandd-speaking-practice">
 <h3 id="ksp-title">🎤 Speaking Practice / Práctica oral</h3>
 <p>Listen, then say the English sentence. / Escucha y luego di la oración en inglés.</p>
 <label for="ksp-phrase"><strong>Choose a sentence / Elige una oración:</strong></label>
@@ -61,13 +87,40 @@
 <div aria-label="Word matching feedback" class="ksp-words" id="ksp-feedback"></div><p class="ksp-explainer" id="ksp-color-key" hidden><small>Green = word recognized in the correct position. Orange = word not recognized in that position. This is a word-recognition practice tool, not an accent or pronunciation grade. / Verde = palabra reconocida. Naranja = palabra no reconocida. No califica tu acento.</small></p>
 
 <p><small>Your microphone audio is processed by your browser's speech recognition service, which may send audio to its provider. This exercise does not save or upload recordings to Kandd Learning. / El servicio de reconocimiento de voz de tu navegador puede procesar el audio. Kandd Learning no guarda grabaciones.</small></p>
-</article><button class="btn" onclick="done('speak','check')">Speaking Challenge Complete →</button></section>
-<section class="panel" id="check"><article><h2>✅ Quick Check</h2><div id="quiz"></div><button class="btn" onclick="grade()">Check My Answers</button><div class="result" id="result"></div></article></section><section class="kandd-practice-promo" aria-label="Optional extra practice"><h2>Ready for Extra Practice?</h2><p>Reinforce Lesson 6 with five optional questions. Your regular lesson quiz and completion status will not change.</p><a class="btn" href="lesson6-practice.html">Start Lesson 6 Extra Practice →</a></section></main><footer>Kandd Learning · Lesson 6</footer><script src="../supabase-client.js"></script><script src="../common.js"></script><script>
+</article><button class="btn" onclick="done('speak','check')">Speaking Challenge Complete / Terminé de hablar →</button></section>
+<section class="panel" id="check"><article><h2>✅ Quick Check / Evaluación rápida</h2><p>Answer all five questions, then check your answers. You need 4 out of 5 to pass. / <span lang="es">Responde las cinco preguntas y revisa tus respuestas. Necesitas 4 de 5 para aprobar.</span></p><div id="quiz"></div><button class="btn" onclick="grade()">Check My Answers / Revisar mis respuestas</button><div class="result" id="result"></div></article></section><section class="kandd-practice-promo" aria-label="Optional extra practice"><h2>Ready for Extra Practice?</h2><p>Reinforce Lesson 6 with five optional questions. Your regular lesson quiz and completion status will not change.</p><a class="btn" href="lesson6-practice.html">Start Lesson 6 Extra Practice →</a></section></main><footer>Kandd Learning · Lesson 6</footer><script src="../supabase-client.js"></script><script src="../common.js"></script><script>
 function choose(el,good){document.querySelectorAll('.choicebtn').forEach(x=>x.classList.remove('selected'));el.classList.add('selected');polite.textContent=good?'✓ Yes — this sounds polite and natural.':'Try a more polite complete sentence.';polite.className='feedback '+(good?'success':'retry')}
-const quiz=[["Ask about price:",["How much is this?","How many is this?","Where price?"],"How much is this?"],["A polite request:",["I'd like two, please.","Give two.","I two."],"I'd like two, please."],["Receipt means…",["recibo","bolsa","precio"],"recibo"],["Ask location:",["Where can I find the bread?","How bread?","What bread is?"],"Where can I find the bread?"],["How many asks about…",["countable things","price only","time"],"countable things"]];
-let parts=JSON.parse(localStorage.getItem('lesson6Parts')||'{}');function update(){let x=['learn','practice','speak','check'].filter(k=>parts[k]).length,p=Math.round(x/4*100);bar.style.width=p+'%';pct.textContent=p+'% complete'}function done(x,y){parts[x]=true;localStorage.setItem('lesson6Parts',JSON.stringify(parts));update();showTab(y)}
-quizEl=document.getElementById('quiz');quizEl.innerHTML=quiz.map((x,i)=>`<div class="question"><b>${i+1}. ${x[0]}</b>${shuffleChoices(x[1]).map(o=>`<label><input type="radio" name="q${i}" value="${o}"> ${o}</label>`).join('')}</div>`).join('');
-function grade(){let s=0;quiz.forEach((x,i)=>{let a=document.querySelector(`input[name=q${i}]:checked`);if(a&&a.value===x[2])s++});localStorage.setItem('lesson6Score',String(s));if(s>=4){parts.check=true;localStorage.setItem('lesson6Parts',JSON.stringify(parts));localStorage.setItem('lesson6Complete','yes');result.className='result success';result.innerHTML=`🎉 ${s}/5 — Lesson complete! <a href="../level1.html"><u>Dashboard</u></a>`;update()}else{result.className='result retry';result.textContent=s+'/5 — Review and try again.'}}update();</script><script>
+const quiz=[
+ {q:"How do you ask about the price of bread?",es:"¿Cómo preguntas el precio del pan?",options:["How much is the bread?","How many is the bread?","How much bread do you have?"],answer:"How much is the bread?",why:"Use 'How much is ...?' to ask for a price. / Para preguntar el precio, usa 'How much is ...?'"},
+ {q:"Which is a polite request for two apples?",es:"¿Cuál es una forma amable de pedir dos manzanas?",options:["I want two apples.","I'd like two apples, please.","Two apples for me."],answer:"I'd like two apples, please.",why:"'I'd like ... please' is a polite way to request something. / 'I'd like ... please' es una forma amable de pedir algo."},
+ {q:"What does 'receipt' mean?",es:"¿Qué significa 'receipt'?",options:["bolsa","recibo","precio"],answer:"recibo",why:"A receipt is proof of purchase. / Un recibo es un comprobante de compra."},
+ {q:"How do you ask where the bread is?",es:"¿Cómo preguntas dónde está el pan?",options:["Where can I find the bread?","Where I can find the bread?","Where is find the bread?"],answer:"Where can I find the bread?",why:"In a question, 'can' comes before 'I'. / En una pregunta, 'can' va antes de 'I'."},
+ {q:"Which question asks about the number of apples?",es:"¿Qué pregunta pide la cantidad de manzanas?",options:["How much are the apples?","How many apples do you want?","How much apple do you want?"],answer:"How many apples do you want?",why:"Use 'how many' with countable items like apples. / Usa 'how many' con cosas que se pueden contar, como las manzanas."}
+];
+let parts=JSON.parse(localStorage.getItem('lesson6Parts')||'{}');
+function update(){let x=['learn','practice','speak','check'].filter(k=>parts[k]).length,p=Math.round(x/4*100);bar.style.width=p+'%';pct.textContent=p+'% complete'}
+function done(x,y){parts[x]=true;localStorage.setItem('lesson6Parts',JSON.stringify(parts));update();showTab(y)}
+const quizEl=document.getElementById('quiz');
+quizEl.innerHTML=quiz.map((x,i)=>`<div class="question"><b>${i+1}. ${x.q}</b><p lang="es">${x.es}</p>${shuffleChoices(x.options).map(o=>`<label><input type="radio" name="q${i}" value="${o.replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;')}"> ${o}</label>`).join('')}<div class="k6-answer-feedback" id="k6-feedback-${i}" aria-live="polite"></div></div>`).join('');
+function grade(){
+ const selected=quiz.map((x,i)=>document.querySelector(`input[name=q${i}]:checked`));
+ if(selected.some(a=>!a)){
+  result.className='result retry';result.textContent='Please answer all five questions before checking. / Responde las cinco preguntas antes de revisar.';
+  return false;
+ }
+ let score=0;
+ quiz.forEach((x,i)=>{
+  const correct=selected[i].value===x.answer;if(correct)score++;
+  const feedback=document.getElementById(`k6-feedback-${i}`);
+  feedback.textContent=(correct?'✓ Correct / Correcto. ':'✗ Correct answer / Respuesta correcta: '+x.answer+'. ')+x.why;
+  feedback.className='k6-answer-feedback '+(correct?'k6-correct':'k6-incorrect');
+ });
+ localStorage.setItem('lesson6Score',String(score));
+ if(score>=4){parts.check=true;localStorage.setItem('lesson6Parts',JSON.stringify(parts));localStorage.setItem('lesson6Complete','yes');result.className='result success';result.innerHTML=`🎉 ${score}/5 — Lesson complete! / ¡Lección completada! <a href="../level1.html"><u>Dashboard / Panel</u></a>`;update()}
+ else{result.className='result retry';result.textContent=score+'/5 — Review the explanations and try again. / Revisa las explicaciones e inténtalo de nuevo.'}
+ return true;
+}
+update();</script><script>
 /* Kandd Learning cloud progress — Lesson 6. Original lesson activities remain unchanged. */
 (function(){
   const lessonNumber=6;
@@ -100,7 +153,7 @@ function grade(){let s=0;quiz.forEach((x,i)=>{let a=document.querySelector(`inpu
     if(cloudBusy)return;
     cloudBusy=true;
     try{
-      originalGrade();
+      if(originalGrade()===false)return;
       const score=Number(localStorage.getItem('lesson'+lessonNumber+'Score'));
       if(!Number.isFinite(score))return;
       message('Saving your quiz result to Kandd Learning…',true);
@@ -188,4 +241,41 @@ check.addEventListener('click',run);
 </script><script>(function(){const feedback=document.getElementById('ksp-feedback'),legend=document.getElementById('ksp-color-key');if(!feedback||!legend)return;const refresh=()=>{legend.hidden=!feedback.querySelector('.ksp-match,.ksp-missing')};new MutationObserver(refresh).observe(feedback,{childList:true,subtree:true});refresh()})();</script><script>
 
 document.getElementById("kandd-check-p").addEventListener("click",()=>checkMatching("p",["$3.50", "Milk", "$2.50"]));
+</script><script id="kandd-lesson6-basket-script">
+(function(){
+ const items=[{name:'Apples',es:'Manzanas',price:1.25,unit:'each / cada una'},{name:'Bread',es:'Pan',price:3.50,unit:'each / cada uno'},{name:'Milk',es:'Leche',price:4.00,unit:'each / cada una'},{name:'Eggs',es:'Huevos',price:3.25,unit:'carton / cartón'}];
+ const key='lesson6BasketQuantities';
+ let saved;try{saved=JSON.parse(localStorage.getItem(key)||'null')}catch(e){saved=null}
+ const qty=Array.isArray(saved)&&saved.length===items.length?saved.map(v=>Math.min(10,Math.max(0,Number(v)||0))):[0,0,0,0];
+ const grid=document.getElementById('k6-basket-items'),total=document.getElementById('k6-total'),order=document.getElementById('k6-order');
+ if(!grid||!total||!order)return;
+ const money=v=>'$'+v.toFixed(2);
+ let spoken='';
+ function update(){
+  const amount=items.reduce((sum,item,i)=>sum+item.price*qty[i],0);
+  total.textContent=money(amount);
+  const chosen=items.filter((item,i)=>qty[i]>0).map(item=>({item,i:items.indexOf(item)}));
+  if(!chosen.length){spoken='';order.textContent='Choose at least one item. / Elige al menos un producto.'}
+  else{
+   const names=chosen.map(({item,i})=>qty[i]+' '+item.name.toLowerCase());
+   spoken="I'd like "+names.join(', ')+", please. My total is "+amount.toFixed(2)+" dollars. Can I have a receipt, please?";
+   order.textContent=spoken+'\n¿Me puede dar un recibo, por favor?';
+  }
+  try{localStorage.setItem(key,JSON.stringify(qty))}catch(e){}
+ }
+ items.forEach((item,i)=>{
+  const row=document.createElement('div');row.className='k6-item';
+  const label=document.createElement('label');label.htmlFor='k6-qty-'+i;label.textContent=item.name+' / '+item.es;
+  const detail=document.createElement('small');detail.textContent=money(item.price)+' '+item.unit;label.appendChild(detail);
+  const select=document.createElement('select');select.id='k6-qty-'+i;select.setAttribute('aria-label','Quantity / Cantidad: '+item.name);
+  for(let n=0;n<=10;n++){const opt=document.createElement('option');opt.value=String(n);opt.textContent=String(n);select.appendChild(opt)}
+  select.value=String(qty[i]);select.addEventListener('change',()=>{qty[i]=Number(select.value);update()});row.append(label,select);grid.appendChild(row);
+ });
+ document.getElementById('k6-listen-order').addEventListener('click',()=>{
+  if(!spoken){order.textContent='Choose at least one item first. / Primero elige al menos un producto.';return}
+  if(!('speechSynthesis' in window)){order.textContent+='\nAudio unavailable in this browser. / Audio no disponible.';return}
+  speechSynthesis.cancel();const utterance=new SpeechSynthesisUtterance(spoken);utterance.lang='en-US';utterance.rate=.85;speechSynthesis.speak(utterance);
+ });
+ update();
+})();
 </script></body></html>
